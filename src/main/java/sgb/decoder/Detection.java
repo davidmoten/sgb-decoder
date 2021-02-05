@@ -1,7 +1,6 @@
 package sgb.decoder;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
