@@ -52,6 +52,7 @@ public class DetectionTest {
     public void test() {
         Detection d = Detection.fromBitString(BITS);
         checkDetection(d);
+        System.out.println(d);
     }
 
     private void checkDetection(Detection d) {

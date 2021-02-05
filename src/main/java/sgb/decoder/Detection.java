@@ -596,4 +596,18 @@ public final class Detection {
     public String beacon15HexId() {
         return beacon23HexId.substring(0, 15);
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Detection\n  tac=%s\n  serialNo=%s\n  countryCode=%s\n  hasAtLeastOneEnabledHomingSignal=%s\n  hasEnabledRls=%s\n  isTestProtocolMessage=%s\n  encodedGnssPosition=%s\n  vesselId=%s\n  beaconType=%s\n  rotatingField=%s\n  beacon23HexId=%s\n  beacon15HexId=%s",
+                tac, serialNo, countryCode, hasAtLeastOneEnabledHomingSignal, hasEnabledRls,
+                isTestProtocolMessage, s(encodedGnssPosition), s(vesselId), beaconType, rotatingField,
+                beacon23HexId, beacon15HexId());
+    }
+    
+    private static String s(Optional<?> o) {
+        return o.map(x -> x.toString()).orElse("");
+    }
+    
 }
