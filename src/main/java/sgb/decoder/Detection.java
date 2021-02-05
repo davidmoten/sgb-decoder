@@ -52,6 +52,8 @@ public final class Detection {
     private final BeaconType beaconType;
     private final RotatingField rotatingField;
 
+    private String beacon23HexId;
+
     public Detection(Bits bits) {
         Preconditions.checkArgument(bits.length() == 202);
         tac = bits.readUnsignedInt(16);
@@ -66,6 +68,26 @@ public final class Detection {
         // skip spare bits
         bits.skip(14);
         rotatingField = readRotatingField(bits);
+        beacon23HexId = readBeacon23HexID(bits.position(0));
+    }
+
+    private String readBeacon23HexID(Bits bits) {
+        StringBuilder s = new StringBuilder();
+        s.append("1");
+        bits.position(0);
+        String tacBits = bits.readBitString(16);
+        String serialBits = bits.readBitString(14);
+        String countryCodeBits = bits.readBitString(10);
+        s.append(countryCodeBits);
+        s.append("101");
+        s.append(tacBits);
+        s.append(serialBits);
+        String testProtocolFlagBits = bits.position(42).readBitString(1);
+        s.append(testProtocolFlagBits);
+        String vesselIdBits = bits.position(90).readBitString(47);
+        s.append(vesselIdBits);
+        Bits b = Bits.from(s.toString());
+        return b.readHex(23);
     }
 
     @VisibleForTesting
@@ -551,5 +573,13 @@ public final class Detection {
 
     public RotatingField rotatingField() {
         return rotatingField;
+    }
+
+    public String beacon23HexId() {
+        return beacon23HexId;
+    }
+
+    public String beacon15HexId() {
+        return beacon23HexId.substring(0, 15);
     }
 }

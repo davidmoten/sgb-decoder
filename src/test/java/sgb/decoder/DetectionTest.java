@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigInteger;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
-import java.util.Optional;
 
 import org.junit.Test;
 
@@ -71,6 +70,8 @@ public class DetectionTest {
         assertEquals(Range.create(75, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE),
                 r.remainingBatteryCapacityPercent().get());
         assertEquals(GnssStatus.LOCATION_3D, r.gnssStatus());
+        assertEquals("9934039823d000000000000", d.beacon23HexId());
+        assertEquals("9934039823d0000", d.beacon15HexId());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -513,7 +514,7 @@ public class DetectionTest {
         assertEquals(-48.79315185546875, p.lat(), 0.0000001);
         assertEquals(-69.00875854492188, p.lon(), 0.0000001);
     }
-
+    
     private static String leftPadWithZeros(String s, int length) {
         while (s.length() < length) {
             s = "0" + s;
