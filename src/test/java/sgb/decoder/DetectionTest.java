@@ -43,11 +43,18 @@ public class DetectionTest {
             + "1001011000";
 
     @Test
+    public void testFromHex() {
+        Detection d = Detection.fromHexGroundSegmentRepresentation("0039823D32618658622811F0000000000003FFF004030680258");
+        checkDetection(d);
+    }
+    
+    @Test
     public void test() {
+        Detection d = Detection.fromBitString(BITS);
+        checkDetection(d);
+    }
 
-        // 202 bits
-
-        Detection d = new Detection(Bits.from(BITS));
+    private void checkDetection(Detection d) {
         assertEquals(230, d.tac());
         assertEquals(573, d.serialNo());
         assertEquals(201, d.countryCode());
@@ -76,7 +83,7 @@ public class DetectionTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testWrongSize() {
-        new Detection(Bits.from("111"));
+        Detection.from(Bits.from("111"));
     }
 
     @Test

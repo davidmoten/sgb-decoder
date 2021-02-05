@@ -1,6 +1,7 @@
 package sgb.decoder;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
@@ -10,6 +11,7 @@ import com.github.davidmoten.guavamini.Preconditions;
 import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
 
 import sgb.decoder.internal.Bits;
+import sgb.decoder.internal.Hex;
 import sgb.decoder.rotatingfield.ActivationMethod;
 import sgb.decoder.rotatingfield.BeaconFeedback;
 import sgb.decoder.rotatingfield.Cancellation;
@@ -54,8 +56,8 @@ public final class Detection {
 
     private String beacon23HexId;
 
-    public Detection(Bits bits) {
-        Preconditions.checkArgument(bits.length() == 202);
+    private Detection(Bits bits) {
+        Preconditions.checkArgument(bits.length() == 202, "length should be 202 but was " + bits.length());
         tac = bits.readUnsignedInt(16);
         serialNo = bits.readUnsignedInt(14);
         countryCode = bits.readUnsignedInt(10);
@@ -69,6 +71,19 @@ public final class Detection {
         bits.skip(14);
         rotatingField = readRotatingField(bits);
         beacon23HexId = readBeacon23HexID(bits.position(0));
+    }
+    
+    public static Detection fromBitString(String bitString) {
+        return from(Bits.from(bitString));
+    }
+    
+    public static Detection fromHexGroundSegmentRepresentation(String hex) {
+        String bitString = Hex.hexToBin(hex).substring(2);
+        return fromBitString(bitString);
+    }
+    
+    public static Detection from(Bits bits) {
+        return new Detection(bits);
     }
 
     private String readBeacon23HexID(Bits bits) {
