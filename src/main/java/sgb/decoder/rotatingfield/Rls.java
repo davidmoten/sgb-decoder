@@ -2,7 +2,10 @@ package sgb.decoder.rotatingfield;
 
 import java.util.Optional;
 
-public final class Rls implements RotatingField {
+import sgb.decoder.HasIndentedToString;
+import sgb.decoder.Indent;
+
+public final class Rls implements RotatingField, HasIndentedToString {
 
     private final boolean canProcessAutomaticallyGeneratedAckRlmType1;
     private final boolean canProcessManuallyGeneratedRlm;
@@ -32,6 +35,20 @@ public final class Rls implements RotatingField {
 
     public Optional<BeaconFeedback> beaconFeedback() {
         return beaconFeedback;
+    }
+
+    @Override
+    public String toString(Indent indent) {
+        return indent.builder() //
+                .right() //
+                .add("rotating field type", "RLS") //
+                .add("can process automatically generated acknowledgement - RLM Type 1",
+                        canProcessAutomaticallyGeneratedAckRlmType1) //
+                .add("can process manually generated RLM", canProcessManuallyGeneratedRlm) //
+                .add("RLS provider", rlsProvider) //
+                .add("beacon feedback", beaconFeedback) //
+                .left() //
+                .toString();
     }
 
 }

@@ -1,6 +1,9 @@
 package sgb.decoder.rotatingfield;
 
-public final class NationalUse implements RotatingField {
+import sgb.decoder.HasIndentedToString;
+import sgb.decoder.Indent;
+
+public final class NationalUse implements RotatingField, HasIndentedToString {
 
     private final String bitString;
 
@@ -12,4 +15,12 @@ public final class NationalUse implements RotatingField {
         return bitString;
     }
 
+    @Override
+    public String toString(Indent indent) {
+        return indent.builder() //
+                .right() //
+                .add("rotating field type", "National Use") //
+                .add("bits", bitString) //
+                .toString();
+    }
 }
