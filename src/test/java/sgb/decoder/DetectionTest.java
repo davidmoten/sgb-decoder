@@ -11,6 +11,7 @@ import java.time.ZoneOffset;
 import org.junit.Test;
 
 import sgb.decoder.internal.Bits;
+import sgb.decoder.internal.Util;
 import sgb.decoder.rotatingfield.ActivationMethod;
 import sgb.decoder.rotatingfield.BeaconFeedback;
 import sgb.decoder.rotatingfield.Cancellation;
@@ -44,10 +45,11 @@ public class DetectionTest {
 
     @Test
     public void testFromHex() {
-        Detection d = Detection.fromHexGroundSegmentRepresentation("0039823D32618658622811F0000000000003FFF004030680258");
+        Detection d = Detection.fromHexGroundSegmentRepresentation(
+                "0039823D32618658622811F0000000000003FFF004030680258");
         checkDetection(d);
     }
-    
+
     @Test
     public void test() {
         Detection d = Detection.fromBitString(BITS);
@@ -514,7 +516,7 @@ public class DetectionTest {
         assertEquals(48.79315185546875, p.lat(), 0.0000001);
         assertEquals(69.00875854492188, p.lon(), 0.0000001);
     }
-    
+
     @Test
     public void testReadLocationNegativeLatNegativeLon() {
         Bits bits = Bits.from("10110000110010110000110101000101000000100011111");
@@ -522,7 +524,7 @@ public class DetectionTest {
         assertEquals(-48.79315185546875, p.lat(), 0.0000001);
         assertEquals(-69.00875854492188, p.lon(), 0.0000001);
     }
-    
+
     private static String leftPadWithZeros(String s, int length) {
         while (s.length() < length) {
             s = "0" + s;
@@ -531,15 +533,11 @@ public class DetectionTest {
     }
 
     private static String ones(int n) {
-        return repeat('1', n);
-    }
-
-    private static String repeat(char ch, int n) {
-        return String.valueOf(ch).repeat(n);
+        return Util.repeat('1', n);
     }
 
     private static String zeros(int n) {
-        return repeat('0', n);
+        return Util.repeat('0', n);
     }
 
 }

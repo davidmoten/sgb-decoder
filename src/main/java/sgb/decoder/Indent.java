@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import com.github.davidmoten.guavamini.Preconditions;
 
+import sgb.decoder.internal.Util;
+
 public final class Indent {
 
     private int length = 0;
@@ -78,6 +80,6 @@ public final class Indent {
     }
 
     public String toString() {
-        return " ".repeat(length);
+        return Util.repeat(' ', length);
     }
 }
