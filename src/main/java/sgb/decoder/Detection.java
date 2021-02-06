@@ -600,12 +600,12 @@ public final class Detection implements HasIndentedToString {
 
     @Override
     public String toString() {
-        return toString(new Indent(2, 2));
+        return "Detection"  + toString(new Indent(2, 2));
     }
 
     @Override
     public String toString(Indent indent) {
-        String fields = indent //
+        return indent //
                 .builder() //
                 .right() //
                 .add("TAC", tac) //
@@ -622,8 +622,6 @@ public final class Detection implements HasIndentedToString {
                 .add("Beacon 15 hex ID", beacon15HexId()) //
                 .left() //
                 .toString();
-
-        return "Detection" + fields;
     }
 
 }
