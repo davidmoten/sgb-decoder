@@ -4,7 +4,10 @@ import java.util.Optional;
 
 import com.github.davidmoten.guavamini.Preconditions;
 
-public final class RadioCallSign implements VesselId {
+import sgb.decoder.HasIndentedToString;
+import sgb.decoder.Indent;
+
+public final class RadioCallSign implements VesselId, HasIndentedToString {
 
     private final Optional<String> value;
 
@@ -17,9 +20,19 @@ public final class RadioCallSign implements VesselId {
             this.value = Optional.of(s);
         }
     }
-    
+
     public Optional<String> value() {
         return value;
+    }
+
+    @Override
+    public String toString(Indent indent) {
+        return indent.builder() //
+                .right() //
+                .add("vessel id type", "radio call sign") //
+                .add("value", value) //
+                .left() //
+                .toString();
     }
 
 }

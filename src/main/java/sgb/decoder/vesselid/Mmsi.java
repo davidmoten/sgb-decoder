@@ -27,6 +27,7 @@ public final class Mmsi implements VesselId, HasIndentedToString {
     public String toString(Indent indent) {
         return indent.builder() //
                 .right() //
+                .add("vessel id type", "MMSI") //
                 .add("MMSI", mmsi) //
                 .add("EPIRB MMSI", epirbMmsi)
                 .left() //
