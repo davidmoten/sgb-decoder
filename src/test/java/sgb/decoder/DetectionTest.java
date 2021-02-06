@@ -535,11 +535,7 @@ public class DetectionTest {
     }
 
     private static String repeat(char ch, int n) {
-        StringBuilder s = new StringBuilder();
-        for (int i = 0; i < n; i++) {
-            s.append(ch);
-        }
-        return s.toString();
+        return String.valueOf(ch).repeat(n);
     }
 
     private static String zeros(int n) {

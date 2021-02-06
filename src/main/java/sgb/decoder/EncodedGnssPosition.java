@@ -1,6 +1,6 @@
 package sgb.decoder;
 
-public final class EncodedGnssPosition {
+public final class EncodedGnssPosition implements HasIndentedToString {
 
     private final double lat;
     private final double lon;
@@ -16,6 +16,11 @@ public final class EncodedGnssPosition {
 
     public double lon() {
         return lon;
+    }
+
+    @Override
+    public String toString(Indent indent) {
+        return indent.builder().add("lat", lat).add("long", lon).toString();
     }
 
 }

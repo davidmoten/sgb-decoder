@@ -37,7 +37,7 @@ import sgb.decoder.vesselid.VesselId;
 /**
  * Decodes a binary beacon detection message. Based on C/T.018 Rev 6 (May 2020).
  */
-public final class Detection {
+public final class Detection implements HasIndentedToString {
 
     private static final Bits NO_ENCODED_LOCATION_CAPABILITY = Bits
             .from("11111111000001111100000111111111111110000011111");
@@ -56,7 +56,8 @@ public final class Detection {
     private String beacon23HexId;
 
     private Detection(Bits bits) {
-        Preconditions.checkArgument(bits.length() == 202, "length should be 202 but was " + bits.length());
+        Preconditions.checkArgument(bits.length() == 202,
+                "length should be 202 but was " + bits.length());
         tac = bits.readUnsignedInt(16);
         serialNo = bits.readUnsignedInt(14);
         countryCode = bits.readUnsignedInt(10);
@@ -71,16 +72,16 @@ public final class Detection {
         rotatingField = readRotatingField(bits);
         beacon23HexId = readBeacon23HexID(bits.position(0));
     }
-    
+
     public static Detection fromBitString(String bitString) {
         return from(Bits.from(bitString));
     }
-    
+
     public static Detection fromHexGroundSegmentRepresentation(String hex) {
         String bitString = Hex.hexToBin(hex).substring(2);
         return fromBitString(bitString);
     }
-    
+
     public static Detection from(Bits bits) {
         return new Detection(bits);
     }
@@ -599,15 +600,28 @@ public final class Detection {
 
     @Override
     public String toString() {
-        return String.format(
-                "Detection\n  tac=%s\n  serialNo=%s\n  countryCode=%s\n  hasAtLeastOneEnabledHomingSignal=%s\n  hasEnabledRls=%s\n  isTestProtocolMessage=%s\n  encodedGnssPosition=%s\n  vesselId=%s\n  beaconType=%s\n  rotatingField=%s\n  beacon23HexId=%s\n  beacon15HexId=%s",
-                tac, serialNo, countryCode, hasAtLeastOneEnabledHomingSignal, hasEnabledRls,
-                isTestProtocolMessage, s(encodedGnssPosition), s(vesselId), beaconType, rotatingField,
-                beacon23HexId, beacon15HexId());
+        return toString(new Indent(2, 2));
     }
-    
-    private static String s(Optional<?> o) {
-        return o.map(x -> x.toString()).orElse("");
+
+    @Override
+    public String toString(Indent indent) {
+        String fields = indent //
+                .builder() //
+                .right() //
+                .add("tac", tac) //
+                .add("serial number", serialNo) //
+                .add("country code", countryCode) //
+                .add("has at least one enabled homing signal", hasAtLeastOneEnabledHomingSignal) //
+                .add("has enabled RLS", hasEnabledRls) //
+                .add("is test protocol message", isTestProtocolMessage) //
+                .add("encoded GNSS position", encodedGnssPosition) //
+                .add("vessel ID", vesselId) //
+                .add("beacon type", beaconType) //
+                .add("rotating field", rotatingField) //
+                .left() //
+                .toString();
+
+        return "Detection" + fields;
     }
-    
+
 }
