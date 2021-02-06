@@ -2,7 +2,10 @@ package sgb.decoder.rotatingfield;
 
 import java.util.Optional;
 
-public final class BeaconFeedback {
+import sgb.decoder.HasIndentedToString;
+import sgb.decoder.Indent;
+
+public final class BeaconFeedback implements HasIndentedToString {
 
     private final boolean rlmType1FeedbackReceived;
     private final boolean rlmType2FeedbackReceived;
@@ -31,5 +34,17 @@ public final class BeaconFeedback {
 
     public Optional<String> shortRlmParametersBitString() {
         return shortRlmParametersBitString;
+    }
+
+    @Override
+    public String toString(Indent indent) {
+        return indent.builder() //
+                .left() //
+                .add("RLM Type 1 Feedback received", rlmType1FeedbackReceived) //
+                .add("RLM Type 2 Feedback received", rlmType2FeedbackReceived) //
+                .add("RLS type", rlsType) //
+                .add("short RLM parameters bits", shortRlmParametersBitString) //
+                .right() //
+                .toString();
     }
 }
