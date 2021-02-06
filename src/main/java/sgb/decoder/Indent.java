@@ -56,9 +56,7 @@ public final class Indent {
             b.append(indent);
             b.append(name);
             b.append(" = ");
-            indent.right();
             b.append(indent.of(value));
-            indent.left();
             return this;
         }
 
