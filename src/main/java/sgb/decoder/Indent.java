@@ -53,7 +53,7 @@ public final class Indent {
 
         public IndentBuilder add(String name, Object value) {
             b.append("\n");
-            b.append(this);
+            b.append(indent);
             b.append(name);
             b.append(" = ");
             indent.right();
