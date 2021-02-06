@@ -2,7 +2,10 @@ package sgb.decoder.rotatingfield;
 
 import com.github.davidmoten.guavamini.Preconditions;
 
-public final class Range {
+import sgb.decoder.HasIndentedToString;
+import sgb.decoder.Indent;
+
+public final class Range implements HasIndentedToString {
 
     private final int start;
     private RangeEndType startType;
@@ -79,6 +82,37 @@ public final class Range {
     public String toString() {
         return "Range [start=" + start + ", startType=" + startType + ", finish=" + finish
                 + ", finishType=" + finishType + "]";
+    }
+
+    @Override
+    public String toString(Indent indent) {
+        String a = startStr();
+        String b = finishStr();
+        if (!a.isEmpty() && !b.isEmpty()) {
+            return a + " and " + b;
+        } else {
+            return a + b;
+        }
+    }
+
+    private String startStr() {
+        if (startType == RangeEndType.MISSING) {
+            return "";
+        } else if (startType == RangeEndType.INCLUSIVE) {
+            return ">=" + start;
+        } else {
+            return ">" + start;
+        }
+    }
+
+    private String finishStr() {
+        if (finishType == RangeEndType.MISSING) {
+            return "";
+        } else if (finishType == RangeEndType.INCLUSIVE) {
+            return "<= " + finish;
+        } else {
+            return "< " + finish;
+        }
     }
 
 }

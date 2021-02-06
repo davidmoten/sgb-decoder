@@ -2,7 +2,10 @@ package sgb.decoder.rotatingfield;
 
 import java.util.Optional;
 
-public final class ObjectiveRequirements implements RotatingField {
+import sgb.decoder.HasIndentedToString;
+import sgb.decoder.Indent;
+
+public final class ObjectiveRequirements implements RotatingField, HasIndentedToString {
 
     private final int elapsedTimeSinceActivationHours;
     private final int timeSinceLastEncodedLocationMinutes;
@@ -58,5 +61,23 @@ public final class ObjectiveRequirements implements RotatingField {
 
     public GnssStatus gnssStatus() {
         return gnssStatus;
+    }
+
+    @Override
+    public String toString(Indent indent) {
+        return indent.builder() //
+                .right() //
+                .add("rotating field type", "Objective Requirements") //
+                .add("elapsed time since activation (hours)", elapsedTimeSinceActivationHours) //
+                .add("time since last encoded location (minutes)",
+                        timeSinceLastEncodedLocationMinutes) //
+                .add("altitude of encoded location (metres)", altitudeEncodedLocationMetres) //
+                .add("dilution precision HDOP", dilutionPrecisionHdop) //
+                .add("dilution precision DOP", dilutionPrecisionDop) //
+                .add("activation method", activationMethod) //
+                .add("remaining battery capacity percent", remainingBatteryCapacityPercent) //
+                .add("GNSS status", gnssStatus) //
+                .left() //
+                .toString();
     }
 }
