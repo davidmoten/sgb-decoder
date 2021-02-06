@@ -49,4 +49,6 @@ Detection
       activation method = MANUAL_ACTIVATION_BY_USER
       remaining battery capacity percent = >75 and <= 100
       GNSS status = LOCATION_3D
+  beacon 23 hex ID = 9934039823d000000000000
+  beacon 15 hex ID = 9934039823d0000
 ```

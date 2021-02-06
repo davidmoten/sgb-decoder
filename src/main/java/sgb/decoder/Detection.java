@@ -618,6 +618,8 @@ public final class Detection implements HasIndentedToString {
                 .add("vessel ID", vesselId) //
                 .add("beacon type", beaconType) //
                 .add("rotating field", rotatingField) //
+                .add("beacon 23 hex ID", beacon23HexId) //
+                .add("beacon 15 hex ID", beacon15HexId()) //
                 .left() //
                 .toString();
 
