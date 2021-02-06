@@ -2,7 +2,10 @@ package sgb.decoder.vesselid;
 
 import java.util.Optional;
 
-public final class Mmsi implements VesselId {
+import sgb.decoder.HasIndentedToString;
+import sgb.decoder.Indent;
+
+public final class Mmsi implements VesselId, HasIndentedToString {
 
     private final Optional<Integer> mmsi;
     private final Optional<Integer> epirbMmsi;
@@ -18,6 +21,16 @@ public final class Mmsi implements VesselId {
 
     public Optional<Integer> epirbMmsi() {
         return epirbMmsi;
+    }
+
+    @Override
+    public String toString(Indent indent) {
+        return indent.builder() //
+                .right() //
+                .add("MMSI", mmsi) //
+                .add("EPIRB MMSI", epirbMmsi)
+                .left() //
+                .toString();
     }
 
 }
