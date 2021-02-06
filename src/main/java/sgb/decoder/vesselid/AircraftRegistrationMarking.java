@@ -4,7 +4,10 @@ import java.util.Optional;
 
 import com.github.davidmoten.guavamini.Preconditions;
 
-public final class AircraftRegistrationMarking implements VesselId {
+import sgb.decoder.HasIndentedToString;
+import sgb.decoder.Indent;
+
+public final class AircraftRegistrationMarking implements VesselId, HasIndentedToString {
 
     private final Optional<String> value;
 
@@ -20,6 +23,16 @@ public final class AircraftRegistrationMarking implements VesselId {
 
     public Optional<String> value() {
         return value;
+    }
+
+    @Override
+    public String toString(Indent indent) {
+        return indent.builder() //
+                .right() //
+                .add("vessel id type", "aircraft registration marking") //
+                .add("value", value) //
+                .left() //
+                .toString();
     }
 
 }
