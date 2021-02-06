@@ -1,6 +1,9 @@
 package sgb.decoder.vesselid;
 
-public final class AircraftOperatorAndSerialNumber implements VesselId {
+import sgb.decoder.HasIndentedToString;
+import sgb.decoder.Indent;
+
+public final class AircraftOperatorAndSerialNumber implements VesselId, HasIndentedToString {
 
     private final String aircraftOperatorDesignator;
     private final int serialNumber;
@@ -16,6 +19,16 @@ public final class AircraftOperatorAndSerialNumber implements VesselId {
 
     public int serialNumber() {
         return serialNumber;
+    }
+
+    @Override
+    public String toString(Indent indent) {
+        return indent.builder() //
+                .right() //
+                .add("aircraft operator designator", aircraftOperatorDesignator) //
+                .add("serial number", serialNumber) //
+                .left() //
+                .toString();
     }
 
 }
