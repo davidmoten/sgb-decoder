@@ -608,18 +608,18 @@ public final class Detection implements HasIndentedToString {
         String fields = indent //
                 .builder() //
                 .right() //
-                .add("tac", tac) //
-                .add("serial number", serialNo) //
-                .add("country code", countryCode) //
-                .add("has at least one enabled homing signal", hasAtLeastOneEnabledHomingSignal) //
-                .add("has enabled RLS", hasEnabledRls) //
-                .add("is test protocol message", isTestProtocolMessage) //
-                .add("encoded GNSS position", encodedGnssPosition) //
-                .add("vessel ID", vesselId) //
-                .add("beacon type", beaconType) //
-                .add("rotating field", rotatingField) //
-                .add("beacon 23 hex ID", beacon23HexId) //
-                .add("beacon 15 hex ID", beacon15HexId()) //
+                .add("TAC", tac) //
+                .add("Serial number", serialNo) //
+                .add("Country code", countryCode) //
+                .add("Has at least one enabled homing signal", hasAtLeastOneEnabledHomingSignal) //
+                .add("Has enabled RLS", hasEnabledRls) //
+                .add("Is test protocol message", isTestProtocolMessage) //
+                .add("Encoded GNSS position", encodedGnssPosition) //
+                .add("Vessel ID", vesselId) //
+                .add("Beacon type", beaconType) //
+                .add("Rotating field", rotatingField) //
+                .add("Beacon 23 hex ID", beacon23HexId) //
+                .add("Beacon 15 hex ID", beacon15HexId()) //
                 .left() //
                 .toString();
 

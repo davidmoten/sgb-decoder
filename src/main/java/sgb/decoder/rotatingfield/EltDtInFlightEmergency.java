@@ -48,11 +48,11 @@ public final class EltDtInFlightEmergency implements RotatingField, HasIndentedT
     public String toString(Indent indent) {
         return indent.builder() //
                 .right() //
-                .add("time of last encoded location", timeOfLastEncodedLocationSeconds) //
-                .add("altitude of encoded location (metres)", altitudeEncodedLocationMetres) //
-                .add("triggering event", triggeringEvent) //
+                .add("Time of last encoded location", timeOfLastEncodedLocationSeconds) //
+                .add("Altitude of encoded location (metres)", altitudeEncodedLocationMetres) //
+                .add("Triggering event", triggeringEvent) //
                 .add("GNSS status", gnssStatus) //
-                .add("remaining battery capacity percent", remainingBatteryCapacityPercent) //
+                .add("Remaining battery capacity percent", remainingBatteryCapacityPercent) //
                 .left() //
                 .toString();
     }

@@ -67,15 +67,15 @@ public final class ObjectiveRequirements implements RotatingField, HasIndentedTo
     public String toString(Indent indent) {
         return indent.builder() //
                 .right() //
-                .add("rotating field type", "Objective Requirements") //
-                .add("elapsed time since activation (hours)", elapsedTimeSinceActivationHours) //
-                .add("time since last encoded location (minutes)",
+                .add("Rotating field type", "Objective Requirements") //
+                .add("Elapsed time since activation (hours)", elapsedTimeSinceActivationHours) //
+                .add("Time since last encoded location (minutes)",
                         timeSinceLastEncodedLocationMinutes) //
-                .add("altitude of encoded location (metres)", altitudeEncodedLocationMetres) //
-                .add("dilution precision HDOP", dilutionPrecisionHdop) //
-                .add("dilution precision DOP", dilutionPrecisionDop) //
-                .add("activation method", activationMethod) //
-                .add("remaining battery capacity percent", remainingBatteryCapacityPercent) //
+                .add("Altitude of encoded location (metres)", altitudeEncodedLocationMetres) //
+                .add("Dilution precision HDOP", dilutionPrecisionHdop) //
+                .add("Dilution precision DOP", dilutionPrecisionDop) //
+                .add("Activation method", activationMethod) //
+                .add("Remaining battery capacity percent", remainingBatteryCapacityPercent) //
                 .add("GNSS status", gnssStatus) //
                 .left() //
                 .toString();

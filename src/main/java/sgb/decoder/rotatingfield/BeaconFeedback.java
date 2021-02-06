@@ -43,7 +43,7 @@ public final class BeaconFeedback implements HasIndentedToString {
                 .add("RLM Type 1 Feedback received", rlmType1FeedbackReceived) //
                 .add("RLM Type 2 Feedback received", rlmType2FeedbackReceived) //
                 .add("RLS type", rlsType) //
-                .add("short RLM parameters bits", shortRlmParametersBitString) //
+                .add("Short RLM parameters bits", shortRlmParametersBitString) //
                 .right() //
                 .toString();
     }

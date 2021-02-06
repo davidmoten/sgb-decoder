@@ -19,8 +19,8 @@ public final class NationalUse implements RotatingField, HasIndentedToString {
     public String toString(Indent indent) {
         return indent.builder() //
                 .right() //
-                .add("rotating field type", "National Use") //
-                .add("bits", bitString) //
+                .add("Rotating field type", "National Use") //
+                .add("Bits", bitString) //
                 .toString();
     }
 }

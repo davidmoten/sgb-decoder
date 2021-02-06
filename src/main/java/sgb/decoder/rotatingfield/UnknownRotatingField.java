@@ -19,8 +19,8 @@ public final class UnknownRotatingField implements RotatingField, HasIndentedToS
     public String toString(Indent indent) {
         return indent.builder() //
                 .right() //
-                .add("rotating field type", "unknown") //
-                .add("bits", bitString) //
+                .add("Rotating field type", "unknown") //
+                .add("Bits", bitString) //
                 .left() //
                 .toString();
     }

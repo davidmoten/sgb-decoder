@@ -41,12 +41,12 @@ public final class Rls implements RotatingField, HasIndentedToString {
     public String toString(Indent indent) {
         return indent.builder() //
                 .right() //
-                .add("rotating field type", "RLS") //
-                .add("can process automatically generated acknowledgement - RLM Type 1",
+                .add("Rotating field type", "RLS") //
+                .add("Can process automatically generated acknowledgement - RLM Type 1",
                         canProcessAutomaticallyGeneratedAckRlmType1) //
-                .add("can process manually generated RLM", canProcessManuallyGeneratedRlm) //
+                .add("Can process manually generated RLM", canProcessManuallyGeneratedRlm) //
                 .add("RLS provider", rlsProvider) //
-                .add("beacon feedback", beaconFeedback) //
+                .add("Beacon feedback", beaconFeedback) //
                 .left() //
                 .toString();
     }

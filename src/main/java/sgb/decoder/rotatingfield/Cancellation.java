@@ -19,8 +19,8 @@ public final class Cancellation implements RotatingField, HasIndentedToString {
     public String toString(Indent indent) {
         return indent.builder() //
                 .left() //
-                .add("rotating field type", "Cancellation") //
-                .add("deactivation method", deactivationMethod) //
+                .add("Rotating field type", "Cancellation") //
+                .add("Deactivation method", deactivationMethod) //
                 .right() //
                 .toString();
     }

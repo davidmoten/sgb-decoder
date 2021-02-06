@@ -20,7 +20,7 @@ public final class EncodedGnssPosition implements HasIndentedToString {
 
     @Override
     public String toString(Indent indent) {
-        return indent.builder().add("lat", lat).add("long", lon).toString();
+        return indent.builder().add("Latitude", lat).add("Longitude", lon).toString();
     }
 
 }
