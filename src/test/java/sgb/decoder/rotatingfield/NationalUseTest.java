@@ -2,10 +2,6 @@ package sgb.decoder.rotatingfield;
 
 import static org.junit.Assert.assertEquals;
 
-import java.time.OffsetTime;
-import java.time.ZoneOffset;
-import java.util.Optional;
-
 import org.junit.Test;
 
 import sgb.decoder.TestingUtil;
