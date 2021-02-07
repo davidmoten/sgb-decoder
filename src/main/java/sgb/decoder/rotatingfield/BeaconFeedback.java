@@ -35,16 +35,21 @@ public final class BeaconFeedback implements HasIndentedToString {
     public Optional<String> shortRlmParametersBitString() {
         return shortRlmParametersBitString;
     }
+    
+    @Override
+    public String toString() {
+        return "BeaconFeedback" + toString(new Indent(2, 2));
+    }
 
     @Override
     public String toString(Indent indent) {
         return indent.builder() //
-                .left() //
+                .right() //
                 .add("RLM Type 1 Feedback received", rlmType1FeedbackReceived) //
                 .add("RLM Type 2 Feedback received", rlmType2FeedbackReceived) //
                 .add("RLS type", rlsType) //
                 .add("Short RLM parameters bits", shortRlmParametersBitString) //
-                .right() //
+                .left() //
                 .toString();
     }
 }

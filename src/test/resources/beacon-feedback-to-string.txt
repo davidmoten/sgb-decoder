@@ -1,0 +1,5 @@
+BeaconFeedback
+  RLM Type 1 Feedback received = true
+  RLM Type 2 Feedback received = false
+  RLS type = ACKNOWLEDGEMENT_SERVICE
+  Short RLM parameters bits = 1110001
