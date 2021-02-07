@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import com.github.davidmoten.guavamini.Preconditions;
 
-import sgb.decoder.HasIndentedToString;
+import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
 
-public final class AircraftRegistrationMarking implements VesselId, HasIndentedToString {
+public final class AircraftRegistrationMarking implements VesselId, HasFormatter {
 
     private final Optional<String> value;
 

@@ -2,10 +2,10 @@ package sgb.decoder.rotatingfield;
 
 import com.github.davidmoten.guavamini.Preconditions;
 
-import sgb.decoder.HasIndentedToString;
+import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
 
-public final class Range implements HasIndentedToString {
+public final class Range implements HasFormatter {
 
     private final int start;
     private RangeEndType startType;

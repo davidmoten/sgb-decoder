@@ -2,10 +2,10 @@ package sgb.decoder.rotatingfield;
 
 import java.util.Optional;
 
-import sgb.decoder.HasIndentedToString;
+import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
 
-public final class ObjectiveRequirements implements RotatingField, HasIndentedToString {
+public final class ObjectiveRequirements implements RotatingField, HasFormatter {
 
     private final int elapsedTimeSinceActivationHours;
     private final int timeSinceLastEncodedLocationMinutes;

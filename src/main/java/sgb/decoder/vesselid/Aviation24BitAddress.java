@@ -2,10 +2,10 @@ package sgb.decoder.vesselid;
 
 import java.util.Optional;
 
-import sgb.decoder.HasIndentedToString;
+import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
 
-public final class Aviation24BitAddress implements VesselId, HasIndentedToString {
+public final class Aviation24BitAddress implements VesselId, HasFormatter {
 
     private final String addressHex;
     private Optional<String> aircraftOperatorDesignator;

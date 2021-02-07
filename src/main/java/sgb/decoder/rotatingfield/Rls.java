@@ -2,10 +2,10 @@ package sgb.decoder.rotatingfield;
 
 import java.util.Optional;
 
-import sgb.decoder.HasIndentedToString;
+import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
 
-public final class Rls implements RotatingField, HasIndentedToString {
+public final class Rls implements RotatingField, HasFormatter {
 
     private final boolean canProcessAutomaticallyGeneratedAckRlmType1;
     private final boolean canProcessManuallyGeneratedRlm;

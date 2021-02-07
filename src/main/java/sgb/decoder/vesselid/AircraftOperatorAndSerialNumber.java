@@ -1,9 +1,9 @@
 package sgb.decoder.vesselid;
 
-import sgb.decoder.HasIndentedToString;
+import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
 
-public final class AircraftOperatorAndSerialNumber implements VesselId, HasIndentedToString {
+public final class AircraftOperatorAndSerialNumber implements VesselId, HasFormatter {
 
     private final String aircraftOperatorDesignator;
     private final int serialNumber;

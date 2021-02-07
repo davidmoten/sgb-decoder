@@ -2,10 +2,10 @@ package sgb.decoder.rotatingfield;
 
 import java.util.Optional;
 
-import sgb.decoder.HasIndentedToString;
+import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
 
-public final class BeaconFeedback implements HasIndentedToString {
+public final class BeaconFeedback implements HasFormatter {
 
     private final boolean rlmType1FeedbackReceived;
     private final boolean rlmType2FeedbackReceived;

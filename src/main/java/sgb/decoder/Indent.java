@@ -36,8 +36,8 @@ public final class Indent {
     public String of(Object o) {
         if (o instanceof Optional) {
             return ((Optional<?>) o).map(x -> of(x)).orElse("");
-        } else if (o instanceof HasIndentedToString) {
-            return ((HasIndentedToString) o).toString(this);
+        } else if (o instanceof HasFormatter) {
+            return ((HasFormatter) o).toString(this);
         } else {
             return String.valueOf(o);
         }

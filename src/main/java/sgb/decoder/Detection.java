@@ -37,7 +37,7 @@ import sgb.decoder.vesselid.VesselId;
 /**
  * Decodes a binary beacon detection message. Based on C/T.018 Rev 6 (May 2020).
  */
-public final class Detection implements HasIndentedToString {
+public final class Detection implements HasFormatter {
 
     private static final Bits NO_ENCODED_LOCATION_CAPABILITY = Bits
             .from("11111111000001111100000111111111111110000011111");

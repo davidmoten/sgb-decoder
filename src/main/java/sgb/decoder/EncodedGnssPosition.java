@@ -1,6 +1,6 @@
 package sgb.decoder;
 
-public final class EncodedGnssPosition implements HasIndentedToString {
+public final class EncodedGnssPosition implements HasFormatter {
 
     private final double lat;
     private final double lon;

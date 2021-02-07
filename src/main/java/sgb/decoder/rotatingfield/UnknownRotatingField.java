@@ -1,9 +1,9 @@
 package sgb.decoder.rotatingfield;
 
-import sgb.decoder.HasIndentedToString;
+import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
 
-public final class UnknownRotatingField implements RotatingField, HasIndentedToString {
+public final class UnknownRotatingField implements RotatingField, HasFormatter {
 
     private final String bitString;
 

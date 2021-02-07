@@ -2,10 +2,10 @@ package sgb.decoder.vesselid;
 
 import java.util.Optional;
 
-import sgb.decoder.HasIndentedToString;
+import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
 
-public final class Mmsi implements VesselId, HasIndentedToString {
+public final class Mmsi implements VesselId, HasFormatter {
 
     private final Optional<Integer> mmsi;
     private final Optional<Integer> epirbMmsi;

@@ -3,10 +3,10 @@ package sgb.decoder.rotatingfield;
 import java.time.OffsetTime;
 import java.util.Optional;
 
-import sgb.decoder.HasIndentedToString;
+import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
 
-public final class EltDtInFlightEmergency implements RotatingField, HasIndentedToString {
+public final class EltDtInFlightEmergency implements RotatingField, HasFormatter {
 
     private final OffsetTime timeOfLastEncodedLocationSeconds;
     private final int altitudeEncodedLocationMetres;
