@@ -1,0 +1,6 @@
+Rls
+  Rotating field type = RLS
+  Can process automatically generated acknowledgement - RLM Type 1 = true
+  Can process manually generated RLM = false
+  RLS provider = GALILEO
+  Beacon feedback = 
