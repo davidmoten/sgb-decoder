@@ -44,8 +44,17 @@ public final class HasFormatterHelper {
 
     private static String toJson(HasFormatter o) {
         return "{" + o.fields().entrySet().stream() //
+                .filter(entry -> isPresent(entry.getValue()))
                 .map(entry -> QUOTE + entry.getKey() + QUOTE + " : " + toJson(entry.getValue())) //
                 .collect(Collectors.joining(", ")) + "}";
+    }
+
+    private static boolean isPresent(Object o) {
+        if (o instanceof Optional) {
+            return ((Optional<?>) o).isPresent();
+        } else {
+            return o != null;
+        }
     }
 
 }

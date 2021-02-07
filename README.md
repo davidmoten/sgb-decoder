@@ -119,7 +119,6 @@ Here's an example of a canonical form using JSON:
     "latitude" : 48.79315185546875,
     "longitude" : 69.00875854492188
   },
-  "vesselId" : null,
   "beaconType" : "ELT_NOT_DT",
   "rotatingField" : {
     "rotatingFieldType" : "Objective Requirements",
