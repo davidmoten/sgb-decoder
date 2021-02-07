@@ -91,10 +91,10 @@ public final class BitsTest {
 
     @Test
     public void testEqualsBits() {
-        assertFalse(Bits.from("11").equals(null));
-        assertFalse(Bits.from("11").equals(Bits.from("10")));
-        assertFalse(Bits.from("11").equals(Bits.from("111")));
-        assertTrue(Bits.from("11").equals(Bits.from("11")));
+        assertFalse(Bits.from("11").isEqualTo(null));
+        assertFalse(Bits.from("11").isEqualTo(Bits.from("10")));
+        assertFalse(Bits.from("11").isEqualTo(Bits.from("111")));
+        assertTrue(Bits.from("11").isEqualTo(Bits.from("11")));
     }
 
     @Test(expected = IllegalArgumentException.class)

@@ -404,7 +404,7 @@ public final class Detection implements HasIndentedToString {
     @VisibleForTesting
     static Optional<EncodedGnssPosition> readPosition(Bits bits) {
         Preconditions.checkArgument(bits.length() == 47);
-        if (bits.equals(NO_ENCODED_LOCATION_CAPABILITY)) {
+        if (bits.isEqualTo(NO_ENCODED_LOCATION_CAPABILITY)) {
             return Optional.empty();
         } else {
             double lat = readLat(bits);

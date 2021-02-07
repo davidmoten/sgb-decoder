@@ -122,7 +122,7 @@ public final class Bits {
         return b.toString();
     }
 
-    public boolean equals(Bits b) {
+    public boolean isEqualTo(Bits b) {
         return b != null && b.bits.length == bits.length && Arrays.equals(b.bits, bits);
     }
 
