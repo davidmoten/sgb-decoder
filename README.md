@@ -106,3 +106,43 @@ Given that a service implementation of the decoder would probably serialize the 
 
 If JSON or XML was used for the canonical format then it should also be described by a schema document (JSON Schema or XSD).
 
+Here's an example of a canonical form using JSON:
+```
+{
+  "TAC" : 230,
+  "serialNumber" : 573,
+  "countryCode" : 201,
+  "hasAtLeastOneEnabledHomingSignal" : true,
+  "hasEnabledRLS" : false,
+  "isTestProtocolMessage" : false,
+  "encodedGNSSPosition" : {
+    "latitude" : 48.79315185546875,
+    "longitude" : 69.00875854492188
+  },
+  "vesselId" : null,
+  "beaconType" : "ELT_NOT_DT",
+  "rotatingField" : {
+    "rotatingFieldType" : "Objective Requirements",
+    "elapsedTimeSinceActivationHours" : 1,
+    "timeSinceLastEncodedLocationMinutes" : 6,
+    "altitudeEncodedLocationMetres" : 432,
+    "dilutionPrecisionHDOP" : 0,
+    "dilutionPrecisionDOP" : {
+      "start" : 1,
+      "startType" : "EXCLUSIVE",
+      "finish" : 2,
+      "finishType" : "INCLUSIVE"
+    },
+    "activationMethod" : "MANUAL_ACTIVATION_BY_USER",
+    "remainingBatteryCapacityPercent" : {
+      "start" : 75,
+      "startType" : "EXCLUSIVE",
+      "finish" : 100,
+      "finishType" : "INCLUSIVE"
+    },
+    "GNSSStatus" : "LOCATION_3D"
+  },
+  "beacon23HexId" : "9934039823d000000000000",
+  "beacon15HexId" : "9934039823d0000"
+}
+```
