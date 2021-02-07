@@ -13,7 +13,6 @@ public class RlsTest {
     @Test
     public void testToString() {
         Rls a = new Rls(true, false, RlsProvider.GALILEO, Optional.empty());
-        System.out.println(a.toString());
         assertEquals(TestingUtil.readResource("/rls-to-string.txt"), a.toString());
     }
 }

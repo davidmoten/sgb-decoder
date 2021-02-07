@@ -11,7 +11,6 @@ public class UnknownRotatingFieldTest {
     @Test
     public void testToString() {
         UnknownRotatingField a = new UnknownRotatingField("11011");
-        System.out.println(a.toString());
         assertEquals(TestingUtil.readResource("/unknown-rotating-field-to-string.txt"), a.toString());
     }
 }

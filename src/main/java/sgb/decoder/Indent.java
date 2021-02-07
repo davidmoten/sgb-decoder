@@ -37,10 +37,7 @@ public final class Indent {
         if (o instanceof Optional) {
             return ((Optional<?>) o).map(x -> of(x)).orElse("");
         } else if (o instanceof HasIndentedToString) {
-            right();
-            String s = ((HasIndentedToString) o).toString(this);
-            left();
-            return s;
+            return ((HasIndentedToString) o).toString(this);
         } else {
             return String.valueOf(o);
         }

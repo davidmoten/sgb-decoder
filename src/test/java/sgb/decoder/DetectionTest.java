@@ -35,6 +35,7 @@ import sgb.decoder.vesselid.RadioCallSign;
 
 public class DetectionTest {
 
+    private static final String SAMPLE_HEX = "0039823D32618658622811F0000000000003FFF004030680258";
     private final String BITS = "00000000111001100000100011110100" //
             + "11001001100001100001100101100001" //
             + "10001000101000000100011111000000" //
@@ -45,16 +46,20 @@ public class DetectionTest {
 
     @Test
     public void testFromHex() {
-        Detection d = Detection.fromHexGroundSegmentRepresentation(
-                "0039823D32618658622811F0000000000003FFF004030680258");
+        Detection d = Detection.fromHexGroundSegmentRepresentation(SAMPLE_HEX);
         checkDetection(d);
     }
 
     @Test
-    public void test() {
+    public void testToBits() {
         Detection d = Detection.fromBitString(BITS);
         checkDetection(d);
-        System.out.println(d);
+    }
+
+    @Test
+    public void testDetectionToString() {
+        Detection d = Detection.fromHexGroundSegmentRepresentation(SAMPLE_HEX);
+        assertEquals(TestingUtil.readResource("/detection-to-string.txt"), d.toString());
     }
 
     private void checkDetection(Detection d) {

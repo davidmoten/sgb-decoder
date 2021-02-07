@@ -1,0 +1,24 @@
+Detection
+  TAC = 230
+  Serial number = 573
+  Country code = 201
+  Has at least one enabled homing signal = true
+  Has enabled RLS = false
+  Is test protocol message = false
+  Encoded GNSS position = 
+    Latitude = 48.79315185546875
+    Longitude = 69.00875854492188
+  Vessel ID = 
+  Beacon type = ELT_NOT_DT
+  Rotating field = 
+    Rotating field type = Objective Requirements
+    Elapsed time since activation (hours) = 1
+    Time since last encoded location (minutes) = 6
+    Altitude of encoded location (metres) = 432
+    Dilution precision HDOP = 0
+    Dilution precision DOP = >1 and <=2
+    Activation method = MANUAL_ACTIVATION_BY_USER
+    Remaining battery capacity percent = >75 and <=100
+    GNSS status = LOCATION_3D
+  Beacon 23 hex ID = 9934039823d000000000000
+  Beacon 15 hex ID = 9934039823d0000

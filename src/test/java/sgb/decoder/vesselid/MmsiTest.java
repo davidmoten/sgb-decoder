@@ -13,7 +13,6 @@ public class MmsiTest {
     @Test
     public void testToString() {
         Mmsi a = new Mmsi(Optional.of(123456789), Optional.of(234567890));
-        System.out.println(a.toString());
         assertEquals(TestingUtil.readResource("/mmsi-to-string.txt"),
                 a.toString());
     }
