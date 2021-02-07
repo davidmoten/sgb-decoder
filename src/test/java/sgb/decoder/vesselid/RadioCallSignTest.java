@@ -2,8 +2,6 @@ package sgb.decoder.vesselid;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Optional;
-
 import org.junit.Test;
 
 import sgb.decoder.TestingUtil;
