@@ -107,7 +107,7 @@ Given that a service implementation of the decoder would probably serialize the 
 If JSON or XML was used for the canonical format then it should also be described by a schema document (JSON Schema or XSD).
 
 Here's an example of a canonical form using JSON:
-```
+```json
 {
   "TAC" : 230,
   "serialNumber" : 573,
