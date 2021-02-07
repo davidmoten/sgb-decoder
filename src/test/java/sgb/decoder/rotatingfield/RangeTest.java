@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import sgb.decoder.Indent;
+
 public final class RangeTest {
 
     @Test
@@ -39,6 +41,35 @@ public final class RangeTest {
         assertFalse(r.equals(Range.create(1, RangeEndType.EXCLUSIVE, 7, RangeEndType.INCLUSIVE)));
         assertFalse(r.equals(Range.create(1, RangeEndType.EXCLUSIVE, 6, RangeEndType.EXCLUSIVE)));
         assertTrue(r.equals(Range.create(1, RangeEndType.EXCLUSIVE, 6, RangeEndType.INCLUSIVE)));
+    }
+
+    @Test
+    public void testRangeToStringIndent() {
+        Indent indent = new Indent(0, 2);
+        {
+            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.INCLUSIVE);
+            assertEquals(">=1 and <=2", r.toString(indent));
+        }
+        {
+            Range r = Range.create(1, RangeEndType.EXCLUSIVE, 2, RangeEndType.INCLUSIVE);
+            assertEquals(">1 and <=2", r.toString(indent));
+        }
+        {
+            Range r = Range.create(1, RangeEndType.MISSING, 2, RangeEndType.INCLUSIVE);
+            assertEquals("<=2", r.toString(indent));
+        }
+        {
+            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.EXCLUSIVE);
+            assertEquals(">=1 and <2", r.toString(indent));
+        }
+        {
+            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.MISSING);
+            assertEquals(">=1", r.toString(indent));
+        }
+        {
+            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.INCLUSIVE);
+            assertEquals(">=1 and <=2", r.toString(indent));
+        }
     }
 
 }

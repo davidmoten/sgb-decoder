@@ -3,4 +3,4 @@ EltDtInFlightEmergency
   Altitude of encoded location (metres) = 57
   Triggering event = MANUAL_ACTIVATION_BY_CREW
   GNSS status = LOCATION_3D
-  Remaining battery capacity percent = >50 and <= 75
+  Remaining battery capacity percent = >50 and <=75

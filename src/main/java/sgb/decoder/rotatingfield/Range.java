@@ -109,9 +109,9 @@ public final class Range implements HasIndentedToString {
         if (finishType == RangeEndType.MISSING) {
             return "";
         } else if (finishType == RangeEndType.INCLUSIVE) {
-            return "<= " + finish;
+            return "<=" + finish;
         } else {
-            return "< " + finish;
+            return "<" + finish;
         }
     }
 
