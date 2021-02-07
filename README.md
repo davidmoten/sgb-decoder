@@ -69,7 +69,7 @@ Detection
 ```
 
 ## Compliance Kit
-A suggestion of for the creators of the SGB encoding specification is that they share a Compliance Kit which is a list of beacon detection messages in hex form together with the corresponding decoded human readable version of the detection message in some *canonical form*. An example of the canonical form is the plain text version of the detection above. Might equally be JSON, XML or something else. If this were the case then no matter what language a decoder was written in full test coverage of that decoder would be guaranteed by consuming the (comprehensive) Compliance Kit test data. An example of one item in the Compliance Kit would be a text file containing:
+A suggestion for the creators of the SGB encoding specification is that they share a Compliance Kit which is a list of beacon detection messages in hex form together with the corresponding decoded human readable version of the detection message in some *canonical form*. An example of the canonical form is the plain text version of the detection above. Might equally be JSON, XML or something else. If this were the case then no matter what language a decoder was written in full test coverage of that decoder would be guaranteed by consuming the (comprehensive) Compliance Kit test data. An example of one item in the Compliance Kit would be a text file containing:
 
 ```
 0039823D32618658622811F0000000000003FFF004030680258
