@@ -1,0 +1,3 @@
+Cancellation
+  Rotating field type = Cancellation
+  Deactivation method = MANUAL_DEACTIVATION_BY_USER

@@ -38,7 +38,7 @@ public final class BeaconFeedback implements HasIndentedToString {
     
     @Override
     public String toString() {
-        return "BeaconFeedback" + toString(new Indent(2, 2));
+        return toStringDefault();
     }
 
     @Override
