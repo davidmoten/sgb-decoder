@@ -1,10 +1,11 @@
 package sgb.decoder.rotatingfield;
 
 import java.time.OffsetTime;
+import java.util.Map;
 import java.util.Optional;
 
 import sgb.decoder.HasFormatter;
-import sgb.decoder.Indent;
+import sgb.decoder.internal.Util;
 
 public final class EltDtInFlightEmergency implements RotatingField, HasFormatter {
 
@@ -43,23 +44,21 @@ public final class EltDtInFlightEmergency implements RotatingField, HasFormatter
     public Optional<Range> remainingBatteryCapacityPercent() {
         return remainingBatteryCapacityPercent;
     }
-    
+
     @Override
     public String toString() {
         return toStringDefault();
     }
 
     @Override
-    public String toString(Indent indent) {
-        return indent.builder() //
-                .right() //
-                .add("Time of last encoded location", timeOfLastEncodedLocationSeconds) //
-                .add("Altitude of encoded location (metres)", altitudeEncodedLocationMetres) //
-                .add("Triggering event", triggeringEvent) //
-                .add("GNSS status", gnssStatus) //
-                .add("Remaining battery capacity percent", remainingBatteryCapacityPercent) //
-                .left() //
-                .toString();
+    public Map<String, Object> fields() {
+        return Util.fieldsBuilder() //
+                .add("timeOfLastEncodedLocation", timeOfLastEncodedLocationSeconds) //
+                .add("altitudeOfEncodedLocationMetres", altitudeEncodedLocationMetres) //
+                .add("triggeringEvent", triggeringEvent) //
+                .add("GNSSStatus", gnssStatus) //
+                .add("remainingBatteryCapacityPercent", remainingBatteryCapacityPercent) //
+                .build();
     }
 
 }

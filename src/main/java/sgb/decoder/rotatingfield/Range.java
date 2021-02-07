@@ -1,5 +1,8 @@
 package sgb.decoder.rotatingfield;
 
+import java.util.Collections;
+import java.util.Map;
+
 import com.github.davidmoten.guavamini.Preconditions;
 
 import sgb.decoder.HasFormatter;
@@ -113,6 +116,11 @@ public final class Range implements HasFormatter {
         } else {
             return "<" + finish;
         }
+    }
+
+    @Override
+    public Map<String, Object> fields() {
+        return Collections.emptyMap();
     }
 
 }

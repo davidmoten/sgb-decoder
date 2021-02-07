@@ -1,11 +1,13 @@
 package sgb.decoder.vesselid;
 
+import java.util.Map;
 import java.util.Optional;
 
 import com.github.davidmoten.guavamini.Preconditions;
 
 import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
+import sgb.decoder.internal.Util;
 
 public final class AircraftRegistrationMarking implements VesselId, HasFormatter {
 
@@ -31,13 +33,11 @@ public final class AircraftRegistrationMarking implements VesselId, HasFormatter
     }
 
     @Override
-    public String toString(Indent indent) {
-        return indent.builder() //
-                .right() //
-                .add("vessel id type", "aircraft registration marking") //
+    public Map<String, Object> fields() {
+        return Util.fieldsBuilder() //
+                .add("vesselIDType", "Aircraft Registration Marking") //
                 .add("value", value) //
-                .left() //
-                .toString();
+                .build();
     }
 
 }

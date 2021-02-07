@@ -1,9 +1,11 @@
 package sgb.decoder.rotatingfield;
 
+import java.util.Map;
 import java.util.Optional;
 
 import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
+import sgb.decoder.internal.Util;
 
 public final class Rls implements RotatingField, HasFormatter {
 
@@ -43,17 +45,15 @@ public final class Rls implements RotatingField, HasFormatter {
     }
 
     @Override
-    public String toString(Indent indent) {
-        return indent.builder() //
-                .right() //
-                .add("Rotating field type", "RLS") //
-                .add("Can process automatically generated acknowledgement - RLM Type 1",
+    public Map<String, Object> fields() {
+        return Util.fieldsBuilder() //
+                .add("rotatingFieldType", "RLS") //
+                .add("canProcessAutomaticallyGeneratedAcknowledgementRLMType1",
                         canProcessAutomaticallyGeneratedAckRlmType1) //
-                .add("Can process manually generated RLM", canProcessManuallyGeneratedRlm) //
-                .add("RLS provider", rlsProvider) //
-                .add("Beacon feedback", beaconFeedback) //
-                .left() //
-                .toString();
+                .add("canProcessManuallyGeneratedRLM", canProcessManuallyGeneratedRlm) //
+                .add("rlsProvider", rlsProvider) //
+                .add("beaconFeedback", beaconFeedback) //
+                .build();
     }
 
 }

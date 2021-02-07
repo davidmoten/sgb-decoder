@@ -1,5 +1,6 @@
 package sgb.decoder;
 
+import java.util.Map;
 import java.util.Optional;
 
 import com.github.davidmoten.guavamini.Preconditions;
@@ -55,6 +56,12 @@ public final class Indent {
         IndentBuilder(Indent indent, StringBuilder b) {
             this.indent = indent;
             this.b = b;
+        }
+
+        public IndentBuilder add(Map<String, Object> fields) {
+            fields.entrySet().stream()
+                    .forEach(entry -> IndentBuilder.this.add(entry.getKey(), entry.getValue()));
+            return this;
         }
 
         public IndentBuilder add(String name, Object value) {

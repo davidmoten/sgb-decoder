@@ -1,7 +1,10 @@
 package sgb.decoder.vesselid;
 
+import java.util.Map;
+
 import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
+import sgb.decoder.internal.Util;
 
 public final class AircraftOperatorAndSerialNumber implements VesselId, HasFormatter {
 
@@ -20,20 +23,18 @@ public final class AircraftOperatorAndSerialNumber implements VesselId, HasForma
     public int serialNumber() {
         return serialNumber;
     }
-    
+
     @Override
     public String toString() {
         return toStringDefault();
     }
 
     @Override
-    public String toString(Indent indent) {
-        return indent.builder() //
-                .right() //
-                .add("aircraft operator designator", aircraftOperatorDesignator) //
-                .add("serial number", serialNumber) //
-                .left() //
-                .toString();
+    public Map<String, Object> fields() {
+        return Util.fieldsBuilder() //
+                .add("aircraftOperatorDesignator", aircraftOperatorDesignator) //
+                .add("serialNumber", serialNumber) //
+                .build();
     }
 
 }

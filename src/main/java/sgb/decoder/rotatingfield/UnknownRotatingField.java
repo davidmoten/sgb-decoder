@@ -1,7 +1,10 @@
 package sgb.decoder.rotatingfield;
 
+import java.util.Map;
+
 import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
+import sgb.decoder.internal.Util;
 
 public final class UnknownRotatingField implements RotatingField, HasFormatter {
 
@@ -21,12 +24,10 @@ public final class UnknownRotatingField implements RotatingField, HasFormatter {
     }
 
     @Override
-    public String toString(Indent indent) {
-        return indent.builder() //
-                .right() //
-                .add("Rotating field type", "unknown") //
-                .add("Bits", bitString) //
-                .left() //
-                .toString();
+    public Map<String, Object> fields() {
+        return Util.fieldsBuilder() //
+                .add("rotatingFieldType", "Unknown") //
+                .add("bits", bitString) //
+                .build();
     }
 }

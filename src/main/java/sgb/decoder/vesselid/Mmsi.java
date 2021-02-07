@@ -1,9 +1,11 @@
 package sgb.decoder.vesselid;
 
+import java.util.Map;
 import java.util.Optional;
 
 import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
+import sgb.decoder.internal.Util;
 
 public final class Mmsi implements VesselId, HasFormatter {
 
@@ -29,14 +31,12 @@ public final class Mmsi implements VesselId, HasFormatter {
     }
 
     @Override
-    public String toString(Indent indent) {
-        return indent.builder() //
-                .right() //
-                .add("vessel id type", "MMSI") //
+    public Map<String, Object> fields() {
+        return Util.fieldsBuilder() //
+                .add("vesselIDType", "MMSI") //
                 .add("MMSI", mmsi) //
                 .add("EPIRB MMSI", epirbMmsi)
-                .left() //
-                .toString();
+                .build();
     }
 
 }

@@ -1,9 +1,11 @@
 package sgb.decoder.vesselid;
 
+import java.util.Map;
 import java.util.Optional;
 
 import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
+import sgb.decoder.internal.Util;
 
 public final class Aviation24BitAddress implements VesselId, HasFormatter {
 
@@ -29,15 +31,12 @@ public final class Aviation24BitAddress implements VesselId, HasFormatter {
     }
 
     @Override
-    public String toString(Indent indent) {
-        return indent.builder() //
-                .right() //
-                .add("vessel id type", "aviation 24 bit address") //
-                .add("address hex", addressHex) //
-                .add("aircraft operator designator", aircraftOperatorDesignator) //
-                .left() //
-                .toString();
-
+    public Map<String, Object> fields() {
+        return Util.fieldsBuilder() //
+                .add("vesselIDType", "Aviation 24 Bit Address") //
+                .add("addressHex", addressHex) //
+                .add("aircraftOperatorDesignator", aircraftOperatorDesignator) //
+                .build();
     }
 
 }

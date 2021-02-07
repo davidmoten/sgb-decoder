@@ -1,9 +1,11 @@
 package sgb.decoder.rotatingfield;
 
+import java.util.Map;
 import java.util.Optional;
 
 import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
+import sgb.decoder.internal.Util;
 
 public final class ObjectiveRequirements implements RotatingField, HasFormatter {
 
@@ -69,20 +71,18 @@ public final class ObjectiveRequirements implements RotatingField, HasFormatter 
     }
 
     @Override
-    public String toString(Indent indent) {
-        return indent.builder() //
-                .right() //
-                .add("Rotating field type", "Objective Requirements") //
-                .add("Elapsed time since activation (hours)", elapsedTimeSinceActivationHours) //
-                .add("Time since last encoded location (minutes)",
+    public Map<String, Object> fields() {
+        return Util.fieldsBuilder() //
+                .add("rotatingFieldType", "Objective Requirements") //
+                .add("elapsedTimeSinceActivationHours", elapsedTimeSinceActivationHours) //
+                .add("timeSinceLastEncodedLocationMinutes",
                         timeSinceLastEncodedLocationMinutes) //
-                .add("Altitude of encoded location (metres)", altitudeEncodedLocationMetres) //
-                .add("Dilution precision HDOP", dilutionPrecisionHdop) //
-                .add("Dilution precision DOP", dilutionPrecisionDop) //
-                .add("Activation method", activationMethod) //
-                .add("Remaining battery capacity percent", remainingBatteryCapacityPercent) //
-                .add("GNSS status", gnssStatus) //
-                .left() //
-                .toString();
+                .add("altitudeEncodedLocationMetres", altitudeEncodedLocationMetres) //
+                .add("dilutionPrecisionHDOP", dilutionPrecisionHdop) //
+                .add("dilutionPrecisionDOP", dilutionPrecisionDop) //
+                .add("activationMethod", activationMethod) //
+                .add("remainingBatteryCapacityPercent", remainingBatteryCapacityPercent) //
+                .add("GNSSStatus", gnssStatus) //
+                .build();
     }
 }

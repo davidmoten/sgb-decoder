@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
+import java.util.Map;
 import java.util.Optional;
 
 import com.github.davidmoten.guavamini.Preconditions;
@@ -11,6 +12,7 @@ import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
 
 import sgb.decoder.internal.Bits;
 import sgb.decoder.internal.Hex;
+import sgb.decoder.internal.Util;
 import sgb.decoder.rotatingfield.ActivationMethod;
 import sgb.decoder.rotatingfield.BeaconFeedback;
 import sgb.decoder.rotatingfield.Cancellation;
@@ -604,24 +606,21 @@ public final class Detection implements HasFormatter {
     }
 
     @Override
-    public String toString(Indent indent) {
-        return indent //
-                .builder() //
-                .right() //
+    public Map<String, Object> fields() {
+        return Util.fieldsBuilder()//
                 .add("TAC", tac) //
-                .add("Serial number", serialNo) //
-                .add("Country code", countryCode) //
-                .add("Has at least one enabled homing signal", hasAtLeastOneEnabledHomingSignal) //
-                .add("Has enabled RLS", hasEnabledRls) //
-                .add("Is test protocol message", isTestProtocolMessage) //
-                .add("Encoded GNSS position", encodedGnssPosition) //
-                .add("Vessel ID", vesselId) //
-                .add("Beacon type", beaconType) //
-                .add("Rotating field", rotatingField) //
-                .add("Beacon 23 hex ID", beacon23HexId) //
-                .add("Beacon 15 hex ID", beacon15HexId()) //
-                .left() //
-                .toString();
+                .add("serialNumber", serialNo) //
+                .add("countryCode", countryCode) //
+                .add("hasAtLeastOneEnabledHomingSignal", hasAtLeastOneEnabledHomingSignal) //
+                .add("hasEnabledRLS", hasEnabledRls) //
+                .add("isTestProtocolMessage", isTestProtocolMessage) //
+                .add("encodedGNSSPosition", encodedGnssPosition) //
+                .add("vesselId", vesselId) //
+                .add("beaconType", beaconType) //
+                .add("rotatingField", rotatingField) //
+                .add("beacon23HexId", beacon23HexId) //
+                .add("beacon15HexId", beacon15HexId()) //
+                .build();
     }
 
 }

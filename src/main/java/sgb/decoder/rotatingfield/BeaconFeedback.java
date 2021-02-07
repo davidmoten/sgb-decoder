@@ -1,9 +1,10 @@
 package sgb.decoder.rotatingfield;
 
+import java.util.Map;
 import java.util.Optional;
 
 import sgb.decoder.HasFormatter;
-import sgb.decoder.Indent;
+import sgb.decoder.internal.Util;
 
 public final class BeaconFeedback implements HasFormatter {
 
@@ -35,21 +36,19 @@ public final class BeaconFeedback implements HasFormatter {
     public Optional<String> shortRlmParametersBitString() {
         return shortRlmParametersBitString;
     }
-    
+
     @Override
     public String toString() {
         return toStringDefault();
     }
 
     @Override
-    public String toString(Indent indent) {
-        return indent.builder() //
-                .right() //
-                .add("RLM Type 1 Feedback received", rlmType1FeedbackReceived) //
-                .add("RLM Type 2 Feedback received", rlmType2FeedbackReceived) //
-                .add("RLS type", rlsType) //
-                .add("Short RLM parameters bits", shortRlmParametersBitString) //
-                .left() //
-                .toString();
+    public Map<String, Object> fields() {
+        return Util.fieldsBuilder() //
+                .add("RLMType1FeedbackReceived", rlmType1FeedbackReceived) //
+                .add("RLMType2FeedbackReceived", rlmType2FeedbackReceived) //
+                .add("RLSType", rlsType) //
+                .add("shortRLMParametersBits", shortRlmParametersBitString) //
+                .build();
     }
 }

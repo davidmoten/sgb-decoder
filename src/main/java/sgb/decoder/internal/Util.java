@@ -13,4 +13,10 @@ public final class Util {
         return IntStream.range(0, n).mapToObj(x -> String.valueOf(ch))
                 .collect(Collectors.joining());
     }
+    
+    public static FieldsBuilder fieldsBuilder() {
+        return new FieldsBuilder();
+    }
+    
+    
 }

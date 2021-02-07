@@ -1,4 +1,4 @@
 Mmsi
-  vessel id type = MMSI
+  vesselIDType = MMSI
   MMSI = 123456789
   EPIRB MMSI = 234567890
