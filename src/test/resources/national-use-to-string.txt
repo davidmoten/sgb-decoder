@@ -1,0 +1,3 @@
+NationalUse
+  Rotating field type = National Use
+  Bits = 11011

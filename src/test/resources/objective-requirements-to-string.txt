@@ -1,0 +1,10 @@
+ObjectiveRequirements
+  Rotating field type = Objective Requirements
+  Elapsed time since activation (hours) = 13
+  Time since last encoded location (minutes) = 47
+  Altitude of encoded location (metres) = 60
+  Dilution precision HDOP = 3
+  Dilution precision DOP = 
+  Activation method = MANUAL_ACTIVATION_BY_USER
+  Remaining battery capacity percent = 
+  GNSS status = LOCATION_3D
