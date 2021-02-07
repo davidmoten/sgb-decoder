@@ -6,13 +6,13 @@ import org.junit.Test;
 
 import sgb.decoder.TestingUtil;
 
-public class AircraftRegistrationMarkingTest {
+public class AircraftOperatorAndSerialNumberTest {
 
     @Test
     public void testToString() {
-        AircraftRegistrationMarking a = new AircraftRegistrationMarking("VH-ABC");
+        AircraftOperatorAndSerialNumber a = new AircraftOperatorAndSerialNumber("ABC", 1234);
         System.out.println(a.toString());
-        assertEquals(TestingUtil.readResource("/aircraft-registration-marking-to-string.txt"),
+        assertEquals(TestingUtil.readResource("/aircraft-operator-and-serial-number-to-string.txt"),
                 a.toString());
     }
 }

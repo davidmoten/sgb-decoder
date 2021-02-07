@@ -1,0 +1,3 @@
+AircraftRegistrationMarking
+  vessel id type = aircraft registration marking
+  value = VH-ABC

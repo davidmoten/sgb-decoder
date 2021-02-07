@@ -1,0 +1,3 @@
+AircraftOperatorAndSerialNumber
+  aircraft operator designator = ABC
+  serial number = 1234
