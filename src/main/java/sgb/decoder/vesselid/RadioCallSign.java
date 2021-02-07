@@ -6,7 +6,6 @@ import java.util.Optional;
 import com.github.davidmoten.guavamini.Preconditions;
 
 import sgb.decoder.HasFormatter;
-import sgb.decoder.Indent;
 import sgb.decoder.internal.Util;
 
 public final class RadioCallSign implements VesselId, HasFormatter {

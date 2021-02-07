@@ -19,6 +19,4 @@ public interface HasFormatter {
     default String toJson() {
         return HasFormatterHelper.toJson(this);
     }
-    
-    
 }

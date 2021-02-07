@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import sgb.decoder.HasFormatter;
-import sgb.decoder.Indent;
 import sgb.decoder.internal.Util;
 
 public final class ObjectiveRequirements implements RotatingField, HasFormatter {

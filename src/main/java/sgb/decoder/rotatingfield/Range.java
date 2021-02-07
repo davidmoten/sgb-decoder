@@ -1,12 +1,13 @@
 package sgb.decoder.rotatingfield;
 
-import java.util.Collections;
 import java.util.Map;
 
 import com.github.davidmoten.guavamini.Preconditions;
 
 import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
+import sgb.decoder.internal.FieldsBuilder;
+import sgb.decoder.internal.Util;
 
 public final class Range implements HasFormatter {
 
@@ -120,7 +121,16 @@ public final class Range implements HasFormatter {
 
     @Override
     public Map<String, Object> fields() {
-        return Collections.emptyMap();
+        FieldsBuilder b = Util.fieldsBuilder();
+        if (startType != RangeEndType.MISSING) {
+            b = b.add("start", start) //
+                    .add("startType", startType);
+        }
+        if (finishType != RangeEndType.MISSING) {
+            b = b.add("finish", finish) //
+                    .add("finishType", finishType);
+        }
+        return b.build();
     }
 
 }

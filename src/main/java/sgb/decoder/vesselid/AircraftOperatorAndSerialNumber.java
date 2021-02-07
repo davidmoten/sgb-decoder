@@ -3,7 +3,6 @@ package sgb.decoder.vesselid;
 import java.util.Map;
 
 import sgb.decoder.HasFormatter;
-import sgb.decoder.Indent;
 import sgb.decoder.internal.Util;
 
 public final class AircraftOperatorAndSerialNumber implements VesselId, HasFormatter {

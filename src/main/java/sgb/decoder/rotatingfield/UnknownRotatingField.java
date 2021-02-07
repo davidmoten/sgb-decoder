@@ -3,7 +3,6 @@ package sgb.decoder.rotatingfield;
 import java.util.Map;
 
 import sgb.decoder.HasFormatter;
-import sgb.decoder.Indent;
 import sgb.decoder.internal.Util;
 
 public final class UnknownRotatingField implements RotatingField, HasFormatter {
