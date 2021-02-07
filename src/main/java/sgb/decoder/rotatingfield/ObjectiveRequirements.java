@@ -62,6 +62,11 @@ public final class ObjectiveRequirements implements RotatingField, HasIndentedTo
     public GnssStatus gnssStatus() {
         return gnssStatus;
     }
+    
+    @Override
+    public String toString() {
+        return toStringDefault();
+    }
 
     @Override
     public String toString(Indent indent) {

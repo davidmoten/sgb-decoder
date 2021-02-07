@@ -22,6 +22,11 @@ public final class Aviation24BitAddress implements VesselId, HasIndentedToString
     public Optional<String> aircraftOperatorDesignator() {
         return aircraftOperatorDesignator;
     }
+    
+    @Override
+    public String toString() {
+        return toStringDefault();
+    }
 
     @Override
     public String toString(Indent indent) {

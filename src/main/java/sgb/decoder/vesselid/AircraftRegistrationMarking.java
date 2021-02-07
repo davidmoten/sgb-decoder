@@ -24,6 +24,11 @@ public final class AircraftRegistrationMarking implements VesselId, HasIndentedT
     public Optional<String> value() {
         return value;
     }
+    
+    @Override
+    public String toString() {
+        return toStringDefault();
+    }
 
     @Override
     public String toString(Indent indent) {

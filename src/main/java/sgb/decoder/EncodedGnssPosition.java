@@ -17,6 +17,11 @@ public final class EncodedGnssPosition implements HasIndentedToString {
     public double lon() {
         return lon;
     }
+    
+    @Override
+    public String toString() {
+        return toStringDefault();
+    }
 
     @Override
     public String toString(Indent indent) {

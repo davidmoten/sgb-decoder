@@ -14,6 +14,11 @@ public final class UnknownRotatingField implements RotatingField, HasIndentedToS
     public String bitString() {
         return bitString;
     }
+    
+    @Override
+    public String toString() {
+        return toStringDefault();
+    }
 
     @Override
     public String toString(Indent indent) {

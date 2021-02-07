@@ -43,6 +43,11 @@ public final class EltDtInFlightEmergency implements RotatingField, HasIndentedT
     public Optional<Range> remainingBatteryCapacityPercent() {
         return remainingBatteryCapacityPercent;
     }
+    
+    @Override
+    public String toString() {
+        return toStringDefault();
+    }
 
     @Override
     public String toString(Indent indent) {

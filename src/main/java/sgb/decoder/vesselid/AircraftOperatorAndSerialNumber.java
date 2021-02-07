@@ -20,6 +20,11 @@ public final class AircraftOperatorAndSerialNumber implements VesselId, HasInden
     public int serialNumber() {
         return serialNumber;
     }
+    
+    @Override
+    public String toString() {
+        return toStringDefault();
+    }
 
     @Override
     public String toString(Indent indent) {

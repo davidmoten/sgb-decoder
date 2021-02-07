@@ -36,6 +36,11 @@ public final class Rls implements RotatingField, HasIndentedToString {
     public Optional<BeaconFeedback> beaconFeedback() {
         return beaconFeedback;
     }
+    
+    @Override
+    public String toString() {
+        return toStringDefault();
+    }
 
     @Override
     public String toString(Indent indent) {

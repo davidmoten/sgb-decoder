@@ -22,6 +22,11 @@ public final class Mmsi implements VesselId, HasIndentedToString {
     public Optional<Integer> epirbMmsi() {
         return epirbMmsi;
     }
+    
+    @Override
+    public String toString() {
+        return toStringDefault();
+    }
 
     @Override
     public String toString(Indent indent) {

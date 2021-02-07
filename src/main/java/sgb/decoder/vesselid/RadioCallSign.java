@@ -24,6 +24,11 @@ public final class RadioCallSign implements VesselId, HasIndentedToString {
     public Optional<String> value() {
         return value;
     }
+    
+    @Override
+    public String toString() {
+        return toStringDefault();
+    }
 
     @Override
     public String toString(Indent indent) {

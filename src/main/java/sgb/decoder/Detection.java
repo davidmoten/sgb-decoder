@@ -600,7 +600,7 @@ public final class Detection implements HasIndentedToString {
 
     @Override
     public String toString() {
-        return "Detection"  + toString(new Indent(2, 2));
+        return toStringDefault();
     }
 
     @Override
