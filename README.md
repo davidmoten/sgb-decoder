@@ -26,6 +26,7 @@ Add this dependency to your pom.xml:
   <groupId>au.gov.amsa</groupId>
   <artifactId>sgb-decoder</artifactId>
   <version>VERSION_HERE</version>
+</dependency>
 ```
 
 The most likely form that you will encounter a beacon detection message is in the hex encoded Cospas-Sarsat Ground Segment Representation. Here's an example:
