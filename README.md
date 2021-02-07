@@ -6,6 +6,7 @@ Java library that decodes Second Generation Beacon (SGB) detection messages and 
 * Decodes Second Generation Beacon (SGB) detection messages (250bit) to Java objects
 * Extracts Beacon 23 Hex Id from an SGB detection message
 * Provides a plain text view of resultant Java objects
+* Provides a JSON form of the SGB detection message (TODO)
 * 100% unit test coverage
 
 Status: *pre-alpha* (in development, not production ready)
