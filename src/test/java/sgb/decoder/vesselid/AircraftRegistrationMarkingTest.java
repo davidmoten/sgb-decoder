@@ -11,7 +11,6 @@ public class AircraftRegistrationMarkingTest {
     @Test
     public void testToString() {
         AircraftRegistrationMarking a = new AircraftRegistrationMarking("VH-ABC");
-        System.out.println(a.toString());
         assertEquals(TestingUtil.readResource("/aircraft-registration-marking-to-string.txt"),
                 a.toString());
     }

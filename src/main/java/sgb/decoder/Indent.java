@@ -12,17 +12,24 @@ public final class Indent {
     private int step;
 
     public Indent(int length, int step) {
-        Preconditions.checkArgument(length >= 0, "left has been called more times than right");
+        this.length = length;
         this.step = step;
+        checkLength();
+    }
+
+    private void checkLength() {
+        Preconditions.checkArgument(length >= 0, "left has been called more times than right");
     }
 
     public Indent left() {
         length -= step;
+        checkLength();
         return this;
     }
 
     public Indent right() {
         length += step;
+        checkLength();
         return this;
     }
 
