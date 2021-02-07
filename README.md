@@ -1,9 +1,12 @@
 # sgb-decoder
-Java library that does the following:
+Java library that decodes Second Generation Beacon (SGB) detection messages and is compliant with C/S T.018 Rev. 6 specification.
 
-* Decodes Second Generation Beacon (SGB) detection messages (250bit) to xml/json
+**Features**
+
+* Decodes Second Generation Beacon (SGB) detection messages (250bit) to Java objects
 * Extracts Beacon 23 Hex Id from an SGB detection message
-* Decodes Beacon 23 Hex Id to xml/json
+* Provides a plain text view of resultant Java objects
+* 100% unit test coverage
 
 Status: *pre-alpha* (in development, not production ready)
 
@@ -15,12 +18,17 @@ The library jar will be in `target` directory.
 
 ## Usage
 
+Add this dependency to your pom.xml:
+
+
+
 The most likely form that you will encounter a beacon detection message is in the hex encoded Cospas-Sarsat Ground Segment Representation. Here's an example:
 
 ```java
-Detection d = Detection.fromHexGroundSegmentRepresentation("0039823D32618658622811F0000000000003FFF004030680258");
+String hex = "0039823D32618658622811F0000000000003FFF004030680258";
+Detection d = Detection.fromHexGroundSegmentRepresentation(hex);
 ``` 
-At that point you can browse the object representation of the message or dump a simple text representation to stdout.
+At that point you can browse the object representation of the message or dump a simple (but comprehensive) text representation to stdout.
 
 ```java
 System.out.println(d);
