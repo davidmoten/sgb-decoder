@@ -51,7 +51,7 @@ public final class Detection implements HasFormatter {
     private final boolean hasEnabledRls;
     private final boolean isTestProtocolMessage;
     private final Optional<EncodedGnssPosition> encodedGnssPosition;
-    private final Optional<? extends VesselId> vesselId;
+    private final Optional<VesselId> vesselId;
     private final BeaconType beaconType;
     private final RotatingField rotatingField;
 
@@ -446,7 +446,7 @@ public final class Detection implements HasFormatter {
     }
 
     @VisibleForTesting
-    static Optional<? extends VesselId> readVesselId(Bits bits) {
+    static Optional<VesselId> readVesselId(Bits bits) {
         int type = bits.readUnsignedInt(3);
         if (type == 0) {
             // no aircraft or maritime identity
