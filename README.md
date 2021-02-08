@@ -109,39 +109,40 @@ If JSON or XML was used for the canonical format then it should also be describe
 Here's an example of a canonical form using JSON:
 ```json
 {
-  "TAC" : 230,
-  "serialNumber" : 573,
-  "countryCode" : 201,
-  "hasAtLeastOneEnabledHomingSignal" : true,
-  "hasEnabledRLS" : false,
-  "isTestProtocolMessage" : false,
-  "encodedGNSSPosition" : {
-    "latitude" : 48.79315185546875,
-    "longitude" : 69.00875854492188
-  },
-  "beaconType" : "ELT_NOT_DT",
-  "rotatingField" : {
-    "rotatingFieldType" : "Objective Requirements",
-    "elapsedTimeSinceActivationHours" : 1,
-    "timeSinceLastEncodedLocationMinutes" : 6,
-    "altitudeEncodedLocationMetres" : 432,
-    "dilutionPrecisionHDOP" : 0,
-    "dilutionPrecisionDOP" : {
-      "start" : 1,
-      "startType" : "EXCLUSIVE",
-      "finish" : 2,
-      "finishType" : "INCLUSIVE"
+    "TAC" : 230,
+    "SerialNo" : 573,
+    "CountryCode" : 201,
+    "HasAtLeastOneEnabledHomingSignal" : true,
+    "HasEnabledRLS" : false,
+    "IsTestProtocolMessage" : false,
+    "EncodedGnssPosition" : {
+        "latitude" : 48.79315185546875,
+        "longitude" : 69.00875854492188
     },
-    "activationMethod" : "MANUAL_ACTIVATION_BY_USER",
-    "remainingBatteryCapacityPercent" : {
-      "start" : 75,
-      "startType" : "EXCLUSIVE",
-      "finish" : 100,
-      "finishType" : "INCLUSIVE"
+    "BeaconType" : "ELT_NOT_DT",
+    "RotatingField" : {
+        "rotatingFieldType" : "OBJECTIVE_REQUIREMENTS",
+        "elapsedTimeSinceActivationHours" : 1,
+        "timeSinceLastEncodedLocationMinutes" : 6,
+        "altitudeEncodedLocationMetres" : 432,
+        "dilutionPrecisionHdop" : 0,
+        "dilutionPrecisionHdop" : 0,
+        "dilutionPrecisionDop" : {
+            "start" : 1,
+            "startInclusive" : false,
+            "finish" : 2,
+            "finishInclusive" : true
+        },
+        "activationMethod" : "MANUAL_ACTIVATION_BY_USER",
+        "remainingBatteryCapacityPercent" : {
+            "start" : 75,
+            "startInclusive" : false,
+            "finish" : 100,
+            "finishInclusive" : true
+        },
+        "gnssStatus" : "LOCATION_3D"
     },
-    "GNSSStatus" : "LOCATION_3D"
-  },
-  "beacon23HexId" : "9934039823d000000000000",
-  "beacon15HexId" : "9934039823d0000"
+    "Beacon23HexId" : "9934039823d000000000000",
+    "Beacon15HexId" : "9934039823d0000"
 }
 ```

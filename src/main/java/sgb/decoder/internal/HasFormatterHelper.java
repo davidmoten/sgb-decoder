@@ -52,9 +52,6 @@ public final class HasFormatterHelper {
 		} else {
 			StringBuilder s = new StringBuilder();
 			for (int i = 0; i < a.fields().length; i++) {
-				if (s.length() > 0) {
-					s.append(", ");
-				}
 				String fieldName = a.fields()[i];
 				String serializedName = a.serializedNames()[i];
 				Object value;
@@ -67,6 +64,9 @@ public final class HasFormatterHelper {
 					throw new RuntimeException(e);
 				}
 				if (isPresent(value)) {
+					if (s.length() > 0) {
+						s.append(", ");
+					}
 					s.append(quoted(serializedName) + ":" + toJson(value));
 				}
 			}

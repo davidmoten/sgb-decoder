@@ -88,7 +88,7 @@ public class TestingUtil {
 		stringBuilder.append("\n");
 		for (int i = 0; i < indentLevel; i++) {
 			// Assuming indention using 2 spaces
-			stringBuilder.append("  ");
+			stringBuilder.append("    ");
 		}
 	}
 
