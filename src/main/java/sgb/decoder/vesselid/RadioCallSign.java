@@ -6,10 +6,9 @@ import com.github.davidmoten.guavamini.Preconditions;
 
 import sgb.decoder.HasFormatter;
 import sgb.decoder.internal.Fields;
-import sgb.decoder.rotatingfield.RotatingField;
 
 @Fields(fields = { "vesselIdType", "value" }, //
-		serializedNames = { RotatingField.ROTATING_FIELD_TYPE_SERIALIZED_NAME, "value" })
+		serializedNames = { VesselId.VESSEL_ID_TYPE_SERIALIZED_NAME, "value" })
 public final class RadioCallSign implements VesselId, HasFormatter {
 
 	@SuppressWarnings("unused")

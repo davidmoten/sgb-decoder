@@ -1,10 +1,8 @@
 ObjectiveRequirements
-  rotatingFieldType = Objective Requirements
+  rotatingFieldType = OBJECTIVE_REQUIREMENTS
   elapsedTimeSinceActivationHours = 13
   timeSinceLastEncodedLocationMinutes = 47
   altitudeEncodedLocationMetres = 60
-  dilutionPrecisionHDOP = 3
-  dilutionPrecisionDOP = 
+  dilutionPrecisionHdop = 3
   activationMethod = MANUAL_ACTIVATION_BY_USER
-  remainingBatteryCapacityPercent = 
-  GNSSStatus = LOCATION_3D
+  gnssStatus = LOCATION_3D

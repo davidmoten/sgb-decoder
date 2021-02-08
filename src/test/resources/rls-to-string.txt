@@ -1,6 +1,5 @@
 Rls
   rotatingFieldType = RLS
-  canProcessAutomaticallyGeneratedAcknowledgementRLMType1 = true
-  canProcessManuallyGeneratedRLM = false
+  canProcessAutomaticallyGeneratedAckRlmType1 = true
+  canProcessManuallyGeneratedRlm = false
   rlsProvider = GALILEO
-  beaconFeedback = 

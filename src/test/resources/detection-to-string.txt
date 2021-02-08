@@ -1,24 +1,23 @@
 Detection
   TAC = 230
-  serialNumber = 573
-  countryCode = 201
-  hasAtLeastOneEnabledHomingSignal = true
-  hasEnabledRLS = false
-  isTestProtocolMessage = false
-  encodedGNSSPosition = 
+  SerialNo = 573
+  CountryCode = 201
+  HasAtLeastOneEnabledHomingSignal = true
+  HasEnabledRLS = false
+  IsTestProtocolMessage = false
+  EncodedGnssPosition = 
     latitude = 48.79315185546875
     longitude = 69.00875854492188
-  vesselId = 
-  beaconType = ELT_NOT_DT
-  rotatingField = 
-    rotatingFieldType = Objective Requirements
+  BeaconType = ELT_NOT_DT
+  RotatingField = 
+    rotatingFieldType = OBJECTIVE_REQUIREMENTS
     elapsedTimeSinceActivationHours = 1
     timeSinceLastEncodedLocationMinutes = 6
     altitudeEncodedLocationMetres = 432
-    dilutionPrecisionHDOP = 0
-    dilutionPrecisionDOP = >1 and <=2
+    dilutionPrecisionHdop = 0
+    dilutionPrecisionDop = >1 and <=2
     activationMethod = MANUAL_ACTIVATION_BY_USER
     remainingBatteryCapacityPercent = >75 and <=100
-    GNSSStatus = LOCATION_3D
-  beacon23HexId = 9934039823d000000000000
-  beacon15HexId = 9934039823d0000
+    gnssStatus = LOCATION_3D
+  Beacon23HexId = 9934039823d000000000000
+  Beacon15HexId = 9934039823d0000

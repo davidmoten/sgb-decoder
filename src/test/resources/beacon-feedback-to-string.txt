@@ -1,5 +1,5 @@
 BeaconFeedback
-  RLMType1FeedbackReceived = true
-  RLMType2FeedbackReceived = false
-  RLSType = ACKNOWLEDGEMENT_SERVICE
-  shortRLMParametersBits = 1110001
+  rlmType1FeedbackReceived = true
+  rlmType2FeedbackReceived = false
+  rlsType = ACKNOWLEDGEMENT_SERVICE
+  shortRlmParametersBitString = 1110001
