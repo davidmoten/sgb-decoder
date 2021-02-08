@@ -17,7 +17,7 @@ public final class HasFormatterHelper {
         if (o instanceof HasFormatter) {
             return toJson((HasFormatter) o);
         } else if (o instanceof Optional) {
-            if (((Optional<?>) o).isEmpty()) {
+            if (!((Optional<?>) o).isPresent()) {
                 return "null";
             } else {
                 return toJson(((Optional<?>) o).get());
