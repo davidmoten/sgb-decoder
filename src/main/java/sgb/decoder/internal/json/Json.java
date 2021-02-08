@@ -26,6 +26,8 @@ public class Json {
 
 	public static String generateSchema(Class<?> cls) {
 		// use all private fields to generate schema
+		Map<String, Definition> clsNameDefinitions = new HashMap<>();
+		collectDefinitions(cls, clsNameDefinitions);
 		StringBuilder s = new StringBuilder();
 		add(s, "$id", "TODO");
 		s.append(COMMA + LF);
@@ -43,27 +45,34 @@ public class Json {
 			this.javaClassName = javaClassName;
 			this.json = json;
 		}
-
 	}
 
 	private static void collectDefinitions(Class<?> cls, Map<String, Definition> clsNameDefinitions) {
-		Arrays.stream(cls.getDeclaredFields()) //
-				.filter(f -> !isStatic(f)) //
-				.map(Json::toMyField) //
-				.peek(f -> {
-					JsonType t = toJsonType(f.javaType);
-					if (t.typeName.equals("object")) {
-						try {
-							collectDefinitions(Class.forName(f.javaType), clsNameDefinitions);
-						} catch (ClassNotFoundException e) {
-							throw new RuntimeException(e);
+		JsonType t = toJsonType(cls.getName());
+		if (t.typeName.equals("object")) {
+			// will be an implementation of HasFormatter
+			Arrays.stream(cls.getDeclaredFields()) //
+					.filter(f -> !isStatic(f)) //
+					.map(Json::toMyField) //
+					.peek(f -> {
+						JsonType type = toJsonType(f.javaType);
+						if (type.typeName.equals("object")) {
+							try {
+								collectDefinitions(Class.forName(f.javaType), clsNameDefinitions);
+							} catch (ClassNotFoundException e) {
+								throw new RuntimeException(e);
+							}
 						}
-					}
-				});
-		StringBuilder json = new StringBuilder();
-		json.append(quoted(definitionName(cls)) + COLON + "{");
-		json.append("}");
-		clsNameDefinitions.put(cls.getName(), new Definition(cls.getName(), json.toString()));
+					});
+
+			StringBuilder json = new StringBuilder();
+			json.append(quoted(definitionName(cls)) + COLON + "{");
+			add(json, "type", "object");
+			json.append(properties(cls));
+			// add required fields
+			json.append("}");
+			clsNameDefinitions.put(cls.getName(), new Definition(cls.getName(), json.toString()));
+		}
 	}
 
 	private static String toRef(Class<?> cls) {
@@ -131,7 +140,7 @@ public class Json {
 		b.append(quoted(key) + COLON + quoted(value));
 	}
 
-	private static String quoted(String s) {
+	public static String quoted(String s) {
 		return DQ + s + DQ;
 	}
 

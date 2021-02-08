@@ -2,6 +2,7 @@ package sgb.decoder.internal;
 
 import java.lang.reflect.Field;
 import java.time.OffsetTime;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -46,27 +47,31 @@ public final class HasFormatterHelper {
 
 	private static String toJson(HasFormatter o) {
 		Fields a = o.getClass().getAnnotationsByType(Fields.class)[0];
-		StringBuilder s = new StringBuilder();
-		for (int i = 0; i < a.fields().length; i++) {
-			if (s.length() > 0) {
-				s.append(", ");
+		if (Arrays.stream(o.getClass().getDeclaredMethods()).anyMatch(x -> x.getName().equals("toJson"))) {
+			return o.toJson();
+		} else {
+			StringBuilder s = new StringBuilder();
+			for (int i = 0; i < a.fields().length; i++) {
+				if (s.length() > 0) {
+					s.append(", ");
+				}
+				String fieldName = a.fields()[i];
+				String serializedName = a.serializedNames()[i];
+				Object value;
+				try {
+					Field fld = o.getClass().getDeclaredField(fieldName);
+					fld.setAccessible(true);
+					value = fld.get(o);
+				} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
+						| SecurityException e) {
+					throw new RuntimeException(e);
+				}
+				if (isPresent(value)) {
+					s.append(quoted(serializedName) + ":" + toJson(value));
+				}
 			}
-			String fieldName = a.fields()[i];
-			String serializedName = a.serializedNames()[i];
-			Object value;
-			try {
-				System.out.println(o.getClass());
-				Field fld = o.getClass().getDeclaredField(fieldName);
-				fld.setAccessible(true);
-				value = fld.get(o);
-			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-				throw new RuntimeException(e);
-			}
-			if (isPresent(value)) {
-				s.append(quoted(serializedName) + ":" + toJson(value));
-			}
+			return "{" + s + "}";
 		}
-		return "{" + s + "}";
 	}
 
 	private static boolean isPresent(Object o) {
