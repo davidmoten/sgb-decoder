@@ -71,7 +71,7 @@ Detection
 ```
 
 ## Compliance Kit
-A suggestion for the creators of the SGB encoding specification is that they share a Compliance Kit which is a list of beacon detection messages in hex form together with the corresponding decoded human readable version of the detection message in some *canonical form*. An example of the canonical form is the plain text version of the detection above. Might equally be JSON, XML or something else. If this were the case then no matter what language a decoder was written in full test coverage of that decoder would be guaranteed by consuming the (comprehensive) Compliance Kit test data. An example of one item in the Compliance Kit would be a text file containing:
+A suggestion for the creators of the SGB encoding specification is that they share a Compliance Kit which is a list of beacon detection messages in hex form together with the corresponding decoded human readable version of the detection message in some *canonical form*. An example of the canonical form is the plain text version of the detection above. Might equally be JSON, XML or something else. If this were the case then no matter what language a decoder was written in full test coverage of that decoder would be guaranteed by consuming the (comprehensive) Compliance Kit test data. An example of one item in the Compliance Kit would be a text file with name `general-detection-test.txt` and contents:
 
 ```
 0039823D32618658622811F0000000000003FFF004030680258
@@ -101,6 +101,10 @@ Detection
   beacon 15 hex ID = 9934039823d0000
 ```
 A consumer of the Compliance Kit would consume the first line of that file, decode it, generate the canonical form string and compare it to the rest of the file.
+
+Clearly one test file in the kit does not cut it. There are many variations on field values, some are derived from special binary codes, some field values are optional.
+
+//TODO make a list of the test files to achieve full coverage 
 
 Given that a service implementation of the decoder would probably serialize the decoded structure into JSON or XML, it probably makes sense to use one of those text formats to hold the canonical decoded form so that the implementer can reuse the canonical form work.
 
