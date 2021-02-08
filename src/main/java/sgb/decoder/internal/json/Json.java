@@ -35,6 +35,24 @@ public class Json {
         return "{\n" + s.toString() + "\n}";
     }
 
+    private static void collectDefinitions(Class<?> cls, Map<String, String> map) {
+        Arrays.stream(cls.getDeclaredFields()) //
+                .filter(f -> !isStatic(f)) //
+                .map(Json::toMyField) //
+                .peek(f -> {
+                    JsonType t = toJsonType(f.javaType);
+                    if (t.typeName.equals("object")) {
+                        try {
+                            collectDefinitions(Class.forName(f.javaType), map);
+                        } catch (ClassNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
+        StringBuilder s = new StringBuilder();
+        map.put(cls.getSimpleName(), s.toString());
+    }
+
     private static String properties(Class<?> cls) {
         return quoted("properties") + COLON + "{" + LF + Arrays.stream(cls.getDeclaredFields()) //
                 .filter(f -> !isStatic(f)) //
