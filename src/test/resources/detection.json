@@ -1,36 +1,40 @@
 {
-  "TAC" : 230,
-  "serialNumber" : 573,
-  "countryCode" : 201,
-  "hasAtLeastOneEnabledHomingSignal" : true,
-  "hasEnabledRLS" : false,
-  "isTestProtocolMessage" : false,
-  "encodedGNSSPosition" : {
-    "latitude" : 48.79315185546875,
-    "longitude" : 69.00875854492188
-  },
-  "beaconType" : "ELT_NOT_DT",
-  "rotatingField" : {
-    "rotatingFieldType" : "Objective Requirements",
-    "elapsedTimeSinceActivationHours" : 1,
-    "timeSinceLastEncodedLocationMinutes" : 6,
-    "altitudeEncodedLocationMetres" : 432,
-    "dilutionPrecisionHDOP" : 0,
-    "dilutionPrecisionDOP" : {
-      "start" : 1,
-      "startType" : "EXCLUSIVE",
-      "finish" : 2,
-      "finishType" : "INCLUSIVE"
+  "$id" : "TODO",
+  "$schema" : "TODO",
+  "properties" : {
+    "tac" : {
+      "type" : "integer"
     },
-    "activationMethod" : "MANUAL_ACTIVATION_BY_USER",
-    "remainingBatteryCapacityPercent" : {
-      "start" : 75,
-      "startType" : "EXCLUSIVE",
-      "finish" : 100,
-      "finishType" : "INCLUSIVE"
+    "serialNo" : {
+      "type" : "integer"
     },
-    "GNSSStatus" : "LOCATION_3D"
-  },
-  "beacon23HexId" : "9934039823d000000000000",
-  "beacon15HexId" : "9934039823d0000"
+    "countryCode" : {
+      "type" : "integer"
+    },
+    "hasAtLeastOneEnabledHomingSignal" : {
+      "type" : "boolean"
+    },
+    "hasEnabledRls" : {
+      "type" : "boolean"
+    },
+    "isTestProtocolMessage" : {
+      "type" : "boolean"
+    },
+    "encodedGnssPosition" : {
+      "type" : "object"
+    },
+    "vesselId" : {
+      "type" : "object"
+    },
+    "beaconType" : {
+      "type" : "string",
+      "enum" : [ "ELT_NOT_DT", "EPIRB", "PLB", "ELT_DT", "SYSTEM", "OTHER" ]
+    },
+    "rotatingField" : {
+      "type" : "object"
+    },
+    "beacon23HexId" : {
+      "type" : "string"
+    }
+  }
 }
