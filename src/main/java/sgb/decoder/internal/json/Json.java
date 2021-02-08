@@ -62,9 +62,6 @@ public class Json {
 				});
 		StringBuilder json = new StringBuilder();
 		json.append(quoted(definitionName(cls)) + COLON + "{");
-		    Arrays.stream(cls.getDeclaredFields()) {
-		    	
-		    }
 		json.append("}");
 		clsNameDefinitions.put(cls.getName(), new Definition(cls.getName(), json.toString()));
 	}

@@ -1,15 +1,11 @@
 package sgb.decoder;
 
-import java.util.Map;
-
 import sgb.decoder.internal.HasFormatterHelper;
 
 public interface HasFormatter {
     
-    Map<String, Object> fields();
-
     default String toString(Indent indent) {
-        return indent.builder().right().add(fields()).left().toString();
+        return indent.builder().right().add(HasFormatterHelper.serializedNamesAndValues(this)).left().toString();
     }
 
     default String toStringDefault() {

@@ -23,6 +23,6 @@ public @interface Fields {
 	 * 
 	 * @return serialized names
 	 */
-	String[] names();
+	String[] serializedNames();
 
 }
