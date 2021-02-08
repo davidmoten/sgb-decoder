@@ -13,27 +13,33 @@ import java.util.stream.Collectors;
 
 import sgb.decoder.Detection;
 
+/**
+ * Simplified JSON schema generator targeting {@link Detection} class and is
+ * dependents.
+ */
 public class Json {
 
     private static final String LF = "\n";
     private static final char DQ = '"';
     private static final String COLON = " : ";
-    private static final char COMMA = ',';
+    private static final String COMMA = ",";
 
     public static String generateSchema(Class<?> cls) {
         // use all private fields to generate schema
         StringBuilder s = new StringBuilder();
+        add(s, "$id", "TODO");
+        s.append(COMMA + LF);
+        add(s, "$schema", "TODO");
+        s.append(COMMA + LF);
         s.append(properties(cls));
-        return s.toString();
+        return "{\n" + s.toString() + "\n}";
     }
 
     private static String properties(Class<?> cls) {
-        return "{" + quoted("properties") + COLON + "{" + LF
-                + Arrays.stream(cls.getDeclaredFields()) //
-                        .filter(f -> !isStatic(f)) //
-                        .map(Json::toMyField).map(Json::generateDefinition)
-                        .collect(Collectors.joining(",\n"))
-                + "}}";
+        return quoted("properties") + COLON + "{" + LF + Arrays.stream(cls.getDeclaredFields()) //
+                .filter(f -> !isStatic(f)) //
+                .map(Json::toMyField).map(Json::generateDefinition)
+                .collect(Collectors.joining(",\n")) + "}";
     }
 
     private static boolean isStatic(Field f) {
@@ -67,7 +73,8 @@ public class Json {
         if (!t.enumeration.isEmpty()) {
             b.append("," + LF);
             b.append(quoted("enum") + COLON);
-            b.append("[" + t.enumeration.stream().map(Json::quoted).collect(Collectors.joining(","))
+            b.append("["
+                    + t.enumeration.stream().map(Json::quoted).collect(Collectors.joining(COMMA))
                     + "]");
             b.append(LF);
         }
