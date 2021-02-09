@@ -4,10 +4,9 @@ import sgb.decoder.HasFormatter;
 import sgb.decoder.internal.Fields;
 
 @Fields(fields = { "rotatingFieldType", "bitString" }, //
-		serializedNames = { RotatingField.ROTATING_FIELD_TYPE_SERIALIZED_NAME, "bits" })
+		serializedNames = { RotatingFieldConstants.ROTATING_FIELD_TYPE_SERIALIZED_NAME, "bits" })
 public final class UnknownRotatingField implements RotatingField, HasFormatter {
 
-	@SuppressWarnings("unused")
 	// used for serialization
 	private final RotatingFieldType rotatingFieldType = RotatingFieldType.UNKNOWN;
 	private final String bitString;
@@ -16,6 +15,10 @@ public final class UnknownRotatingField implements RotatingField, HasFormatter {
 		this.bitString = bitString;
 	}
 
+	public RotatingFieldType rotatingFieldType() {
+		return rotatingFieldType;
+	}
+	
 	public String bitString() {
 		return bitString;
 	}

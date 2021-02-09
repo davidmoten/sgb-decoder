@@ -7,12 +7,11 @@ import sgb.decoder.internal.Fields;
 
 @Fields(fields = { "rotatingFieldType", "canProcessAutomaticallyGeneratedAckRlmType1", "canProcessManuallyGeneratedRlm",
 		"rlsProvider", "beaconFeedback" }, //
-		serializedNames = { RotatingField.ROTATING_FIELD_TYPE_SERIALIZED_NAME,
+		serializedNames = { RotatingFieldConstants.ROTATING_FIELD_TYPE_SERIALIZED_NAME,
 				"canProcessAutomaticallyGeneratedAckRlmType1", "canProcessManuallyGeneratedRlm", "rlsProvider",
 				"beaconFeedback" })
 public final class Rls implements RotatingField, HasFormatter {
 
-	@SuppressWarnings("unused")
 	// used for serialization
 	private final RotatingFieldType rotatingFieldType = RotatingFieldType.RLS;
 	private final boolean canProcessAutomaticallyGeneratedAckRlmType1;
@@ -26,6 +25,10 @@ public final class Rls implements RotatingField, HasFormatter {
 		this.canProcessManuallyGeneratedRlm = canProcessManuallyGeneratedRlm;
 		this.rlsProvider = rlsProvider;
 		this.beaconFeedback = beaconFeedback;
+	}
+	
+	public RotatingFieldType rotatingFieldType() {
+		return rotatingFieldType;
 	}
 
 	public boolean canProcessAutomaticallyGeneratedAckRlmType1() {

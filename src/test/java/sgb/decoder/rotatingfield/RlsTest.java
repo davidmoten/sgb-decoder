@@ -14,5 +14,6 @@ public class RlsTest {
     public void testToString() {
         Rls a = new Rls(true, false, RlsProvider.GALILEO, Optional.empty());
         assertEquals(TestingUtil.readResource("/rls-to-string.txt"), a.toString());
+        assertEquals(RotatingFieldType.RLS, a.rotatingFieldType());
     }
 }

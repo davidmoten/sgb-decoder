@@ -42,7 +42,7 @@ public final class HasFormatterHelper {
 		} else if ((o.getClass().isEnum())) {
 			return quoted(o);
 		} else {
-			throw new RuntimeException("unexpected " + o);
+			throw new IllegalArgumentException("unsupported object type: " + o);
 		}
 	}
 

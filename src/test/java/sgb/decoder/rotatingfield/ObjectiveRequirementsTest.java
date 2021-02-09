@@ -17,5 +17,6 @@ public class ObjectiveRequirementsTest {
                 GnssStatus.LOCATION_3D);
         assertEquals(TestingUtil.readResource("/objective-requirements-to-string.txt"),
                 a.toString());
+        assertEquals(RotatingFieldType.OBJECTIVE_REQUIREMENTS, a.rotatingFieldType());
     }
 }

@@ -71,5 +71,33 @@ public final class RangeTest {
             assertEquals(">=1 and <=2", r.toString(indent));
         }
     }
+    
+    @Test
+    public void testRangeToJson() {
+    	{
+            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.INCLUSIVE);
+            assertEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : true}", r.toJson());
+        }
+        {
+            Range r = Range.create(1, RangeEndType.EXCLUSIVE, 2, RangeEndType.INCLUSIVE);
+            assertEquals("{\"min\" : 1, \"minInclusive\" : false, \"max\" : 2, \"maxInclusive\" : true}", r.toJson());
+        }
+        {
+            Range r = Range.create(1, RangeEndType.MISSING, 2, RangeEndType.INCLUSIVE);
+            assertEquals("{\"max\" : 2, \"maxInclusive\" : true}", r.toJson());
+        }
+        {
+            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.EXCLUSIVE);
+            assertEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : false}", r.toJson());
+        }
+        {
+            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.MISSING);
+            assertEquals("{\"min\" : 1, \"minInclusive\" : true}", r.toJson());
+        }
+        {
+            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.INCLUSIVE);
+            assertEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : true}", r.toJson());
+        }
+    }
 
 }

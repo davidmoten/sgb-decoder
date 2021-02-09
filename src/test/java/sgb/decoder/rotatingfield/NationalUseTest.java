@@ -13,5 +13,6 @@ public class NationalUseTest {
         NationalUse a = new NationalUse("11011");
         assertEquals(TestingUtil.readResource("/national-use-to-string.txt"),
                 a.toString());
+        assertEquals(RotatingFieldType.NATIONAL_USE, a.rotatingFieldType());
     }
 }

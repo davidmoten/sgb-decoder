@@ -3,6 +3,9 @@ package sgb.decoder.internal;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import java.text.DecimalFormat;
+import java.time.OffsetTime;
+import java.time.ZoneOffset;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -29,6 +32,17 @@ public class HasFormatterHelperTest {
 	@Test
 	public void testIsPresent() {
 		assertFalse(HasFormatterHelper.isPresent(null));
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testToJsonUnsupportedObject() {
+		HasFormatterHelper.toJson(new DecimalFormat("00"));
+	}
+	
+	@Test
+	public void testToJsonOffsetTime() {
+		String json = HasFormatterHelper.toJson(OffsetTime.of(15, 35, 44, 0, ZoneOffset.UTC));
+		assertEquals("\"15:35:44Z\"", json);
 	}
 
 }

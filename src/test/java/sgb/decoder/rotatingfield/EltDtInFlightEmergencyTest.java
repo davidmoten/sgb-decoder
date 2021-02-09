@@ -20,6 +20,7 @@ public class EltDtInFlightEmergencyTest {
                 Optional.of(Range.create(50, RangeEndType.EXCLUSIVE, 75, RangeEndType.INCLUSIVE)));
         assertEquals(TestingUtil.readResource("/elt-dt-in-flight-emergency-to-string.txt"),
                 a.toString());
+        assertEquals(RotatingFieldType.ELT_DT_IN_FLIGHT_EMERGENCY, a.rotatingFieldType());
     }
 
 }

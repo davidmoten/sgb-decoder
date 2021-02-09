@@ -8,12 +8,11 @@ import sgb.decoder.internal.Fields;
 @Fields(fields = { "rotatingFieldType", "elapsedTimeSinceActivationHours", "timeSinceLastEncodedLocationMinutes",
 		"altitudeEncodedLocationMetres", "dilutionPrecisionHdop", "dilutionPrecisionDop", "activationMethod",
 		"remainingBatteryCapacityPercent", "gnssStatus" }, //
-		serializedNames = { RotatingField.ROTATING_FIELD_TYPE_SERIALIZED_NAME, "elapsedTimeSinceActivationHours",
+		serializedNames = { RotatingFieldConstants.ROTATING_FIELD_TYPE_SERIALIZED_NAME, "elapsedTimeSinceActivationHours",
 				"timeSinceLastEncodedLocationMinutes", "altitudeEncodedLocationMetres", "dilutionPrecisionHdop",
 				"dilutionPrecisionDop", "activationMethod", "remainingBatteryCapacityPercent", "gnssStatus" })
 public final class ObjectiveRequirements implements RotatingField, HasFormatter {
 
-	@SuppressWarnings("unused")
 	// used for serialization
 	private final RotatingFieldType rotatingFieldType = RotatingFieldType.OBJECTIVE_REQUIREMENTS;
 	private final int elapsedTimeSinceActivationHours;
@@ -36,6 +35,10 @@ public final class ObjectiveRequirements implements RotatingField, HasFormatter 
 		this.activationMethod = activationMethod;
 		this.remainingBatteryCapacityPercent = remainingBatteryCapacityPercent;
 		this.gnssStatus = gnssStatus;
+	}
+	
+	public RotatingFieldType rotatingFieldType() {
+		return rotatingFieldType;
 	}
 
 	public int elapsedTimeSinceActivationHours() {

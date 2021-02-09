@@ -8,11 +8,10 @@ import sgb.decoder.internal.Fields;
 
 @Fields(fields = {"rotatingFieldType", "timeOfLastEncodedLocation", "altitudeEncodedLocationMetres", "triggeringEvent", "gnssStatus",
 		"remainingBatteryCapacityPercent" }, //
-		serializedNames = {RotatingField.ROTATING_FIELD_TYPE_SERIALIZED_NAME, "timeOfLastEncodedLocation", "altitudeEncodedLocationMetres", "triggeringEvent",
+		serializedNames = {RotatingFieldConstants.ROTATING_FIELD_TYPE_SERIALIZED_NAME, "timeOfLastEncodedLocation", "altitudeEncodedLocationMetres", "triggeringEvent",
 				"gnssStatus", "remainingBatteryCapacityPercent" })
 public final class EltDtInFlightEmergency implements RotatingField, HasFormatter {
 	
-	@SuppressWarnings("unused")
 	// used for serialization
 	private final RotatingFieldType rotatingFieldType = RotatingFieldType.ELT_DT_IN_FLIGHT_EMERGENCY;
 
@@ -29,6 +28,10 @@ public final class EltDtInFlightEmergency implements RotatingField, HasFormatter
 		this.triggeringEvent = triggeringEvent;
 		this.gnssStatus = gnssStatus;
 		this.remainingBatteryCapacityPercent = remainingBatteryCapacityPercent;
+	}
+	
+	public RotatingFieldType rotatingFieldType() {
+		return rotatingFieldType;
 	}
 
 	public OffsetTime timeOfLastEncodedLocation() {
