@@ -70,7 +70,7 @@ public final class JsonSchema {
 							}
 						} else if (type.typeName.equals("string") && !type.enumeration.isEmpty()) {
 							StringBuilder json = new StringBuilder();
-							json.append(quoted(definitionName(cls)) + COLON + "{");
+							json.append(quoted(definitionName(f.javaType)) + COLON + "{");
 							add(json, "type", "string");
 							json.append(", ");
 							json.append(quoted("enum") + COLON);
@@ -104,7 +104,18 @@ public final class JsonSchema {
 				json.append(", ");
 				json.append(properties);
 			}
-			// TODO add required fields
+			
+			String required = Arrays.stream(cls.getDeclaredFields()) //
+					.filter(f -> !isStatic(f)) //
+					.map(JsonSchema::toMyField) //
+					.filter(f -> f.required) //
+					.map(f -> quoted(f.name)) //
+					.collect(Collectors.joining(", "));
+			
+			if (!required.isEmpty()) {
+				json.append(COMMA);
+				json.append(quoted("required") + COLON + "[" + required + "]");
+			}
 			json.append("}");
 			clsNameDefinitions.put(cls.getName(), new Definition(cls.getName(), json.toString()));
 		}
