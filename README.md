@@ -152,4 +152,4 @@ Here's an example of a canonical form using JSON:
 }
 ```
 
-Note that the canonical form in JSON would not have to be exactly matched as a string during a test for compliance. We don't care about whitespace outside of expressions (new lines, indents) so the match would be based on JSON equality. Every major programming language will have support for this sort of equality match (either in an open-source library or in the base platform).
+Note that the canonical form in JSON would not have to be exactly matched as a string during a test for compliance. We don't care about whitespace outside of expressions (new lines, indents) so the match would be based on JSON equality. Every major programming language has support for this sort of equality match (either in an open-source library or in the base platform).
