@@ -187,9 +187,7 @@
                 "#/definitions/Rls",
                 "#/definitions/UnknownRotatingField"
             ],
-            "properties" : {
-                
-            }
+            
         },
         "Aviation24BitAddress" : {
             "type" : "object",
@@ -213,9 +211,7 @@
                 "#/definitions/Mmsi",
                 "#/definitions/RadioCallSign"
             ],
-            "properties" : {
-                
-            }
+            
         },
         "ObjectiveRequirements" : {
             "type" : "object",

@@ -74,9 +74,8 @@ public final class JsonSchema {
 							add(json, "type", "string");
 							json.append(", ");
 							json.append(quoted("enum") + COLON);
-							json.append(
-									"[" + type.enumeration.stream().map(JsonSchema::quoted).collect(Collectors.joining(COMMA))
-											+ "]");
+							json.append("[" + type.enumeration.stream().map(JsonSchema::quoted)
+									.collect(Collectors.joining(COMMA)) + "]");
 							json.append("}");
 							clsNameDefinitions.put(type.typeName, new Definition(type.typeName, json.toString()));
 						}
@@ -153,12 +152,17 @@ public final class JsonSchema {
 	}
 
 	private static String properties(Class<?> cls) {
-		return quoted("properties") + COLON + "{" + Arrays.stream(cls.getDeclaredFields()) //
+		String content = Arrays.stream(cls.getDeclaredFields()) //
 				.filter(f -> !isStatic(f)) //
 				.map(JsonSchema::toMyField) //
 				.map(JsonSchema::generateDefinition) //
-				.collect(Collectors.joining(",")) //
-				+ "}";
+				.collect(Collectors.joining(","));
+		if (content.isEmpty()) {
+			return "";
+		} else {
+			return quoted("properties") + COLON + "{" + content //
+					+ "}";
+		}
 	}
 
 	private static boolean isStatic(Field f) {
