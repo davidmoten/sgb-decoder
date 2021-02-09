@@ -10,7 +10,6 @@ import com.github.davidmoten.guavamini.Preconditions;
 import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
 
 import sgb.decoder.internal.Bits;
-import sgb.decoder.internal.Fields;
 import sgb.decoder.internal.Hex;
 import sgb.decoder.rotatingfield.ActivationMethod;
 import sgb.decoder.rotatingfield.BeaconFeedback;
@@ -38,12 +37,6 @@ import sgb.decoder.vesselid.VesselId;
 /**
  * Decodes a binary beacon detection message. Based on C/T.018 Rev 6 (May 2020).
  */
-@Fields(fields = { "tac", "serialNo", "countryCode", "hasAtLeastOneEnabledHomingSignal", "hasEnabledRls",
-		"isTestProtocolMessage", "encodedGnssPosition", "vesselId", "beaconType", "rotatingField", "beacon23HexId",
-		"beacon15HexId" }, //
-		serializedNames = { "tac", "serialNo", "countryCode", "hasAtLeastOneEnabledHomingSignal", "hasEnabledRLS",
-				"isTestProtocolMessage", "encodedGnssPosition", "vesselId", "beaconType", "rotatingField",
-				"beacon23HexId", "beacon15HexId" })
 public final class Detection implements HasFormatter {
 
 	private static final Bits NO_ENCODED_LOCATION_CAPABILITY = Bits
@@ -59,10 +52,8 @@ public final class Detection implements HasFormatter {
 	private final Optional<VesselId> vesselId;
 	private final BeaconType beaconType;
 	private final RotatingField rotatingField;
-
-	private String beacon23HexId;
-
-	private String beacon15HexId;
+	private final String beacon23HexId;
+	private final String beacon15HexId;
 
 	private Detection(Bits bits) {
 		Preconditions.checkArgument(bits.length() == 202, "length should be 202 but was " + bits.length());

@@ -49,11 +49,9 @@ public final class JsonSchema {
 	}
 
 	private static final class Definition {
-		final String javaClassName;
 		final String json;
 
-		Definition(String javaClassName, String json) {
-			this.javaClassName = javaClassName;
+		Definition(String json) {
 			this.json = json;
 		}
 	}
@@ -79,7 +77,7 @@ public final class JsonSchema {
 							json.append("[" + type.enumeration.stream().map(JsonSchema::quoted)
 									.collect(Collectors.joining(COMMA)) + "]");
 							json.append("}");
-							clsNameDefinitions.put(type.typeName, new Definition(type.typeName, json.toString()));
+							clsNameDefinitions.put(type.typeName, new Definition(json.toString()));
 						}
 					});
 			final String type;
@@ -119,7 +117,7 @@ public final class JsonSchema {
 				json.append(quoted("required") + COLON + "[" + required + "]");
 			}
 			json.append("}");
-			clsNameDefinitions.put(cls.getName(), new Definition(cls.getName(), json.toString()));
+			clsNameDefinitions.put(cls.getName(), new Definition(json.toString()));
 		}
 	}
 
