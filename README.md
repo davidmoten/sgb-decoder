@@ -109,7 +109,7 @@ Clearly one test file in the kit does not cut it. There are many variations on f
 
 Given that a service implementation of the decoder would probably serialize the decoded structure into JSON or XML, it probably makes sense to use one of those text formats to hold the canonical decoded form so that the implementer can reuse the canonical form work.
 
-If JSON or XML was used for the canonical format then it should also be described by a schema document (JSON Schema or XSD).
+If JSON or XML was used for the canonical form then it should also be described by a schema document (JSON Schema or XSD). This library offers a JSON form.
 
 Here's an example of a canonical form using JSON:
 ```json
@@ -150,4 +150,6 @@ Here's an example of a canonical form using JSON:
     "Beacon23HexId" : "9934039823d000000000000",
     "Beacon15HexId" : "9934039823d0000"
 }
+
+Note that the canonical form in JSON would not have to be exactly matched as a string during a test for compliance. We don't care about whitespace outside of expressions (new lines, indents) so the match would be based on JSON equality. Every major programming language will have support for this sort of equality match (either in an open-source library or in the base platform).
 ```
