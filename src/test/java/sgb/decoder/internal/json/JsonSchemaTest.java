@@ -1,5 +1,7 @@
 package sgb.decoder.internal.json;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -10,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
+
+import com.github.davidmoten.junit.Asserts;
 
 import sgb.decoder.Detection;
 import sgb.decoder.TestingUtil;
@@ -40,6 +44,26 @@ public class JsonSchemaTest {
 		File file = new File("src/main/json-schema/detection-schema.json");
 		file.delete();
 		Files.write(file.toPath(), schema.getBytes(StandardCharsets.UTF_8));
+	}
+
+	@Test
+	public void testSimpleNameNoPackage() {
+		assertEquals("Hello", JsonSchema.simpleName("Hello"));
+	}
+
+	@Test
+	public void testSimpleNameHasPackage() {
+		assertEquals("There", JsonSchema.simpleName("hello.There"));
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void testToClassNotFound() {
+		JsonSchema.toClass("ThisClassDoesNotExist");
+	}
+	
+	@Test
+	public void isUtilityClass() {
+		Asserts.assertIsUtilityClass(JsonSchema.class);
 	}
 
 }

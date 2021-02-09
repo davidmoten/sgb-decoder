@@ -2,16 +2,22 @@ package sgb.decoder.internal;
 
 import java.lang.reflect.Field;
 import java.time.OffsetTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import com.github.davidmoten.guavamini.Preconditions;
+import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
 
 import sgb.decoder.HasFormatter;
 
 public final class HasFormatterHelper {
+
+	private HasFormatterHelper() {
+		// prevent instantiation
+	}
 
 	private static final char QUOTE = '"';
 
@@ -32,8 +38,7 @@ public final class HasFormatterHelper {
 		} else if (o instanceof String) {
 			return quoted(o);
 		} else if (o instanceof OffsetTime) {
-			// TODO conform to ISO8601 time
-			return quoted(o);
+			return quoted(DateTimeFormatter.ISO_TIME.format((OffsetTime) o));
 		} else if ((o.getClass().isEnum())) {
 			return quoted(o);
 		} else {
@@ -54,15 +59,7 @@ public final class HasFormatterHelper {
 			for (int i = 0; i < a.fields().length; i++) {
 				String fieldName = a.fields()[i];
 				String serializedName = a.serializedNames()[i];
-				Object value;
-				try {
-					Field fld = o.getClass().getDeclaredField(fieldName);
-					fld.setAccessible(true);
-					value = fld.get(o);
-				} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
-						| SecurityException e) {
-					throw new RuntimeException(e);
-				}
+				Object value = getValue(o, fieldName);
 				if (isPresent(value)) {
 					if (s.length() > 0) {
 						s.append(", ");
@@ -74,7 +71,19 @@ public final class HasFormatterHelper {
 		}
 	}
 
-	private static boolean isPresent(Object o) {
+	@VisibleForTesting
+	static Object getValue(Object o, String fieldName) {
+		try {
+			Field fld = o.getClass().getDeclaredField(fieldName);
+			fld.setAccessible(true);
+			return fld.get(o);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@VisibleForTesting
+	static boolean isPresent(Object o) {
 		if (o instanceof Optional) {
 			return ((Optional<?>) o).isPresent();
 		} else {
@@ -88,14 +97,7 @@ public final class HasFormatterHelper {
 		for (int i = 0; i < a.fields().length; i++) {
 			String fieldName = a.fields()[i];
 			String serializedName = a.serializedNames()[i];
-			final Object value;
-			try {
-				Field fld = o.getClass().getDeclaredField(fieldName);
-				fld.setAccessible(true);
-				value = fld.get(o);
-			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-				throw new RuntimeException(e);
-			}
+			Object value = getValue(o, fieldName);
 			if (isPresent(value)) {
 				map.put(serializedName, value);
 			}

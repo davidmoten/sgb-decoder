@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
+
 import sgb.decoder.Detection;
 
 /**
@@ -23,6 +25,10 @@ public final class JsonSchema {
 	private static final char DQ = '"';
 	private static final String COLON = " : ";
 	private static final String COMMA = ",";
+
+	private JsonSchema() {
+		// prevent instantiation
+	}
 
 	public static String generateSchema(Class<?> cls, Map<Class<?>, List<Class<?>>> subclasses) {
 		// use all private fields to generate schema
@@ -63,11 +69,7 @@ public final class JsonSchema {
 					.forEach(f -> {
 						JsonType type = toJsonType(f.javaType);
 						if (type.typeName.equals("object")) {
-							try {
-								collectDefinitions(Class.forName(f.javaType), clsNameDefinitions, subclasses);
-							} catch (ClassNotFoundException e) {
-								throw new RuntimeException(e);
-							}
+							collectDefinitions(toClass(f.javaType), clsNameDefinitions, subclasses);
 						} else if (type.typeName.equals("string") && !type.enumeration.isEmpty()) {
 							StringBuilder json = new StringBuilder();
 							json.append(quoted(definitionName(f.javaType)) + COLON + "{");
@@ -104,20 +106,29 @@ public final class JsonSchema {
 				json.append(", ");
 				json.append(properties);
 			}
-			
+
 			String required = Arrays.stream(cls.getDeclaredFields()) //
 					.filter(f -> !isStatic(f)) //
 					.map(JsonSchema::toMyField) //
 					.filter(f -> f.required) //
 					.map(f -> quoted(f.name)) //
 					.collect(Collectors.joining(", "));
-			
+
 			if (!required.isEmpty()) {
 				json.append(COMMA);
 				json.append(quoted("required") + COLON + "[" + required + "]");
 			}
 			json.append("}");
 			clsNameDefinitions.put(cls.getName(), new Definition(cls.getName(), json.toString()));
+		}
+	}
+
+	@VisibleForTesting
+	static Class<?> toClass(String javaClassName) {
+		try {
+			return Class.forName(javaClassName);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -156,7 +167,8 @@ public final class JsonSchema {
 		return simpleName(javaClassName);
 	}
 
-	private static String simpleName(String javaClassName) {
+	@VisibleForTesting
+	static String simpleName(String javaClassName) {
 		int i = javaClassName.lastIndexOf('.');
 		if (i == -1) {
 			return javaClassName;
@@ -223,12 +235,7 @@ public final class JsonSchema {
 		if (t != null) {
 			return new JsonType(t, Collections.emptyList());
 		} else {
-			Class<?> cls;
-			try {
-				cls = Class.forName(javaType);
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException(e);
-			}
+			Class<?> cls = toClass(javaType);
 			if (cls.isEnum()) {
 				List<String> list = Arrays.stream(cls.getEnumConstants()).map(x -> x.toString())
 						.collect(Collectors.toList());

@@ -14,9 +14,4 @@ public final class Util {
                 .collect(Collectors.joining());
     }
     
-    public static FieldsBuilder fieldsBuilder() {
-        return new FieldsBuilder();
-    }
-    
-    
 }
