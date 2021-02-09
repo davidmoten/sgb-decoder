@@ -459,7 +459,7 @@ public class DetectionTest {
                 + "000000000"); // spare
         EltDtInFlightEmergency a = (EltDtInFlightEmergency) Detection.readRotatingField(b);
         assertEquals(OffsetTime.of(2, 16, 31, 0, ZoneOffset.UTC),
-                a.timeOfLastEncodedLocationSeconds());
+                a.timeOfLastEncodedLocation());
         assertEquals(1952 - 400, a.altitudeEncodedLocationMetres());
         assertEquals(TriggeringEvent.G_SWITCH_OR_DEFORMATION_ACTIVATION, a.triggeringEvent());
         assertEquals(GnssStatus.LOCATION_2D, a.gnssStatus());

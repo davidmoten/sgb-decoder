@@ -13,11 +13,11 @@ public final class RangeTest {
     @Test
     public void testRange() {
         Range r = Range.create(1, RangeEndType.EXCLUSIVE, 6, RangeEndType.INCLUSIVE);
-        assertEquals(1, r.start());
-        assertEquals(RangeEndType.EXCLUSIVE, r.startType());
-        assertEquals(6, r.finish());
-        assertEquals(RangeEndType.INCLUSIVE, r.finishType());
-        assertEquals("Range [start=1, startType=EXCLUSIVE, finish=6, finishType=INCLUSIVE]",
+        assertEquals(1, r.min());
+        assertEquals(RangeEndType.EXCLUSIVE, r.minType());
+        assertEquals(6, r.max());
+        assertEquals(RangeEndType.INCLUSIVE, r.maxType());
+        assertEquals("Range [min=1, minType=EXCLUSIVE, max=6, maxType=INCLUSIVE]",
                 r.toString());
         // get coverage
         r.hashCode();
@@ -26,8 +26,8 @@ public final class RangeTest {
     @Test
     public void testRangeMissing() {
         Range r = Range.create(5, RangeEndType.MISSING, 7, RangeEndType.MISSING);
-        assertEquals(0, r.start());
-        assertEquals(0, r.finish());
+        assertEquals(0, r.min());
+        assertEquals(0, r.max());
     }
 
     @Test

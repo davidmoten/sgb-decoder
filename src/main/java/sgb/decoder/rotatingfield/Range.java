@@ -10,53 +10,53 @@ import sgb.decoder.internal.json.JsonSchema;
 @Fields(fields = {}, serializedNames = {})
 public final class Range implements HasFormatter {
 
-	private final int start;
-	private RangeEndType startType;
-	private final int finish;
-	private RangeEndType finishType;
+	private final int min;
+	private RangeEndType minType;
+	private final int max;
+	private RangeEndType maxType;
 
-	private Range(int start, RangeEndType startType, int finish, RangeEndType finishType) {
-		Preconditions.checkNotNull(startType);
-		Preconditions.checkNotNull(finishType);
-		this.start = start;
-		this.startType = startType;
-		this.finish = finish;
-		this.finishType = finishType;
+	private Range(int min, RangeEndType minType, int max, RangeEndType maxType) {
+		Preconditions.checkNotNull(minType);
+		Preconditions.checkNotNull(maxType);
+		this.min = min;
+		this.minType = minType;
+		this.max = max;
+		this.maxType = maxType;
 	}
 
-	public static Range create(int start, RangeEndType startType, int finish, RangeEndType finishType) {
-		return new Range(startType == RangeEndType.MISSING ? 0 : start, startType,
-				finishType == RangeEndType.MISSING ? 0 : finish, finishType);
+	public static Range create(int min, RangeEndType minType, int max, RangeEndType maxType) {
+		return new Range(minType == RangeEndType.MISSING ? 0 : min, minType,
+				maxType == RangeEndType.MISSING ? 0 : max, maxType);
 	}
 
-	public static Range createWithStart(int start, RangeEndType startType) {
-		return create(start, startType, 0, RangeEndType.MISSING);
+	public static Range createWithMin(int min, RangeEndType minType) {
+		return create(min, minType, 0, RangeEndType.MISSING);
 	}
 
-	public int start() {
-		return start;
+	public int min() {
+		return min;
 	}
 
-	public RangeEndType startType() {
-		return startType;
+	public RangeEndType minType() {
+		return minType;
 	}
 
-	public int finish() {
-		return finish;
+	public int max() {
+		return max;
 	}
 
-	public RangeEndType finishType() {
-		return finishType;
+	public RangeEndType maxType() {
+		return maxType;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + finish;
-		result = prime * result + finishType.hashCode();
-		result = prime * result + start;
-		result = prime * result + startType.hashCode();
+		result = prime * result + max;
+		result = prime * result + maxType.hashCode();
+		result = prime * result + min;
+		result = prime * result + minType.hashCode();
 		return result;
 	}
 
@@ -69,27 +69,27 @@ public final class Range implements HasFormatter {
 		if (getClass() != o.getClass())
 			return false;
 		Range other = (Range) o;
-		if (finish != other.finish)
+		if (max != other.max)
 			return false;
-		if (finishType != other.finishType)
+		if (maxType != other.maxType)
 			return false;
-		if (start != other.start)
+		if (min != other.min)
 			return false;
-		if (startType != other.startType)
+		if (minType != other.minType)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Range [start=" + start + ", startType=" + startType + ", finish=" + finish + ", finishType="
-				+ finishType + "]";
+		return "Range [min=" + min + ", minType=" + minType + ", max=" + max + ", maxType="
+				+ maxType + "]";
 	}
 
 	@Override
 	public String toString(Indent indent) {
-		String a = startStr();
-		String b = finishStr();
+		String a = minStr();
+		String b = maxStr();
 		if (!a.isEmpty() && !b.isEmpty()) {
 			return a + " and " + b;
 		} else {
@@ -97,48 +97,41 @@ public final class Range implements HasFormatter {
 		}
 	}
 
-	private String startStr() {
-		if (startType == RangeEndType.MISSING) {
+	private String minStr() {
+		if (minType == RangeEndType.MISSING) {
 			return "";
-		} else if (startType == RangeEndType.INCLUSIVE) {
-			return ">=" + start;
+		} else if (minType == RangeEndType.INCLUSIVE) {
+			return ">=" + min;
 		} else {
-			return ">" + start;
+			return ">" + min;
 		}
 	}
 
-	private String finishStr() {
-		if (finishType == RangeEndType.MISSING) {
+	private String maxStr() {
+		if (maxType == RangeEndType.MISSING) {
 			return "";
-		} else if (finishType == RangeEndType.INCLUSIVE) {
-			return "<=" + finish;
+		} else if (maxType == RangeEndType.INCLUSIVE) {
+			return "<=" + max;
 		} else {
-			return "<" + finish;
+			return "<" + max;
 		}
 	}
 
 	@Override
 	public String toJson() {
 		StringBuilder b = new StringBuilder();
-		if (startType != RangeEndType.MISSING) {
-			b.append(JsonSchema.quoted("start") + " : " + start + ", ");
-			b.append(JsonSchema.quoted("startInclusive") + " : " + (startType == RangeEndType.INCLUSIVE));
+		if (minType != RangeEndType.MISSING) {
+			b.append(JsonSchema.quoted("min") + " : " + min + ", ");
+			b.append(JsonSchema.quoted("minInclusive") + " : " + (minType == RangeEndType.INCLUSIVE));
 		}
-		if (finishType != RangeEndType.MISSING) {
+		if (maxType != RangeEndType.MISSING) {
 			if (b.length() > 0) {
 				b.append(", ");
 			}
-			b.append(JsonSchema.quoted("finish") + " : " + finish + ", ");
-			b.append(JsonSchema.quoted("finishInclusive") + " : " + (finishType == RangeEndType.INCLUSIVE));
+			b.append(JsonSchema.quoted("max") + " : " + max + ", ");
+			b.append(JsonSchema.quoted("maxInclusive") + " : " + (maxType == RangeEndType.INCLUSIVE));
 		}
 		return "{" + b.toString() + "}";
 	}
-
-//    @Override
-//    public Map<String, Object> fields() {
-//        FieldsBuilder b = Util.fieldsBuilder();
-
-//        return b.build();
-//    }
 
 }

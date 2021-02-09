@@ -91,7 +91,7 @@
                 "rotatingFieldType" : {
                     "type" : "string"
                 },
-                "timeOfLastEncodedLocationSeconds" : {
+                "timeOfLastEncodedLocation" : {
                     "type" : "time"
                 },
                 "altitudeEncodedLocationMetres" : {
@@ -109,7 +109,7 @@
             },
             "required" : [
                 "rotatingFieldType",
-                "timeOfLastEncodedLocationSeconds",
+                "timeOfLastEncodedLocation",
                 "altitudeEncodedLocationMetres",
                 "triggeringEvent",
                 "gnssStatus"
@@ -118,24 +118,24 @@
         "Range" : {
             "type" : "object",
             "properties" : {
-                "start" : {
+                "min" : {
                     "type" : "integer"
                 },
-                "startType" : {
+                "minType" : {
                     "type" : "string"
                 },
-                "finish" : {
+                "max" : {
                     "type" : "integer"
                 },
-                "finishType" : {
+                "maxType" : {
                     "type" : "string"
                 }
             },
             "required" : [
-                "start",
-                "startType",
-                "finish",
-                "finishType"
+                "min",
+                "minType",
+                "max",
+                "maxType"
             ]
         },
         "BeaconFeedback" : {

@@ -1,6 +1,6 @@
 EltDtInFlightEmergency
   rotatingFieldType = ELT_DT_IN_FLIGHT_EMERGENCY
-  timeOfLastEncodedLocationSeconds = 15:44:32Z
+  timeOfLastEncodedLocation = 15:44:32Z
   altitudeEncodedLocationMetres = 57
   triggeringEvent = MANUAL_ACTIVATION_BY_CREW
   gnssStatus = LOCATION_3D

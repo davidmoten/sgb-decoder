@@ -224,7 +224,7 @@ public final class Detection implements HasFormatter {
 		} else if (code == 13) {
 			return Optional.of(Range.create(30, RangeEndType.EXCLUSIVE, 50, RangeEndType.INCLUSIVE));
 		} else if (code == 14) {
-			return Optional.of(Range.createWithStart(50, RangeEndType.EXCLUSIVE));
+			return Optional.of(Range.createWithMin(50, RangeEndType.EXCLUSIVE));
 		} else {
 			return Optional.empty();
 		}
