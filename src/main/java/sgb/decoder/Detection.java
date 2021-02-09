@@ -41,9 +41,9 @@ import sgb.decoder.vesselid.VesselId;
 @Fields(fields = { "tac", "serialNo", "countryCode", "hasAtLeastOneEnabledHomingSignal", "hasEnabledRls",
 		"isTestProtocolMessage", "encodedGnssPosition", "vesselId", "beaconType", "rotatingField", "beacon23HexId",
 		"beacon15HexId" }, //
-		serializedNames = { "TAC", "SerialNo", "CountryCode", "HasAtLeastOneEnabledHomingSignal", "HasEnabledRLS",
-				"IsTestProtocolMessage", "EncodedGnssPosition", "VesselId", "BeaconType", "RotatingField",
-				"Beacon23HexId", "Beacon15HexId" })
+		serializedNames = { "tac", "serialNo", "countryCode", "hasAtLeastOneEnabledHomingSignal", "hasEnabledRLS",
+				"isTestProtocolMessage", "encodedGnssPosition", "vesselId", "beaconType", "rotatingField",
+				"beacon23HexId", "beacon15HexId" })
 public final class Detection implements HasFormatter {
 
 	private static final Bits NO_ENCODED_LOCATION_CAPABILITY = Bits
