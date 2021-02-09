@@ -33,7 +33,12 @@ public class Json {
 		s.append(COMMA + LF);
 		add(s, "$schema", "TODO");
 		s.append(COMMA + LF);
-		s.append(properties(cls));
+		s.append(quoted("definitions") + COLON + "{");
+		s.append(clsNameDefinitions.values() //
+				.stream() //
+				.map(x -> x.json) //
+				.collect(Collectors.joining(",\n")));
+		s.append("}");
 		return "{\n" + s.toString() + "\n}";
 	}
 
@@ -69,7 +74,7 @@ public class Json {
 			json.append(quoted(definitionName(cls)) + COLON + "{");
 			add(json, "type", "object");
 			json.append(properties(cls));
-			// add required fields
+			// TODO add required fields
 			json.append("}");
 			clsNameDefinitions.put(cls.getName(), new Definition(cls.getName(), json.toString()));
 		}
@@ -80,7 +85,11 @@ public class Json {
 	}
 
 	private static String definitionName(Class<?> cls) {
-		return simpleName(cls.getName());
+		return definitionName(cls.getName());
+	}
+	
+	private static String definitionName(String javaClassName) {
+		return simpleName(javaClassName);
 	}
 
 	private static String simpleName(String javaClassName) {
