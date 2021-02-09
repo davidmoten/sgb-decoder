@@ -18,7 +18,7 @@ import sgb.decoder.Detection;
  * Simplified JSON schema generator targeting {@link Detection} class and is
  * dependents.
  */
-public final class Json {
+public final class JsonSchema {
 
 	private static final char DQ = '"';
 	private static final String COLON = " : ";
@@ -59,7 +59,7 @@ public final class Json {
 			// will be an implementation of HasFormatter
 			Arrays.stream(cls.getDeclaredFields()) //
 					.filter(f -> !isStatic(f)) //
-					.map(Json::toMyField) //
+					.map(JsonSchema::toMyField) //
 					.forEach(f -> {
 						JsonType type = toJsonType(f.javaType);
 						if (type.typeName.equals("object")) {
@@ -75,7 +75,7 @@ public final class Json {
 							json.append(", ");
 							json.append(quoted("enum") + COLON);
 							json.append(
-									"[" + type.enumeration.stream().map(Json::quoted).collect(Collectors.joining(COMMA))
+									"[" + type.enumeration.stream().map(JsonSchema::quoted).collect(Collectors.joining(COMMA))
 											+ "]");
 							json.append("}");
 							clsNameDefinitions.put(type.typeName, new Definition(type.typeName, json.toString()));
@@ -155,8 +155,8 @@ public final class Json {
 	private static String properties(Class<?> cls) {
 		return quoted("properties") + COLON + "{" + Arrays.stream(cls.getDeclaredFields()) //
 				.filter(f -> !isStatic(f)) //
-				.map(Json::toMyField) //
-				.map(Json::generateDefinition) //
+				.map(JsonSchema::toMyField) //
+				.map(JsonSchema::generateDefinition) //
 				.collect(Collectors.joining(",")) //
 				+ "}";
 	}

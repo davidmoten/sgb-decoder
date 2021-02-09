@@ -5,7 +5,7 @@ import com.github.davidmoten.guavamini.Preconditions;
 import sgb.decoder.HasFormatter;
 import sgb.decoder.Indent;
 import sgb.decoder.internal.Fields;
-import sgb.decoder.internal.json.Json;
+import sgb.decoder.internal.json.JsonSchema;
 
 @Fields(fields = {}, serializedNames = {})
 public final class Range implements HasFormatter {
@@ -121,15 +121,15 @@ public final class Range implements HasFormatter {
 	public String toJson() {
 		StringBuilder b = new StringBuilder();
 		if (startType != RangeEndType.MISSING) {
-			b.append(Json.quoted("start") + " : " + start + ", ");
-			b.append(Json.quoted("startInclusive") + " : " + (startType == RangeEndType.INCLUSIVE));
+			b.append(JsonSchema.quoted("start") + " : " + start + ", ");
+			b.append(JsonSchema.quoted("startInclusive") + " : " + (startType == RangeEndType.INCLUSIVE));
 		}
 		if (finishType != RangeEndType.MISSING) {
 			if (b.length() > 0) {
 				b.append(", ");
 			}
-			b.append(Json.quoted("finish") + " : " + finish + ", ");
-			b.append(Json.quoted("finishInclusive") + " : " + (finishType == RangeEndType.INCLUSIVE));
+			b.append(JsonSchema.quoted("finish") + " : " + finish + ", ");
+			b.append(JsonSchema.quoted("finishInclusive") + " : " + (finishType == RangeEndType.INCLUSIVE));
 		}
 		return "{" + b.toString() + "}";
 	}
