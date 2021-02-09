@@ -99,8 +99,11 @@ public final class JsonSchema {
 			StringBuilder json = new StringBuilder();
 			json.append(quoted(definitionName(cls)) + COLON + "{");
 			json.append(quoted("type") + COLON + type);
-			json.append(", ");
-			json.append(properties(cls));
+			String properties = properties(cls);
+			if (!properties.isEmpty()) {
+				json.append(", ");
+				json.append(properties);
+			}
 			// TODO add required fields
 			json.append("}");
 			clsNameDefinitions.put(cls.getName(), new Definition(cls.getName(), json.toString()));
@@ -157,7 +160,7 @@ public final class JsonSchema {
 				.map(JsonSchema::toMyField) //
 				.map(JsonSchema::generateDefinition) //
 				.collect(Collectors.joining(","));
-		if (content.isEmpty()) {
+		if (content.trim().isEmpty()) {
 			return "";
 		} else {
 			return quoted("properties") + COLON + "{" + content //
