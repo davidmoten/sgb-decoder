@@ -3,6 +3,7 @@ package sgb.decoder.internal.json;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
+import java.time.OffsetTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,29 +18,28 @@ import sgb.decoder.Detection;
  * Simplified JSON schema generator targeting {@link Detection} class and is
  * dependents.
  */
-public class Json {
+public final class Json {
 
-	private static final String LF = "\n";
 	private static final char DQ = '"';
 	private static final String COLON = " : ";
 	private static final String COMMA = ",";
 
-	public static String generateSchema(Class<?> cls) {
+	public static String generateSchema(Class<?> cls, Map<Class<?>, List<Class<?>>> subclasses) {
 		// use all private fields to generate schema
 		Map<String, Definition> clsNameDefinitions = new HashMap<>();
-		collectDefinitions(cls, clsNameDefinitions);
+		collectDefinitions(cls, clsNameDefinitions, subclasses);
 		StringBuilder s = new StringBuilder();
+		add(s, "$schema", "http://json-schema.org/draft/2019-09/schema#");
+		s.append(COMMA);
 		add(s, "$id", "TODO");
-		s.append(COMMA + LF);
-		add(s, "$schema", "TODO");
-		s.append(COMMA + LF);
+		s.append(COMMA);
 		s.append(quoted("definitions") + COLON + "{");
 		s.append(clsNameDefinitions.values() //
 				.stream() //
 				.map(x -> x.json) //
-				.collect(Collectors.joining(",\n")));
+				.collect(Collectors.joining(",")));
 		s.append("}");
-		return "{\n" + s.toString() + "\n}";
+		return "{" + s.toString() + "}";
 	}
 
 	private static final class Definition {
@@ -52,27 +52,55 @@ public class Json {
 		}
 	}
 
-	private static void collectDefinitions(Class<?> cls, Map<String, Definition> clsNameDefinitions) {
+	private static void collectDefinitions(Class<?> cls, Map<String, Definition> clsNameDefinitions,
+			Map<Class<?>, List<Class<?>>> subclasses) {
 		JsonType t = toJsonType(cls.getName());
-		if (t.typeName.equals("object")) {
+		if (t.typeName.equals("object") && !clsNameDefinitions.containsKey(cls.getName())) {
 			// will be an implementation of HasFormatter
 			Arrays.stream(cls.getDeclaredFields()) //
 					.filter(f -> !isStatic(f)) //
 					.map(Json::toMyField) //
-					.peek(f -> {
+					.forEach(f -> {
 						JsonType type = toJsonType(f.javaType);
 						if (type.typeName.equals("object")) {
 							try {
-								collectDefinitions(Class.forName(f.javaType), clsNameDefinitions);
+								collectDefinitions(Class.forName(f.javaType), clsNameDefinitions, subclasses);
 							} catch (ClassNotFoundException e) {
 								throw new RuntimeException(e);
 							}
+						} else if (type.typeName.equals("string") && !type.enumeration.isEmpty()) {
+							StringBuilder json = new StringBuilder();
+							json.append(quoted(definitionName(cls)) + COLON + "{");
+							add(json, "type", "string");
+							json.append(", ");
+							json.append(quoted("enum") + COLON);
+							json.append(
+									"[" + type.enumeration.stream().map(Json::quoted).collect(Collectors.joining(COMMA))
+											+ "]");
+							json.append("}");
+							clsNameDefinitions.put(type.typeName, new Definition(type.typeName, json.toString()));
 						}
 					});
-
+			final String type;
+			List<Class<?>> list = subclasses.get(cls);
+			if (list != null) {
+				StringBuilder s = new StringBuilder();
+				// cls must be an interface because we don't use class inheritance
+				for (Class<?> c : list) {
+					collectDefinitions(c, clsNameDefinitions, subclasses);
+					if (s.length() > 0) {
+						s.append(", ");
+					}
+					s.append(quoted(toRef(c)));
+				}
+				type = "[" + s.toString() + "]";
+			} else {
+				type = "object";
+			}
 			StringBuilder json = new StringBuilder();
 			json.append(quoted(definitionName(cls)) + COLON + "{");
-			add(json, "type", "object");
+			add(json, "type", type);
+			json.append(", ");
 			json.append(properties(cls));
 			// TODO add required fields
 			json.append("}");
@@ -80,14 +108,37 @@ public class Json {
 		}
 	}
 
+	private static String generateDefinition(MyField f) {
+		StringBuilder b = new StringBuilder();
+		b.append(DQ);
+		b.append(f.name);
+		b.append(DQ);
+		b.append(" : ");
+		b.append("{");
+		JsonType t = toJsonType(f.javaType);
+		final String type;
+		if (t.typeName.equals("object")) {
+			type = toRef(f.javaType);
+		} else {
+			type = t.typeName;
+		}
+		add(b, "type", type);
+		b.append("}");
+		return b.toString();
+	}
+
 	private static String toRef(Class<?> cls) {
-		return "#/definitions/" + cls.getSimpleName();
+		return "#/definitions/" + definitionName(cls);
+	}
+
+	private static String toRef(String javaClassName) {
+		return "#/definitions/" + definitionName(javaClassName);
 	}
 
 	private static String definitionName(Class<?> cls) {
 		return definitionName(cls.getName());
 	}
-	
+
 	private static String definitionName(String javaClassName) {
 		return simpleName(javaClassName);
 	}
@@ -102,9 +153,12 @@ public class Json {
 	}
 
 	private static String properties(Class<?> cls) {
-		return quoted("properties") + COLON + "{" + LF + Arrays.stream(cls.getDeclaredFields()) //
+		return quoted("properties") + COLON + "{" + Arrays.stream(cls.getDeclaredFields()) //
 				.filter(f -> !isStatic(f)) //
-				.map(Json::toMyField).map(Json::generateDefinition).collect(Collectors.joining(",\n")) + "}";
+				.map(Json::toMyField) //
+				.map(Json::generateDefinition) //
+				.collect(Collectors.joining(",")) //
+				+ "}";
 	}
 
 	private static boolean isStatic(Field f) {
@@ -124,25 +178,6 @@ public class Json {
 			required = true;
 		}
 		return new MyField(field.getName(), javaType, required);
-	}
-
-	private static String generateDefinition(MyField f) {
-		StringBuilder b = new StringBuilder();
-		b.append(DQ);
-		b.append(f.name);
-		b.append(DQ);
-		b.append(" : ");
-		b.append("{");
-		JsonType t = toJsonType(f.javaType);
-		add(b, "type", t.typeName);
-		if (!t.enumeration.isEmpty()) {
-			b.append("," + LF);
-			b.append(quoted("enum") + COLON);
-			b.append("[" + t.enumeration.stream().map(Json::quoted).collect(Collectors.joining(COMMA)) + "]");
-			b.append(LF);
-		}
-		b.append("}");
-		return b.toString();
 	}
 
 	private static void add(StringBuilder b, String key, String value) {
@@ -195,11 +230,8 @@ public class Json {
 		map.put(Double.class.getName(), "number");
 		map.put("double", "number");
 		map.put(String.class.getName(), "string");
+		map.put(OffsetTime.class.getName(), "time");
 		return map;
-	}
-
-	public static void main(String[] args) {
-		System.out.println(Json.generateSchema(Detection.class));
 	}
 
 }

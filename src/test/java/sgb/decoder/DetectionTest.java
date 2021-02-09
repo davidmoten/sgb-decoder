@@ -60,7 +60,9 @@ public class DetectionTest {
     public void testToJson() {
         Detection d = Detection.fromBitString(BITS);
         checkDetection(d);
+        System.out.println(d);
         System.out.println(TestingUtil.prettyPrintJSON(d.toJson()));
+        
     }
 
     @Test
