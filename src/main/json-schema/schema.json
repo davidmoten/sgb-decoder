@@ -179,9 +179,14 @@
             }
         },
         "RotatingField" : {
-            "type" : "[
-                "#/definitions/Cancellation", "#/definitions/EltDtInFlightEmergency", "#/definitions/NationalUse", "#/definitions/ObjectiveRequirements", "#/definitions/Rls", "#/definitions/UnknownRotatingField"
-            ]",
+            "type" : [
+                "#/definitions/Cancellation",
+                "#/definitions/EltDtInFlightEmergency",
+                "#/definitions/NationalUse",
+                "#/definitions/ObjectiveRequirements",
+                "#/definitions/Rls",
+                "#/definitions/UnknownRotatingField"
+            ],
             "properties" : {
                 
             }
@@ -201,9 +206,13 @@
             }
         },
         "VesselId" : {
-            "type" : "[
-                "#/definitions/AircraftOperatorAndSerialNumber", "#/definitions/AircraftRegistrationMarking", "#/definitions/Aviation24BitAddress", "#/definitions/Mmsi", "#/definitions/RadioCallSign"
-            ]",
+            "type" : [
+                "#/definitions/AircraftOperatorAndSerialNumber",
+                "#/definitions/AircraftRegistrationMarking",
+                "#/definitions/Aviation24BitAddress",
+                "#/definitions/Mmsi",
+                "#/definitions/RadioCallSign"
+            ],
             "properties" : {
                 
             }

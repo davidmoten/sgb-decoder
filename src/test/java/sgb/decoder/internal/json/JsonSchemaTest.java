@@ -27,10 +27,10 @@ import sgb.decoder.vesselid.Mmsi;
 import sgb.decoder.vesselid.RadioCallSign;
 import sgb.decoder.vesselid.VesselId;
 
-public class JsonTest {
+public class JsonSchemaTest {
 
 	@Test
-	public void test() throws IOException {
+	public void updateSchema() throws IOException {
 		Map<Class<?>, List<Class<?>>> map = new HashMap<>();
 		map.put(VesselId.class, Arrays.asList(AircraftOperatorAndSerialNumber.class, AircraftRegistrationMarking.class,
 				Aviation24BitAddress.class, Mmsi.class, RadioCallSign.class));

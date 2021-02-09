@@ -95,11 +95,11 @@ public final class JsonSchema {
 				}
 				type = "[" + s.toString() + "]";
 			} else {
-				type = "object";
+				type = quoted("object");
 			}
 			StringBuilder json = new StringBuilder();
 			json.append(quoted(definitionName(cls)) + COLON + "{");
-			add(json, "type", type);
+			json.append(quoted("type") + COLON + type);
 			json.append(", ");
 			json.append(properties(cls));
 			// TODO add required fields
