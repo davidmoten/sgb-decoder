@@ -114,18 +114,18 @@ If JSON or XML was used for the canonical form then it should also be described 
 Here's an example of a canonical form using JSON:
 ```json
 {
-    "TAC" : 230,
-    "SerialNo" : 573,
-    "CountryCode" : 201,
-    "HasAtLeastOneEnabledHomingSignal" : true,
-    "HasEnabledRLS" : false,
-    "IsTestProtocolMessage" : false,
-    "EncodedGnssPosition" : {
+    "tac" : 230,
+    "serialNo" : 573,
+    "countryCode" : 201,
+    "hasAtLeastOneEnabledHomingSignal" : true,
+    "hasEnabledRLS" : false,
+    "isTestProtocolMessage" : false,
+    "encodedGnssPosition" : {
         "latitude" : 48.79315185546875,
         "longitude" : 69.00875854492188
     },
-    "BeaconType" : "ELT_NOT_DT",
-    "RotatingField" : {
+    "beaconType" : "ELT_NOT_DT",
+    "rotatingField" : {
         "rotatingFieldType" : "OBJECTIVE_REQUIREMENTS",
         "elapsedTimeSinceActivationHours" : 1,
         "timeSinceLastEncodedLocationMinutes" : 6,
@@ -147,9 +147,10 @@ Here's an example of a canonical form using JSON:
         },
         "gnssStatus" : "LOCATION_3D"
     },
-    "Beacon23HexId" : "9934039823d000000000000",
-    "Beacon15HexId" : "9934039823d0000"
+    "beacon23HexId" : "9934039823d000000000000",
+    "beacon15HexId" : "9934039823d0000"
 }
+
 ```
 
 Note that the canonical form in JSON would not have to be exactly matched as a string during a test for compliance. We don't care about whitespace outside of expressions (new lines, indents) so the match would be based on JSON equality. Every major programming language has support for this sort of equality match (either in an open-source library or in the base platform).
