@@ -54,15 +54,14 @@ public class DetectionTest {
     public void testToBits() {
         Detection d = Detection.fromBitString(BITS);
         checkDetection(d);
+        System.out.println(d);
     }
     
     @Test
     public void testToJson() {
         Detection d = Detection.fromBitString(BITS);
         checkDetection(d);
-        System.out.println(d);
         System.out.println(TestingUtil.prettyPrintJSON(d.toJson()));
-        
     }
 
     @Test

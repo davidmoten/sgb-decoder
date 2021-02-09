@@ -6,12 +6,11 @@ import sgb.decoder.HasFormatter;
 import sgb.decoder.internal.Fields;
 
 @Fields(fields = { "rotatingFieldType", "elapsedTimeSinceActivationHours", "timeSinceLastEncodedLocationMinutes",
-		"altitudeEncodedLocationMetres", "dilutionPrecisionHdop", "dilutionPrecisionHdop", "dilutionPrecisionDop",
-		"activationMethod", "remainingBatteryCapacityPercent", "gnssStatus" }, //
+		"altitudeEncodedLocationMetres", "dilutionPrecisionHdop", "dilutionPrecisionDop", "activationMethod",
+		"remainingBatteryCapacityPercent", "gnssStatus" }, //
 		serializedNames = { RotatingField.ROTATING_FIELD_TYPE_SERIALIZED_NAME, "elapsedTimeSinceActivationHours",
 				"timeSinceLastEncodedLocationMinutes", "altitudeEncodedLocationMetres", "dilutionPrecisionHdop",
-				"dilutionPrecisionHdop", "dilutionPrecisionDop", "activationMethod", "remainingBatteryCapacityPercent",
-				"gnssStatus" })
+				"dilutionPrecisionDop", "activationMethod", "remainingBatteryCapacityPercent", "gnssStatus" })
 public final class ObjectiveRequirements implements RotatingField, HasFormatter {
 
 	@SuppressWarnings("unused")

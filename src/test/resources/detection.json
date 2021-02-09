@@ -1,40 +1,36 @@
 {
-  "$id" : "TODO",
-  "$schema" : "TODO",
-  "properties" : {
-    "tac" : {
-      "type" : "integer"
-    },
-    "serialNo" : {
-      "type" : "integer"
-    },
-    "countryCode" : {
-      "type" : "integer"
-    },
-    "hasAtLeastOneEnabledHomingSignal" : {
-      "type" : "boolean"
-    },
-    "hasEnabledRls" : {
-      "type" : "boolean"
-    },
-    "isTestProtocolMessage" : {
-      "type" : "boolean"
-    },
+    "tac" : 230,
+    "serialNo" : 573,
+    "countryCode" : 201,
+    "hasAtLeastOneEnabledHomingSignal" : true,
+    "hasEnabledRLS" : false,
+    "isTestProtocolMessage" : false,
     "encodedGnssPosition" : {
-      "type" : "object"
+        "latitude" : 48.79315185546875,
+        "longitude" : 69.00875854492188
     },
-    "vesselId" : {
-      "type" : "object"
-    },
-    "beaconType" : {
-      "type" : "string",
-      "enum" : [ "ELT_NOT_DT", "EPIRB", "PLB", "ELT_DT", "SYSTEM", "OTHER" ]
-    },
+    "beaconType" : "ELT_NOT_DT",
     "rotatingField" : {
-      "type" : "object"
+        "rotatingFieldType" : "OBJECTIVE_REQUIREMENTS",
+        "elapsedTimeSinceActivationHours" : 1,
+        "timeSinceLastEncodedLocationMinutes" : 6,
+        "altitudeEncodedLocationMetres" : 432,
+        "dilutionPrecisionHdop" : 0,
+        "dilutionPrecisionDop" : {
+            "start" : 1,
+            "startInclusive" : false,
+            "finish" : 2,
+            "finishInclusive" : true
+        },
+        "activationMethod" : "MANUAL_ACTIVATION_BY_USER",
+        "remainingBatteryCapacityPercent" : {
+            "start" : 75,
+            "startInclusive" : false,
+            "finish" : 100,
+            "finishInclusive" : true
+        },
+        "gnssStatus" : "LOCATION_3D"
     },
-    "beacon23HexId" : {
-      "type" : "string"
-    }
-  }
+    "beacon23HexId" : "9934039823d000000000000",
+    "beacon15HexId" : "9934039823d0000"
 }
