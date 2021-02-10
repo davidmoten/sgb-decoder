@@ -7,6 +7,7 @@ import com.github.davidmoten.guavamini.Preconditions;
 
 public final class Bits {
 
+    private static final int BITS_PER_HEX_CHAR = 4;
     private final boolean[] bits;
     private int pos;
 
@@ -81,6 +82,10 @@ public final class Bits {
         return result;
     }
 
+    //////////////////////////////////////////////////////////////
+    // Modified Baudot parsing
+    //////////////////////////////////////////////////////////////
+
     private static final int SHORT_BAUDOT_CODE_BINARY_LENGTH = 5;
     private static final int BAUDOT_CODE_BINARY_LENGTH = 6;
 
@@ -102,6 +107,8 @@ public final class Bits {
         return s.toString();
     }
 
+    //////////////////////////////////////////////////////////////
+
     public boolean readBoolean() {
         Preconditions.checkArgument(!atEnd(), "already at end");
         pos += 1;
@@ -109,7 +116,7 @@ public final class Bits {
     }
 
     public String readHex(int numChars) {
-        return new BigInteger(readBitString(numChars * 4), 2).toString(16);
+        return new BigInteger(readBitString(numChars * BITS_PER_HEX_CHAR), 2).toString(16);
     }
 
     public String readBitString(int numBits) {
