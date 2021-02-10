@@ -69,19 +69,6 @@ public class DetectionTest {
 	}
 
 	@Test
-	public void testToJson() {
-		Detection d = Detection.fromBitString(BITS);
-		checkDetection(d);
-		System.out.println(TestingUtil.prettyPrintJSON(d.toJson()));
-	}
-
-	@Test
-	public void testDetectionToString() {
-		Detection d = Detection.fromHexGroundSegmentRepresentation(SAMPLE_HEX);
-		assertEquals(TestingUtil.readResource("/detection-to-string.txt"), d.toString());
-	}
-
-	@Test
 	public void testDetectionToJsonUsingJackson() throws JsonProcessingException {
 		Detection d = Detection.fromHexGroundSegmentRepresentation(SAMPLE_HEX);
 		ObjectMapper m = new ObjectMapper();

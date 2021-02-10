@@ -2,12 +2,7 @@ package sgb.decoder.vesselid;
 
 import java.util.Optional;
 
-import sgb.decoder.HasFormatter;
-import sgb.decoder.internal.Fields;
-
-@Fields(fields = { "vesselIdType", "mmsi", "epirbMmsi" }, //
-		serializedNames = { VesselId.VESSEL_ID_TYPE_SERIALIZED_NAME, "MMSI", "EPIRB MMSI" })
-public final class Mmsi implements VesselId, HasFormatter {
+public final class Mmsi implements VesselId {
 
 	@SuppressWarnings("unused")
 	// used for serialization
@@ -26,11 +21,6 @@ public final class Mmsi implements VesselId, HasFormatter {
 
 	public Optional<Integer> epirbMmsi() {
 		return epirbMmsi;
-	}
-
-	@Override
-	public String toString() {
-		return toStringDefault();
 	}
 
 }

@@ -1,12 +1,7 @@
 package sgb.decoder.vesselid;
 
-import sgb.decoder.HasFormatter;
-import sgb.decoder.internal.Fields;
 
-@Fields(fields = { "vesselIdType", "aircraftOperatorDesignator", "serialNumber" }, //
-		serializedNames = { VesselId.VESSEL_ID_TYPE_SERIALIZED_NAME, "aircraftOperatorDesignator",
-				"serialNumber" })
-public final class AircraftOperatorAndSerialNumber implements VesselId, HasFormatter {
+public final class AircraftOperatorAndSerialNumber implements VesselId {
 
 	@SuppressWarnings("unused")
 	// used for serialization
@@ -25,11 +20,6 @@ public final class AircraftOperatorAndSerialNumber implements VesselId, HasForma
 
 	public int serialNumber() {
 		return serialNumber;
-	}
-
-	@Override
-	public String toString() {
-		return toStringDefault();
 	}
 
 }

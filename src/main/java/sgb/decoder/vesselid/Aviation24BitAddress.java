@@ -2,13 +2,7 @@ package sgb.decoder.vesselid;
 
 import java.util.Optional;
 
-import sgb.decoder.HasFormatter;
-import sgb.decoder.internal.Fields;
-
-@Fields(fields = { "vesselIdType", "addressHex", "aircraftOperatorDesignator" }, //
-		serializedNames = { VesselId.VESSEL_ID_TYPE_SERIALIZED_NAME, "addressHex",
-				"aircraftOperatorDesignator" })
-public final class Aviation24BitAddress implements VesselId, HasFormatter {
+public final class Aviation24BitAddress implements VesselId {
 
 	@SuppressWarnings("unused")
 	// used for serialization
@@ -27,11 +21,6 @@ public final class Aviation24BitAddress implements VesselId, HasFormatter {
 
 	public Optional<String> aircraftOperatorDesignator() {
 		return aircraftOperatorDesignator;
-	}
-
-	@Override
-	public String toString() {
-		return toStringDefault();
 	}
 
 }

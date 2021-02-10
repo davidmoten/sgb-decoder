@@ -1,11 +1,6 @@
 package sgb.decoder.rotatingfield;
 
-import sgb.decoder.HasFormatter;
-import sgb.decoder.internal.Fields;
-
-@Fields(fields = { "rotatingFieldType", "deactivationMethod" }, serializedNames = {
-		RotatingFieldConstants.ROTATING_FIELD_TYPE_SERIALIZED_NAME, "deactivationMethod" })
-public final class Cancellation implements RotatingField, HasFormatter {
+public final class Cancellation implements RotatingField {
 
 	private final RotatingFieldType rotatingFieldType = RotatingFieldType.CANCELLATION;
 	private final DeactivationMethod deactivationMethod;
@@ -20,11 +15,6 @@ public final class Cancellation implements RotatingField, HasFormatter {
 
 	public DeactivationMethod deactivationMethod() {
 		return deactivationMethod;
-	}
-
-	@Override
-	public String toString() {
-		return toStringDefault();
 	}
 
 }

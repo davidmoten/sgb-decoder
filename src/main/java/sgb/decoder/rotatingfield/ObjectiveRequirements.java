@@ -2,16 +2,7 @@ package sgb.decoder.rotatingfield;
 
 import java.util.Optional;
 
-import sgb.decoder.HasFormatter;
-import sgb.decoder.internal.Fields;
-
-@Fields(fields = { "rotatingFieldType", "elapsedTimeSinceActivationHours", "timeSinceLastEncodedLocationMinutes",
-		"altitudeEncodedLocationMetres", "dilutionPrecisionHdop", "dilutionPrecisionDop", "activationMethod",
-		"remainingBatteryCapacityPercent", "gnssStatus" }, //
-		serializedNames = { RotatingFieldConstants.ROTATING_FIELD_TYPE_SERIALIZED_NAME, "elapsedTimeSinceActivationHours",
-				"timeSinceLastEncodedLocationMinutes", "altitudeEncodedLocationMetres", "dilutionPrecisionHdop",
-				"dilutionPrecisionDop", "activationMethod", "remainingBatteryCapacityPercent", "gnssStatus" })
-public final class ObjectiveRequirements implements RotatingField, HasFormatter {
+public final class ObjectiveRequirements implements RotatingField {
 
 	// used for serialization
 	private final RotatingFieldType rotatingFieldType = RotatingFieldType.OBJECTIVE_REQUIREMENTS;
@@ -36,7 +27,7 @@ public final class ObjectiveRequirements implements RotatingField, HasFormatter 
 		this.remainingBatteryCapacityPercent = remainingBatteryCapacityPercent;
 		this.gnssStatus = gnssStatus;
 	}
-	
+
 	public RotatingFieldType rotatingFieldType() {
 		return rotatingFieldType;
 	}
@@ -71,11 +62,6 @@ public final class ObjectiveRequirements implements RotatingField, HasFormatter 
 
 	public GnssStatus gnssStatus() {
 		return gnssStatus;
-	}
-
-	@Override
-	public String toString() {
-		return toStringDefault();
 	}
 
 }

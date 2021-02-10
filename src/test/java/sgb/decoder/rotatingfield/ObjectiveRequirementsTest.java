@@ -6,8 +6,6 @@ import java.util.Optional;
 
 import org.junit.Test;
 
-import sgb.decoder.TestingUtil;
-
 public class ObjectiveRequirementsTest {
 
     @Test
@@ -15,8 +13,6 @@ public class ObjectiveRequirementsTest {
         ObjectiveRequirements a = new ObjectiveRequirements(13, 47, 60, 3, Optional.empty(),
                 ActivationMethod.MANUAL_ACTIVATION_BY_USER, Optional.empty(),
                 GnssStatus.LOCATION_3D);
-        assertEquals(TestingUtil.readResource("/objective-requirements-to-string.txt"),
-                a.toString());
         assertEquals(RotatingFieldType.OBJECTIVE_REQUIREMENTS, a.rotatingFieldType());
     }
 }

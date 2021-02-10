@@ -6,8 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import sgb.decoder.Indent;
-
 public final class RangeTest {
 
     @Test
@@ -43,61 +41,32 @@ public final class RangeTest {
         assertTrue(r.equals(Range.create(1, RangeEndType.EXCLUSIVE, 6, RangeEndType.INCLUSIVE)));
     }
 
-    @Test
-    public void testRangeToStringIndent() {
-        Indent indent = new Indent(0, 2);
-        {
-            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.INCLUSIVE);
-            assertEquals(">=1 and <=2", r.toString(indent));
-        }
-        {
-            Range r = Range.create(1, RangeEndType.EXCLUSIVE, 2, RangeEndType.INCLUSIVE);
-            assertEquals(">1 and <=2", r.toString(indent));
-        }
-        {
-            Range r = Range.create(1, RangeEndType.MISSING, 2, RangeEndType.INCLUSIVE);
-            assertEquals("<=2", r.toString(indent));
-        }
-        {
-            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.EXCLUSIVE);
-            assertEquals(">=1 and <2", r.toString(indent));
-        }
-        {
-            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.MISSING);
-            assertEquals(">=1", r.toString(indent));
-        }
-        {
-            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.INCLUSIVE);
-            assertEquals(">=1 and <=2", r.toString(indent));
-        }
-    }
-    
-    @Test
-    public void testRangeToJson() {
-    	{
-            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.INCLUSIVE);
-            assertEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : true}", r.toJson());
-        }
-        {
-            Range r = Range.create(1, RangeEndType.EXCLUSIVE, 2, RangeEndType.INCLUSIVE);
-            assertEquals("{\"min\" : 1, \"minInclusive\" : false, \"max\" : 2, \"maxInclusive\" : true}", r.toJson());
-        }
-        {
-            Range r = Range.create(1, RangeEndType.MISSING, 2, RangeEndType.INCLUSIVE);
-            assertEquals("{\"max\" : 2, \"maxInclusive\" : true}", r.toJson());
-        }
-        {
-            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.EXCLUSIVE);
-            assertEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : false}", r.toJson());
-        }
-        {
-            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.MISSING);
-            assertEquals("{\"min\" : 1, \"minInclusive\" : true}", r.toJson());
-        }
-        {
-            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.INCLUSIVE);
-            assertEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : true}", r.toJson());
-        }
-    }
+//    @Test
+//    public void testRangeToJson() {
+//    	{
+//            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.INCLUSIVE);
+//            assertEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : true}", r.toJson());
+//        }
+//        {
+//            Range r = Range.create(1, RangeEndType.EXCLUSIVE, 2, RangeEndType.INCLUSIVE);
+//            assertEquals("{\"min\" : 1, \"minInclusive\" : false, \"max\" : 2, \"maxInclusive\" : true}", r.toJson());
+//        }
+//        {
+//            Range r = Range.create(1, RangeEndType.MISSING, 2, RangeEndType.INCLUSIVE);
+//            assertEquals("{\"max\" : 2, \"maxInclusive\" : true}", r.toJson());
+//        }
+//        {
+//            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.EXCLUSIVE);
+//            assertEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : false}", r.toJson());
+//        }
+//        {
+//            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.MISSING);
+//            assertEquals("{\"min\" : 1, \"minInclusive\" : true}", r.toJson());
+//        }
+//        {
+//            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.INCLUSIVE);
+//            assertEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : true}", r.toJson());
+//        }
+//    }
 
 }

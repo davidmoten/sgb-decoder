@@ -2,13 +2,7 @@ package sgb.decoder.rotatingfield;
 
 import com.github.davidmoten.guavamini.Preconditions;
 
-import sgb.decoder.HasFormatter;
-import sgb.decoder.Indent;
-import sgb.decoder.internal.Fields;
-import sgb.decoder.internal.json.JsonSchema;
-
-@Fields(fields = {}, serializedNames = {})
-public final class Range implements HasFormatter {
+public final class Range {
 
 	private final int min;
 	private RangeEndType minType;
@@ -86,52 +80,35 @@ public final class Range implements HasFormatter {
 				+ maxType + "]";
 	}
 
-	@Override
-	public String toString(Indent indent) {
-		String a = minStr();
-		String b = maxStr();
-		if (!a.isEmpty() && !b.isEmpty()) {
-			return a + " and " + b;
-		} else {
-			return a + b;
-		}
-	}
-
-	private String minStr() {
-		if (minType == RangeEndType.MISSING) {
-			return "";
-		} else if (minType == RangeEndType.INCLUSIVE) {
-			return ">=" + min;
-		} else {
-			return ">" + min;
-		}
-	}
-
-	private String maxStr() {
-		if (maxType == RangeEndType.MISSING) {
-			return "";
-		} else if (maxType == RangeEndType.INCLUSIVE) {
-			return "<=" + max;
-		} else {
-			return "<" + max;
-		}
-	}
-
-	@Override
-	public String toJson() {
-		StringBuilder b = new StringBuilder();
-		if (minType != RangeEndType.MISSING) {
-			b.append(JsonSchema.quoted("min") + " : " + min + ", ");
-			b.append(JsonSchema.quoted("minInclusive") + " : " + (minType == RangeEndType.INCLUSIVE));
-		}
-		if (maxType != RangeEndType.MISSING) {
-			if (b.length() > 0) {
-				b.append(", ");
-			}
-			b.append(JsonSchema.quoted("max") + " : " + max + ", ");
-			b.append(JsonSchema.quoted("maxInclusive") + " : " + (maxType == RangeEndType.INCLUSIVE));
-		}
-		return "{" + b.toString() + "}";
-	}
+//	@Override
+//	public String toString(Indent indent) {
+//		String a = minStr();
+//		String b = maxStr();
+//		if (!a.isEmpty() && !b.isEmpty()) {
+//			return a + " and " + b;
+//		} else {
+//			return a + b;
+//		}
+//	}
+//
+//	private String minStr() {
+//		if (minType == RangeEndType.MISSING) {
+//			return "";
+//		} else if (minType == RangeEndType.INCLUSIVE) {
+//			return ">=" + min;
+//		} else {
+//			return ">" + min;
+//		}
+//	}
+//
+//	private String maxStr() {
+//		if (maxType == RangeEndType.MISSING) {
+//			return "";
+//		} else if (maxType == RangeEndType.INCLUSIVE) {
+//			return "<=" + max;
+//		} else {
+//			return "<" + max;
+//		}
+//	}
 
 }

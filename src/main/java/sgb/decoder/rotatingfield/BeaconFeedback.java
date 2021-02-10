@@ -2,14 +2,7 @@ package sgb.decoder.rotatingfield;
 
 import java.util.Optional;
 
-import sgb.decoder.HasFormatter;
-import sgb.decoder.internal.Fields;
-
-@Fields(fields = { "rlmType1FeedbackReceived", "rlmType2FeedbackReceived", "rlsType",
-		"shortRlmParametersBitString" }, //
-serializedNames = { "rlmType1FeedbackReceived", "rlmType2FeedbackReceived",
-				"rlsType", "shortRlmParametersBitString" })
-public final class BeaconFeedback implements HasFormatter {
+public final class BeaconFeedback {
 
 	private final boolean rlmType1FeedbackReceived;
 	private final boolean rlmType2FeedbackReceived;
@@ -38,11 +31,6 @@ public final class BeaconFeedback implements HasFormatter {
 
 	public Optional<String> shortRlmParametersBitString() {
 		return shortRlmParametersBitString;
-	}
-
-	@Override
-	public String toString() {
-		return toStringDefault();
 	}
 
 }

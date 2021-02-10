@@ -4,12 +4,7 @@ import java.util.Optional;
 
 import com.github.davidmoten.guavamini.Preconditions;
 
-import sgb.decoder.HasFormatter;
-import sgb.decoder.internal.Fields;
-
-@Fields(fields = { "vesselIdType", "value" }, //
-		serializedNames = { VesselId.VESSEL_ID_TYPE_SERIALIZED_NAME, "value" })
-public final class RadioCallSign implements VesselId, HasFormatter {
+public final class RadioCallSign implements VesselId {
 
 	@SuppressWarnings("unused")
 	// used for serialization
@@ -28,11 +23,6 @@ public final class RadioCallSign implements VesselId, HasFormatter {
 
 	public Optional<String> value() {
 		return value;
-	}
-
-	@Override
-	public String toString() {
-		return toStringDefault();
 	}
 
 }
