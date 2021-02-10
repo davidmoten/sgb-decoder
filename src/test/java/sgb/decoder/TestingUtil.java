@@ -8,7 +8,11 @@ import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
-public class TestingUtil {
+import org.junit.ComparisonFailure;
+
+import sgb.decoder.internal.json.Json;
+
+public final class TestingUtil {
 
 	public static String readResource(String resourceName) {
 		try (InputStream in = TestingUtil.class.getResourceAsStream(resourceName)) {
@@ -19,13 +23,20 @@ public class TestingUtil {
 		}
 	}
 
+	public static void assertResourceEqualsJson(String resourceName, String json) {
+		String expected = readResource(resourceName);
+		if (!Json.equals(expected, json)) {
+			throw new ComparisonFailure("unequal json", expected, json);
+		}
+	}
+
 	/**
 	 * A simple implementation to pretty-print JSON file.
 	 *
 	 * @param json
 	 * @return
 	 */
-	public static String prettyPrintJSON(String json) {
+	public static String prettyPrintJson(String json) {
 		StringBuilder b = new StringBuilder();
 		int indentLevel = 0;
 		boolean inQuote = false;

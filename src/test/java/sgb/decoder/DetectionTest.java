@@ -1,28 +1,23 @@
 package sgb.decoder;
 
-import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
-import static com.fasterxml.jackson.annotation.JsonCreator.Mode.PROPERTIES;
-import static com.fasterxml.jackson.annotation.PropertyAccessor.FIELD;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
 
 import org.junit.Test;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 import sgb.decoder.internal.Bits;
 import sgb.decoder.internal.Util;
-import sgb.decoder.internal.json.RangeSerializer;
 import sgb.decoder.rotatingfield.ActivationMethod;
 import sgb.decoder.rotatingfield.BeaconFeedback;
 import sgb.decoder.rotatingfield.Cancellation;
@@ -69,25 +64,11 @@ public class DetectionTest {
 	}
 
 	@Test
-	public void testDetectionToJsonUsingJackson() throws JsonProcessingException {
+	public void testDetectionToJsonUsingJackson() throws IOException {
 		Detection d = Detection.fromHexGroundSegmentRepresentation(SAMPLE_HEX);
-		ObjectMapper m = new ObjectMapper();
-
-		// Avoid having to annotate the Person class
-		// Requires Java 8, pass -parameters to javac
-		// and jackson-module-parameter-names as a dependency
-		m.registerModule(new ParameterNamesModule(PROPERTIES));
-		m.registerModule(new Jdk8Module());
-
-		SimpleModule custom = new SimpleModule();
-		custom.addSerializer(Range.class, new RangeSerializer());
-		m.registerModule(custom);
-
-		// make private fields of Person visible to Jackson
-		m.setVisibility(FIELD, ANY);
-		m.setSerializationInclusion(Include.NON_NULL);
-
-		System.out.println(TestingUtil.prettyPrintJSON(m.writeValueAsString(d)));
+		TestingUtil.assertResourceEqualsJson("/detection.json", d.toJson());
+		File file = new File("src/docs/detection.json");
+		Files.write(file.toPath(), TestingUtil.prettyPrintJson(d.toJson()).getBytes(StandardCharsets.UTF_8));
 	}
 
 	private void checkDetection(Detection d) {

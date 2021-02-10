@@ -40,7 +40,7 @@ public class JsonSchemaTest {
 				Aviation24BitAddress.class, Mmsi.class, RadioCallSign.class));
 		map.put(RotatingField.class, Arrays.asList(Cancellation.class, EltDtInFlightEmergency.class, NationalUse.class,
 				ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
-		String schema = TestingUtil.prettyPrintJSON(JsonSchema.generateSchema(Detection.class, map));
+		String schema = TestingUtil.prettyPrintJson(JsonSchema.generateSchema(Detection.class, map));
 		File file = new File("src/main/json-schema/detection-schema.json");
 		file.delete();
 		Files.write(file.toPath(), schema.getBytes(StandardCharsets.UTF_8));

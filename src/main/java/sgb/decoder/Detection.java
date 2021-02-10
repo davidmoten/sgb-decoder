@@ -11,6 +11,7 @@ import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
 
 import sgb.decoder.internal.Bits;
 import sgb.decoder.internal.Hex;
+import sgb.decoder.internal.json.Json;
 import sgb.decoder.rotatingfield.ActivationMethod;
 import sgb.decoder.rotatingfield.BeaconFeedback;
 import sgb.decoder.rotatingfield.Cancellation;
@@ -590,4 +591,7 @@ public final class Detection {
 		return "";
 	}
 
+	public String toJson() {
+		return Json.toJson(this);
+	}
 }
