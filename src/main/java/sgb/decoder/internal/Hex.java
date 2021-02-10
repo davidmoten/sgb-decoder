@@ -1,6 +1,7 @@
 package sgb.decoder.internal;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public final class Hex {
@@ -33,7 +34,7 @@ public final class Hex {
     }
 
     public static String hexToBin(String s) {
-        char[] hex = s.toUpperCase().toCharArray();
+        char[] hex = s.toUpperCase(Locale.ENGLISH).toCharArray();
         StringBuilder b = new StringBuilder();
         for (char h : hex) {
             b.append(map.get(String.valueOf(h)));
