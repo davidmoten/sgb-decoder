@@ -8,9 +8,9 @@ import org.junit.Test;
 
 public class MmsiTest {
 
-	@Test
-	public void testToString() {
-		Mmsi a = new Mmsi(Optional.of(123456789), Optional.of(234567890));
-		assertEquals(VesselIdType.MMSI, a.vesselIdType());
-	}
+    @Test
+    public void testToString() {
+        Mmsi a = new Mmsi(Optional.of(123456789), Optional.of(234567890));
+        assertEquals(VesselIdType.MMSI, a.vesselIdType());
+    }
 }

@@ -15,54 +15,54 @@ import sgb.decoder.rotatingfield.Range;
 
 public final class Json {
 
-	private Json() {
-		// prevent instantiation
-	}
+    private Json() {
+        // prevent instantiation
+    }
 
-	public static String toJson(Object o) {
-		ObjectMapper m = createMapper();
-		try {
-			return m.writeValueAsString(o);
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public static String toJson(Object o) {
+        ObjectMapper m = createMapper();
+        try {
+            return m.writeValueAsString(o);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	private static ObjectMapper createMapper() {
-		ObjectMapper m = new ObjectMapper();
+    private static ObjectMapper createMapper() {
+        ObjectMapper m = new ObjectMapper();
 
-		// Avoid having to annotate the Person class
-		// Requires Java 8, pass -parameters to javac
-		// and jackson-module-parameter-names as a dependency
-		m.registerModule(new ParameterNamesModule(PROPERTIES));
-		m.registerModule(new Jdk8Module());
+        // Avoid having to annotate the Person class
+        // Requires Java 8, pass -parameters to javac
+        // and jackson-module-parameter-names as a dependency
+        m.registerModule(new ParameterNamesModule(PROPERTIES));
+        m.registerModule(new Jdk8Module());
 
-		SimpleModule custom = new SimpleModule();
-		custom.addSerializer(Range.class, new RangeSerializer());
-		m.registerModule(custom);
+        SimpleModule custom = new SimpleModule();
+        custom.addSerializer(Range.class, new RangeSerializer());
+        m.registerModule(custom);
 
-		// make private fields of Person visible to Jackson
-		m.setVisibility(FIELD, ANY);
-		m.setSerializationInclusion(Include.NON_NULL);
-		return m;
-	}
+        // make private fields of Person visible to Jackson
+        m.setVisibility(FIELD, ANY);
+        m.setSerializationInclusion(Include.NON_NULL);
+        return m;
+    }
 
-	public static boolean equals(String json1, String json2) {
-		ObjectMapper m = new ObjectMapper();
-		try {
-			return m.readTree(json1).equals(m.readTree(json2));
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public static boolean equals(String json1, String json2) {
+        ObjectMapper m = new ObjectMapper();
+        try {
+            return m.readTree(json1).equals(m.readTree(json2));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	public static String prettyPrint(String json) {
-		ObjectMapper m = new ObjectMapper();
-		try {
-			Object v = m.readValue(json, Object.class);
-			return m.writerWithDefaultPrettyPrinter().writeValueAsString(v);
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public static String prettyPrint(String json) {
+        ObjectMapper m = new ObjectMapper();
+        try {
+            Object v = m.readValue(json, Object.class);
+            return m.writerWithDefaultPrettyPrinter().writeValueAsString(v);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

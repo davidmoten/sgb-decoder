@@ -6,9 +6,9 @@ import org.junit.Test;
 
 public class RadioCallSignTest {
 
-	@Test
-	public void testToString() {
-		RadioCallSign a = new RadioCallSign("FLIGHT");
-		assertEquals(VesselIdType.RADIO_CALL_SIGN, a.vesselIdType());
-	}
+    @Test
+    public void testToString() {
+        RadioCallSign a = new RadioCallSign("FLIGHT");
+        assertEquals(VesselIdType.RADIO_CALL_SIGN, a.vesselIdType());
+    }
 }

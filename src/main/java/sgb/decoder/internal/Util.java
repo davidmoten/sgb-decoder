@@ -5,12 +5,12 @@ import java.util.stream.IntStream;
 
 public final class Util {
 
-	private Util() {
-		// prevent instantiation
-	}
+    private Util() {
+        // prevent instantiation
+    }
 
-	public static String repeat(char ch, int n) {
-		return IntStream.range(0, n).mapToObj(x -> String.valueOf(ch)).collect(Collectors.joining());
-	}
+    public static String repeat(char ch, int n) {
+        return IntStream.range(0, n).mapToObj(x -> String.valueOf(ch)).collect(Collectors.joining());
+    }
 
 }

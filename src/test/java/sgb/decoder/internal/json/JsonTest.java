@@ -8,24 +8,24 @@ import com.github.davidmoten.junit.Asserts;
 
 public class JsonTest {
 
-	@Test
-	public void isUtilityClass() {
-		Asserts.assertIsUtilityClass(Json.class);
-	}
+    @Test
+    public void isUtilityClass() {
+        Asserts.assertIsUtilityClass(Json.class);
+    }
 
-	@Test(expected = RuntimeException.class)
-	public void testEqualsWithInvalidJson() {
-		assertTrue(Json.equals("boo", "you"));
-	}
+    @Test(expected = RuntimeException.class)
+    public void testEqualsWithInvalidJson() {
+        assertTrue(Json.equals("boo", "you"));
+    }
 
-	@Test(expected = RuntimeException.class)
-	public void testToJsonWithNoDefinedSerializer() {
-		Json.toJson(new Object());
-	}
+    @Test(expected = RuntimeException.class)
+    public void testToJsonWithNoDefinedSerializer() {
+        Json.toJson(new Object());
+    }
 
-	@Test(expected = RuntimeException.class)
-	public void testPrettyPrintInvalidJson() {
-		Json.prettyPrint("boo");
-	}
+    @Test(expected = RuntimeException.class)
+    public void testPrettyPrintInvalidJson() {
+        Json.prettyPrint("boo");
+    }
 
 }

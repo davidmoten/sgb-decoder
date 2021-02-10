@@ -6,9 +6,9 @@ import org.junit.Test;
 
 public class NationalUseTest {
 
-	@Test
-	public void testToString() {
-		NationalUse a = new NationalUse("11011");
-		assertEquals(RotatingFieldType.NATIONAL_USE, a.rotatingFieldType());
-	}
+    @Test
+    public void testToString() {
+        NationalUse a = new NationalUse("11011");
+        assertEquals(RotatingFieldType.NATIONAL_USE, a.rotatingFieldType());
+    }
 }

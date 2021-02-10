@@ -2,19 +2,19 @@ package sgb.decoder.rotatingfield;
 
 public final class Cancellation implements RotatingField {
 
-	private final RotatingFieldType rotatingFieldType = RotatingFieldType.CANCELLATION;
-	private final DeactivationMethod deactivationMethod;
+    private final RotatingFieldType rotatingFieldType = RotatingFieldType.CANCELLATION;
+    private final DeactivationMethod deactivationMethod;
 
-	public Cancellation(DeactivationMethod deactivationMethod) {
-		this.deactivationMethod = deactivationMethod;
-	}
+    public Cancellation(DeactivationMethod deactivationMethod) {
+        this.deactivationMethod = deactivationMethod;
+    }
 
-	public RotatingFieldType rotatingFieldType() {
-		return rotatingFieldType;
-	}
+    public RotatingFieldType rotatingFieldType() {
+        return rotatingFieldType;
+    }
 
-	public DeactivationMethod deactivationMethod() {
-		return deactivationMethod;
-	}
+    public DeactivationMethod deactivationMethod() {
+        return deactivationMethod;
+    }
 
 }

@@ -14,24 +14,24 @@ import sgb.decoder.internal.json.Json;
 
 public final class TestingUtil {
 
-	public static String readResource(String resourceName) {
-		try (InputStream in = TestingUtil.class.getResourceAsStream(resourceName)) {
-			return new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)).lines()
-			        .collect(Collectors.joining("\n"));
-		} catch (IOException e) {
-			throw new UncheckedIOException(e);
-		}
-	}
+    public static String readResource(String resourceName) {
+        try (InputStream in = TestingUtil.class.getResourceAsStream(resourceName)) {
+            return new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)).lines()
+                    .collect(Collectors.joining("\n"));
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
 
-	public static void assertResourceEqualsJson(String resourceName, String json) {
-		String expected = readResource(resourceName);
-		assertJsonEquals(json, expected);
-	}
+    public static void assertResourceEqualsJson(String resourceName, String json) {
+        String expected = readResource(resourceName);
+        assertJsonEquals(json, expected);
+    }
 
-	public static void assertJsonEquals(String json, String expected) throws ComparisonFailure {
-		if (!Json.equals(expected, json)) {
-			throw new ComparisonFailure("unequal json", expected, Json.prettyPrint(json));
-		}
-	}
+    public static void assertJsonEquals(String json, String expected) throws ComparisonFailure {
+        if (!Json.equals(expected, json)) {
+            throw new ComparisonFailure("unequal json", expected, Json.prettyPrint(json));
+        }
+    }
 
 }

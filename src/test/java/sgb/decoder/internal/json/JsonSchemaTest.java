@@ -32,37 +32,37 @@ import sgb.decoder.vesselid.VesselId;
 
 public class JsonSchemaTest {
 
-	@Test
-	public void updateSchema() throws IOException {
-		Map<Class<?>, List<Class<?>>> map = new HashMap<>();
-		map.put(VesselId.class, Arrays.asList(AircraftOperatorAndSerialNumber.class, AircraftRegistrationMarking.class,
-		        Aviation24BitAddress.class, Mmsi.class, RadioCallSign.class));
-		map.put(RotatingField.class, Arrays.asList(Cancellation.class, EltDtInFlightEmergency.class, NationalUse.class,
-		        ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
-		String schema = Json.prettyPrint(JsonSchema.generateSchema(Detection.class, map));
-		File file = new File("src/main/json-schema/detection-schema.json");
-		file.delete();
-		Files.write(file.toPath(), schema.getBytes(StandardCharsets.UTF_8));
-	}
+    @Test
+    public void updateSchema() throws IOException {
+        Map<Class<?>, List<Class<?>>> map = new HashMap<>();
+        map.put(VesselId.class, Arrays.asList(AircraftOperatorAndSerialNumber.class, AircraftRegistrationMarking.class,
+                Aviation24BitAddress.class, Mmsi.class, RadioCallSign.class));
+        map.put(RotatingField.class, Arrays.asList(Cancellation.class, EltDtInFlightEmergency.class, NationalUse.class,
+                ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
+        String schema = Json.prettyPrint(JsonSchema.generateSchema(Detection.class, map));
+        File file = new File("src/main/json-schema/detection-schema.json");
+        file.delete();
+        Files.write(file.toPath(), schema.getBytes(StandardCharsets.UTF_8));
+    }
 
-	@Test
-	public void testSimpleNameNoPackage() {
-		assertEquals("Hello", JsonSchema.simpleName("Hello"));
-	}
+    @Test
+    public void testSimpleNameNoPackage() {
+        assertEquals("Hello", JsonSchema.simpleName("Hello"));
+    }
 
-	@Test
-	public void testSimpleNameHasPackage() {
-		assertEquals("There", JsonSchema.simpleName("hello.There"));
-	}
+    @Test
+    public void testSimpleNameHasPackage() {
+        assertEquals("There", JsonSchema.simpleName("hello.There"));
+    }
 
-	@Test(expected = RuntimeException.class)
-	public void testToClassNotFound() {
-		JsonSchema.toClass("ThisClassDoesNotExist");
-	}
+    @Test(expected = RuntimeException.class)
+    public void testToClassNotFound() {
+        JsonSchema.toClass("ThisClassDoesNotExist");
+    }
 
-	@Test
-	public void isUtilityClass() {
-		Asserts.assertIsUtilityClass(JsonSchema.class);
-	}
+    @Test
+    public void isUtilityClass() {
+        Asserts.assertIsUtilityClass(JsonSchema.class);
+    }
 
 }
