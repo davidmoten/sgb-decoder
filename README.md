@@ -11,7 +11,7 @@ Java library that decodes [Cospas-Sarsat](https://en.wikipedia.org/wiki/Internat
 * *spotbugs* maximum effort static analysis enforced 
 * *pmd* static analysis enforced 
 
-Status: *pre-alpha* (in development, not production ready)
+Status: *pre-alpha* (in development, **NOT production ready yet**)
 
 ## How to build
 ```bash
