@@ -36,9 +36,9 @@ public class JsonSchemaTest {
 	public void updateSchema() throws IOException {
 		Map<Class<?>, List<Class<?>>> map = new HashMap<>();
 		map.put(VesselId.class, Arrays.asList(AircraftOperatorAndSerialNumber.class, AircraftRegistrationMarking.class,
-				Aviation24BitAddress.class, Mmsi.class, RadioCallSign.class));
+		        Aviation24BitAddress.class, Mmsi.class, RadioCallSign.class));
 		map.put(RotatingField.class, Arrays.asList(Cancellation.class, EltDtInFlightEmergency.class, NationalUse.class,
-				ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
+		        ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
 		String schema = Json.prettyPrint(JsonSchema.generateSchema(Detection.class, map));
 		File file = new File("src/main/json-schema/detection-schema.json");
 		file.delete();

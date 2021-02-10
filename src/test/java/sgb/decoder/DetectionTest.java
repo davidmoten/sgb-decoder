@@ -42,12 +42,12 @@ public class DetectionTest {
 
 	private static final String SAMPLE_HEX = "0039823D32618658622811F0000000000003FFF004030680258";
 	private final String BITS = "00000000111001100000100011110100" //
-			+ "11001001100001100001100101100001" //
-			+ "10001000101000000100011111000000" //
-			+ "00000000000000000000000000000000" //
-			+ "00000000000011111111111111000000" //
-			+ "00010000000011000001101000000000" //
-			+ "1001011000";
+	        + "11001001100001100001100101100001" //
+	        + "10001000101000000100011111000000" //
+	        + "00000000000000000000000000000000" //
+	        + "00000000000011111111111111000000" //
+	        + "00010000000011000001101000000000" //
+	        + "1001011000";
 
 	@Test
 	public void testFromHex() {
@@ -88,10 +88,10 @@ public class DetectionTest {
 		assertEquals(432, r.altitudeEncodedLocationMetres());
 		assertEquals(0, r.dilutionPrecisionHdop());
 		assertEquals(Range.create(1, RangeEndType.EXCLUSIVE, 2, RangeEndType.INCLUSIVE),
-				r.dilutionPrecisionDop().get());
+		        r.dilutionPrecisionDop().get());
 		assertEquals(ActivationMethod.MANUAL_ACTIVATION_BY_USER, r.activationMethod());
 		assertEquals(Range.create(75, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE),
-				r.remainingBatteryCapacityPercent().get());
+		        r.remainingBatteryCapacityPercent().get());
 		assertEquals(GnssStatus.LOCATION_3D, r.gnssStatus());
 		assertEquals("9934039823d000000000000", d.beacon23HexId());
 		assertEquals("9934039823d0000", d.beacon15HexId());
@@ -132,7 +132,7 @@ public class DetectionTest {
 	@Test
 	public void testReadVesselIdWithAviation24BitAddress() {
 		Aviation24BitAddress a = (Aviation24BitAddress) Detection
-				.readVesselId(Bits.from("100").concatWith(createVesselIdAviation24BitAddress())).get();
+		        .readVesselId(Bits.from("100").concatWith(createVesselIdAviation24BitAddress())).get();
 		assertEquals("ac82ec", a.addressHex());
 	}
 
@@ -165,7 +165,7 @@ public class DetectionTest {
 	@Test
 	public void testReadVesselIdWithAircraftRegistrationMarking() {
 		AircraftRegistrationMarking a = (AircraftRegistrationMarking) Detection
-				.readVesselId(Bits.from("011").concatWith(createVesselIdAircraftRegistrationMarkingVhAbc())).get();
+		        .readVesselId(Bits.from("011").concatWith(createVesselIdAircraftRegistrationMarkingVhAbc())).get();
 		assertEquals("VH-ABC", a.value().get());
 	}
 
@@ -190,7 +190,7 @@ public class DetectionTest {
 	@Test
 	public void testReadVesselIdWithRadioCallSign() {
 		RadioCallSign a = (RadioCallSign) Detection
-				.readVesselId(Bits.from("010").concatWith(createVesselIdRadioCallSignForBingo())).get();
+		        .readVesselId(Bits.from("010").concatWith(createVesselIdRadioCallSignForBingo())).get();
 		assertEquals("BINGO", a.value().get());
 	}
 
@@ -213,17 +213,17 @@ public class DetectionTest {
 	@Test
 	public void testRemainingBattery() {
 		assertEquals(Range.create(0, RangeEndType.INCLUSIVE, 5, RangeEndType.INCLUSIVE),
-				Detection.readBatteryPercent(Bits.from("000")).get());
+		        Detection.readBatteryPercent(Bits.from("000")).get());
 		assertEquals(Range.create(5, RangeEndType.EXCLUSIVE, 10, RangeEndType.INCLUSIVE),
-				Detection.readBatteryPercent(Bits.from("001")).get());
+		        Detection.readBatteryPercent(Bits.from("001")).get());
 		assertEquals(Range.create(10, RangeEndType.EXCLUSIVE, 25, RangeEndType.INCLUSIVE),
-				Detection.readBatteryPercent(Bits.from("010")).get());
+		        Detection.readBatteryPercent(Bits.from("010")).get());
 		assertEquals(Range.create(25, RangeEndType.EXCLUSIVE, 50, RangeEndType.INCLUSIVE),
-				Detection.readBatteryPercent(Bits.from("011")).get());
+		        Detection.readBatteryPercent(Bits.from("011")).get());
 		assertEquals(Range.create(50, RangeEndType.EXCLUSIVE, 75, RangeEndType.INCLUSIVE),
-				Detection.readBatteryPercent(Bits.from("100")).get());
+		        Detection.readBatteryPercent(Bits.from("100")).get());
 		assertEquals(Range.create(75, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE),
-				Detection.readBatteryPercent(Bits.from("101")).get());
+		        Detection.readBatteryPercent(Bits.from("101")).get());
 		assertFalse(Detection.readBatteryPercent(Bits.from("110")).isPresent());
 		assertFalse(Detection.readBatteryPercent(Bits.from("111")).isPresent());
 	}
@@ -231,35 +231,35 @@ public class DetectionTest {
 	@Test
 	public void testDop() {
 		assertEquals(Range.create(0, RangeEndType.INCLUSIVE, 1, RangeEndType.INCLUSIVE),
-				Detection.readDop(Bits.from("0000")).get());
+		        Detection.readDop(Bits.from("0000")).get());
 		assertEquals(Range.create(1, RangeEndType.EXCLUSIVE, 2, RangeEndType.INCLUSIVE),
-				Detection.readDop(Bits.from("0001")).get());
+		        Detection.readDop(Bits.from("0001")).get());
 		assertEquals(Range.create(2, RangeEndType.EXCLUSIVE, 3, RangeEndType.INCLUSIVE),
-				Detection.readDop(Bits.from("0010")).get());
+		        Detection.readDop(Bits.from("0010")).get());
 		assertEquals(Range.create(3, RangeEndType.EXCLUSIVE, 4, RangeEndType.INCLUSIVE),
-				Detection.readDop(Bits.from("0011")).get());
+		        Detection.readDop(Bits.from("0011")).get());
 		assertEquals(Range.create(4, RangeEndType.EXCLUSIVE, 5, RangeEndType.INCLUSIVE),
-				Detection.readDop(Bits.from("0100")).get());
+		        Detection.readDop(Bits.from("0100")).get());
 		assertEquals(Range.create(5, RangeEndType.EXCLUSIVE, 6, RangeEndType.INCLUSIVE),
-				Detection.readDop(Bits.from("0101")).get());
+		        Detection.readDop(Bits.from("0101")).get());
 		assertEquals(Range.create(6, RangeEndType.EXCLUSIVE, 7, RangeEndType.INCLUSIVE),
-				Detection.readDop(Bits.from("0110")).get());
+		        Detection.readDop(Bits.from("0110")).get());
 		assertEquals(Range.create(7, RangeEndType.EXCLUSIVE, 8, RangeEndType.INCLUSIVE),
-				Detection.readDop(Bits.from("0111")).get());
+		        Detection.readDop(Bits.from("0111")).get());
 		assertEquals(Range.create(8, RangeEndType.EXCLUSIVE, 10, RangeEndType.INCLUSIVE),
-				Detection.readDop(Bits.from("1000")).get());
+		        Detection.readDop(Bits.from("1000")).get());
 		assertEquals(Range.create(10, RangeEndType.EXCLUSIVE, 12, RangeEndType.INCLUSIVE),
-				Detection.readDop(Bits.from("1001")).get());
+		        Detection.readDop(Bits.from("1001")).get());
 		assertEquals(Range.create(12, RangeEndType.EXCLUSIVE, 15, RangeEndType.INCLUSIVE),
-				Detection.readDop(Bits.from("1010")).get());
+		        Detection.readDop(Bits.from("1010")).get());
 		assertEquals(Range.create(15, RangeEndType.EXCLUSIVE, 20, RangeEndType.INCLUSIVE),
-				Detection.readDop(Bits.from("1011")).get());
+		        Detection.readDop(Bits.from("1011")).get());
 		assertEquals(Range.create(20, RangeEndType.EXCLUSIVE, 30, RangeEndType.INCLUSIVE),
-				Detection.readDop(Bits.from("1100")).get());
+		        Detection.readDop(Bits.from("1100")).get());
 		assertEquals(Range.create(30, RangeEndType.EXCLUSIVE, 50, RangeEndType.INCLUSIVE),
-				Detection.readDop(Bits.from("1101")).get());
+		        Detection.readDop(Bits.from("1101")).get());
 		assertEquals(Range.create(50, RangeEndType.EXCLUSIVE, 0, RangeEndType.MISSING),
-				Detection.readDop(Bits.from("1110")).get());
+		        Detection.readDop(Bits.from("1110")).get());
 		assertFalse(Detection.readDop(Bits.from("1111")).isPresent());
 	}
 
@@ -282,7 +282,7 @@ public class DetectionTest {
 		assertEquals(ActivationMethod.MANUAL_ACTIVATION_BY_USER, Detection.readActivationMethod(Bits.from("00")));
 		assertEquals(ActivationMethod.AUTOMATIC_ACTIVATION_BY_BEACON, Detection.readActivationMethod(Bits.from("01")));
 		assertEquals(ActivationMethod.AUTOMATIC_ACTIVATION_BY_EXTERNAL_MEANS,
-				Detection.readActivationMethod(Bits.from("10")));
+		        Detection.readActivationMethod(Bits.from("10")));
 		assertEquals(ActivationMethod.OTHER, Detection.readActivationMethod(Bits.from("11")));
 	}
 
@@ -298,7 +298,7 @@ public class DetectionTest {
 	@Test
 	public void testReadVesselIdWithAircraftOperatorAndSerialNumber() {
 		AircraftOperatorAndSerialNumber a = (AircraftOperatorAndSerialNumber) Detection
-				.readVesselId(Bits.from("101").concatWith(createVesselIdAircraftOperatorAndSerialNumber())).get();
+		        .readVesselId(Bits.from("101").concatWith(createVesselIdAircraftOperatorAndSerialNumber())).get();
 		assertEquals("XYZ", a.aircraftOperatorDesignator());
 	}
 
@@ -356,11 +356,11 @@ public class DetectionTest {
 	@Test
 	public void testBatteryPercentInFlightEmergency() {
 		assertEquals(Range.create(0, RangeEndType.INCLUSIVE, 33, RangeEndType.INCLUSIVE),
-				Detection.readBatteryPercentInFlightEmergency(Bits.from("00")).get());
+		        Detection.readBatteryPercentInFlightEmergency(Bits.from("00")).get());
 		assertEquals(Range.create(33, RangeEndType.EXCLUSIVE, 66, RangeEndType.INCLUSIVE),
-				Detection.readBatteryPercentInFlightEmergency(Bits.from("01")).get());
+		        Detection.readBatteryPercentInFlightEmergency(Bits.from("01")).get());
 		assertEquals(Range.create(66, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE),
-				Detection.readBatteryPercentInFlightEmergency(Bits.from("10")).get());
+		        Detection.readBatteryPercentInFlightEmergency(Bits.from("10")).get());
 		assertFalse(Detection.readBatteryPercentInFlightEmergency(Bits.from("11")).isPresent());
 	}
 
@@ -368,20 +368,20 @@ public class DetectionTest {
 	public void testReadTriggeringEvent() {
 		assertEquals(TriggeringEvent.MANUAL_ACTIVATION_BY_CREW, Detection.readTriggeringEvent(Bits.from("0001")));
 		assertEquals(TriggeringEvent.G_SWITCH_OR_DEFORMATION_ACTIVATION,
-				Detection.readTriggeringEvent(Bits.from("0100")));
+		        Detection.readTriggeringEvent(Bits.from("0100")));
 		assertEquals(TriggeringEvent.AUTOMATIC_ACTIVATION_FROM_AVIONICS_OR_TRIGGERING_SYSTEM,
-				Detection.readTriggeringEvent(Bits.from("1000")));
+		        Detection.readTriggeringEvent(Bits.from("1000")));
 		assertEquals(TriggeringEvent.OTHER, Detection.readTriggeringEvent(Bits.from("1111")));
 	}
 
 	@Test
 	public void testReadRotatingFieldCancellationMessage() {
 		assertEquals(DeactivationMethod.MANUAL_DEACTIVATION_BY_USER,
-				Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "10")).deactivationMethod());
+		        Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "10")).deactivationMethod());
 		assertEquals(DeactivationMethod.AUTOMATIC_DEACTIVATION_BY_EXTERNAL_MEANS,
-				Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "01")).deactivationMethod());
+		        Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "01")).deactivationMethod());
 		assertEquals(DeactivationMethod.OTHER,
-				Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "11")).deactivationMethod());
+		        Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "11")).deactivationMethod());
 	}
 
 	@Test
@@ -435,19 +435,19 @@ public class DetectionTest {
 	@Test
 	public void testReadRotatingFieldEltDtInFlightEmergency() {
 		Bits b = Bits.from("0001" // rotating field type
-				+ "00001111111111111" // time
-				+ "0001111010" // altitude
-				+ "0100" // triggering event
-				+ "01" // gnss status
-				+ "10" // battery
-				+ "000000000"); // spare
+		        + "00001111111111111" // time
+		        + "0001111010" // altitude
+		        + "0100" // triggering event
+		        + "01" // gnss status
+		        + "10" // battery
+		        + "000000000"); // spare
 		EltDtInFlightEmergency a = (EltDtInFlightEmergency) Detection.readRotatingField(b);
 		assertEquals(OffsetTime.of(2, 16, 31, 0, ZoneOffset.UTC), a.timeOfLastEncodedLocation());
 		assertEquals(1952 - 400, a.altitudeEncodedLocationMetres());
 		assertEquals(TriggeringEvent.G_SWITCH_OR_DEFORMATION_ACTIVATION, a.triggeringEvent());
 		assertEquals(GnssStatus.LOCATION_2D, a.gnssStatus());
 		assertEquals(Range.create(66, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE),
-				a.remainingBatteryCapacityPercent().get());
+		        a.remainingBatteryCapacityPercent().get());
 	}
 
 	@Test
@@ -489,15 +489,15 @@ public class DetectionTest {
 	@Test
 	public void testReadRotatingFieldRls() {
 		Bits b = Bits.from("0010" // rotating field id
-				+ "00" // empty
-				+ "1" //
-				+ "0" //
-				+ zeros(4) //
-				+ "010" // glonass
-				+ "1" //
-				+ "0" //
-				+ "1110" //
-				+ "10" + ones(14) + zeros(11));
+		        + "00" // empty
+		        + "1" //
+		        + "0" //
+		        + zeros(4) //
+		        + "010" // glonass
+		        + "1" //
+		        + "0" //
+		        + "1110" //
+		        + "10" + ones(14) + zeros(11));
 		Rls a = (Rls) Detection.readRotatingField(b);
 		assertTrue(a.canProcessAutomaticallyGeneratedAckRlmType1());
 		assertFalse(a.canProcessManuallyGeneratedRlm());

@@ -16,8 +16,8 @@ public final class ObjectiveRequirements implements RotatingField {
 	private final GnssStatus gnssStatus;
 
 	public ObjectiveRequirements(int elapsedTimeSinceActivationHours, int timeSinceLastEncodedLocationMinutes,
-			int altitudeEncodedLocationMetres, int dilutionPrecisionHdop, Optional<Range> dilutionPrecisionDop,
-			ActivationMethod activationMethod, Optional<Range> remainingBatteryCapacityPercent, GnssStatus gnssStatus) {
+	        int altitudeEncodedLocationMetres, int dilutionPrecisionHdop, Optional<Range> dilutionPrecisionDop,
+	        ActivationMethod activationMethod, Optional<Range> remainingBatteryCapacityPercent, GnssStatus gnssStatus) {
 		this.elapsedTimeSinceActivationHours = elapsedTimeSinceActivationHours;
 		this.timeSinceLastEncodedLocationMinutes = timeSinceLastEncodedLocationMinutes;
 		this.altitudeEncodedLocationMetres = altitudeEncodedLocationMetres;

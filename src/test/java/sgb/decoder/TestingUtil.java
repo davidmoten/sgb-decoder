@@ -17,7 +17,7 @@ public final class TestingUtil {
 	public static String readResource(String resourceName) {
 		try (InputStream in = TestingUtil.class.getResourceAsStream(resourceName)) {
 			return new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)).lines()
-					.collect(Collectors.joining("\n"));
+			        .collect(Collectors.joining("\n"));
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
 		}

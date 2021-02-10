@@ -41,9 +41,9 @@ public final class JsonSchema {
 		s.append(COMMA);
 		s.append(quoted("definitions") + COLON + "{");
 		s.append(clsNameDefinitions.values() //
-				.stream() //
-				.map(x -> x.json) //
-				.collect(Collectors.joining(",")));
+		        .stream() //
+		        .map(x -> x.json) //
+		        .collect(Collectors.joining(",")));
 		s.append("}");
 		return "{" + s.toString() + "}";
 	}
@@ -57,29 +57,29 @@ public final class JsonSchema {
 	}
 
 	private static void collectDefinitions(Class<?> cls, Map<String, Definition> clsNameDefinitions,
-			Map<Class<?>, List<Class<?>>> subclasses) {
+	        Map<Class<?>, List<Class<?>>> subclasses) {
 		JsonType t = toJsonType(cls.getName());
 		if (t.typeName.equals("object") && !clsNameDefinitions.containsKey(cls.getName())) {
 			// will be an implementation of HasFormatter
 			Arrays.stream(cls.getDeclaredFields()) //
-					.filter(f -> !isStatic(f)) //
-					.map(JsonSchema::toMyField) //
-					.forEach(f -> {
-						JsonType type = toJsonType(f.javaType);
-						if (type.typeName.equals("object")) {
-							collectDefinitions(toClass(f.javaType), clsNameDefinitions, subclasses);
-						} else if (type.typeName.equals("string") && !type.enumeration.isEmpty()) {
-							StringBuilder json = new StringBuilder();
-							json.append(quoted(definitionName(f.javaType)) + COLON + "{");
-							add(json, "type", "string");
-							json.append(", ");
-							json.append(quoted("enum") + COLON);
-							json.append("[" + type.enumeration.stream().map(JsonSchema::quoted)
-									.collect(Collectors.joining(COMMA)) + "]");
-							json.append("}");
-							clsNameDefinitions.put(type.typeName, new Definition(json.toString()));
-						}
-					});
+			        .filter(f -> !isStatic(f)) //
+			        .map(JsonSchema::toMyField) //
+			        .forEach(f -> {
+				        JsonType type = toJsonType(f.javaType);
+				        if (type.typeName.equals("object")) {
+					        collectDefinitions(toClass(f.javaType), clsNameDefinitions, subclasses);
+				        } else if (type.typeName.equals("string") && !type.enumeration.isEmpty()) {
+					        StringBuilder json = new StringBuilder();
+					        json.append(quoted(definitionName(f.javaType)) + COLON + "{");
+					        add(json, "type", "string");
+					        json.append(", ");
+					        json.append(quoted("enum") + COLON);
+					        json.append("[" + type.enumeration.stream().map(JsonSchema::quoted)
+					                .collect(Collectors.joining(COMMA)) + "]");
+					        json.append("}");
+					        clsNameDefinitions.put(type.typeName, new Definition(json.toString()));
+				        }
+			        });
 			final String type;
 			List<Class<?>> list = subclasses.get(cls);
 			if (list != null) {
@@ -106,11 +106,11 @@ public final class JsonSchema {
 			}
 
 			String required = Arrays.stream(cls.getDeclaredFields()) //
-					.filter(f -> !isStatic(f)) //
-					.map(JsonSchema::toMyField) //
-					.filter(f -> f.required) //
-					.map(f -> quoted(f.name)) //
-					.collect(Collectors.joining(", "));
+			        .filter(f -> !isStatic(f)) //
+			        .map(JsonSchema::toMyField) //
+			        .filter(f -> f.required) //
+			        .map(f -> quoted(f.name)) //
+			        .collect(Collectors.joining(", "));
 
 			if (!required.isEmpty()) {
 				json.append(COMMA);
@@ -177,15 +177,15 @@ public final class JsonSchema {
 
 	private static String properties(Class<?> cls) {
 		String content = Arrays.stream(cls.getDeclaredFields()) //
-				.filter(f -> !isStatic(f)) //
-				.map(JsonSchema::toMyField) //
-				.map(JsonSchema::generateDefinition) //
-				.collect(Collectors.joining(","));
+		        .filter(f -> !isStatic(f)) //
+		        .map(JsonSchema::toMyField) //
+		        .map(JsonSchema::generateDefinition) //
+		        .collect(Collectors.joining(","));
 		if (content.trim().isEmpty()) {
 			return "";
 		} else {
 			return quoted("properties") + COLON + "{" + content //
-					+ "}";
+			        + "}";
 		}
 	}
 
@@ -236,7 +236,7 @@ public final class JsonSchema {
 			Class<?> cls = toClass(javaType);
 			if (cls.isEnum()) {
 				List<String> list = Arrays.stream(cls.getEnumConstants()).map(x -> x.toString())
-						.collect(Collectors.toList());
+				        .collect(Collectors.toList());
 				return new JsonType("string", list);
 			} else {
 				return new JsonType("object", Collections.emptyList());

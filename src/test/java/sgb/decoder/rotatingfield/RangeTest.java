@@ -48,12 +48,12 @@ public final class RangeTest {
 		{
 			Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.INCLUSIVE);
 			assertJsonEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : true}",
-					Json.toJson(r));
+			        Json.toJson(r));
 		}
 		{
 			Range r = Range.create(1, RangeEndType.EXCLUSIVE, 2, RangeEndType.INCLUSIVE);
 			assertJsonEquals("{\"min\" : 1, \"minInclusive\" : false, \"max\" : 2, \"maxInclusive\" : true}",
-					Json.toJson(r));
+			        Json.toJson(r));
 		}
 		{
 			Range r = Range.create(1, RangeEndType.MISSING, 2, RangeEndType.INCLUSIVE);
@@ -62,7 +62,7 @@ public final class RangeTest {
 		{
 			Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.EXCLUSIVE);
 			assertJsonEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : false}",
-					Json.toJson(r));
+			        Json.toJson(r));
 		}
 		{
 			Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.MISSING);
@@ -71,7 +71,7 @@ public final class RangeTest {
 		{
 			Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.INCLUSIVE);
 			assertJsonEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : true}",
-					Json.toJson(r));
+			        Json.toJson(r));
 		}
 	}
 

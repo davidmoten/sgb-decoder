@@ -10,7 +10,7 @@ public final class BeaconFeedback {
 	private final Optional<String> shortRlmParametersBitString;
 
 	public BeaconFeedback(boolean rlmType1FeedbackReceived, boolean rlmType2FeedbackReceived, RlsType rlsType,
-			Optional<String> shortRlmParametersBitString) {
+	        Optional<String> shortRlmParametersBitString) {
 		this.rlmType1FeedbackReceived = rlmType1FeedbackReceived;
 		this.rlmType2FeedbackReceived = rlmType2FeedbackReceived;
 		this.rlsType = rlsType;

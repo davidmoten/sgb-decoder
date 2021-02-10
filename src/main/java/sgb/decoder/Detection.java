@@ -41,7 +41,7 @@ import sgb.decoder.vesselid.VesselId;
 public final class Detection {
 
 	private static final Bits NO_ENCODED_LOCATION_CAPABILITY = Bits
-			.from("11111111000001111100000111111111111110000011111");
+	        .from("11111111000001111100000111111111111110000011111");
 
 	private final int tac;
 	private final int serialNo;
@@ -137,8 +137,8 @@ public final class Detection {
 		GnssStatus gnssStatus = readGnssStatus(bits);
 		bits.skip(2);
 		return new ObjectiveRequirements(elapsedTimeSinceActivationHours, timeSinceLastEncodedLocationMinutes,
-				altitudeEncodedLocationMetres, dilutionPrecisionHdop, dilutionPrecisionDop, activationMethod,
-				remainingBatteryCapacityPercent, gnssStatus);
+		        altitudeEncodedLocationMetres, dilutionPrecisionHdop, dilutionPrecisionDop, activationMethod,
+		        remainingBatteryCapacityPercent, gnssStatus);
 	}
 
 	@VisibleForTesting
@@ -247,7 +247,7 @@ public final class Detection {
 		Optional<Range> remainingBatteryCapacityPercent = readBatteryPercentInFlightEmergency(bits);
 		bits.skip(9);
 		return new EltDtInFlightEmergency(timeOfLastEncodedLocationSeconds, altitudeEncodedLocationMetres,
-				triggeringEvent, gnssStatus, remainingBatteryCapacityPercent);
+		        triggeringEvent, gnssStatus, remainingBatteryCapacityPercent);
 	}
 
 	private static int readAltitudeEncodedLocationMetres(Bits bits) {
@@ -303,7 +303,7 @@ public final class Detection {
 		Optional<BeaconFeedback> beaconFeedback = readBeaconFeadback(bits, rlsProvider);
 		bits.skip(11);
 		return new Rls(canProcessAutomaticallyGeneratedAckRlmType1, canProcessManuallyGeneratedRlm, rlsProvider,
-				beaconFeedback);
+		        beaconFeedback);
 	}
 
 	@VisibleForTesting
@@ -341,7 +341,7 @@ public final class Detection {
 				shortRlmParametersBitString = Optional.of(bits.readBitString(15));
 			}
 			return Optional.of(new BeaconFeedback(rlmType1FeedbackReceived, rlmType2FeedbackReceived, rlsType,
-					shortRlmParametersBitString));
+			        shortRlmParametersBitString));
 		} else {
 			return Optional.empty();
 		}

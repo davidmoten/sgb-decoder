@@ -15,7 +15,7 @@ public final class EltDtInFlightEmergency implements RotatingField {
 	private final Optional<Range> remainingBatteryCapacityPercent;
 
 	public EltDtInFlightEmergency(OffsetTime timeOfLastEncodedLocation, int altitudeEncodedLocationMetres,
-			TriggeringEvent triggeringEvent, GnssStatus gnssStatus, Optional<Range> remainingBatteryCapacityPercent) {
+	        TriggeringEvent triggeringEvent, GnssStatus gnssStatus, Optional<Range> remainingBatteryCapacityPercent) {
 		this.timeOfLastEncodedLocation = timeOfLastEncodedLocation;
 		this.altitudeEncodedLocationMetres = altitudeEncodedLocationMetres;
 		this.triggeringEvent = triggeringEvent;

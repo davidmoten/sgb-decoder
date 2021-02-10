@@ -20,7 +20,7 @@ public final class Range {
 
 	public static Range create(int min, RangeEndType minType, int max, RangeEndType maxType) {
 		return new Range(minType == RangeEndType.MISSING ? 0 : min, minType, maxType == RangeEndType.MISSING ? 0 : max,
-				maxType);
+		        maxType);
 	}
 
 	public static Range createWithMin(int min, RangeEndType minType) {

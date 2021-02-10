@@ -12,7 +12,7 @@ public final class Rls implements RotatingField {
 	private final Optional<BeaconFeedback> beaconFeedback;
 
 	public Rls(boolean canProcessAutomaticallyGeneratedAckRlmType1, boolean canProcessManuallyGeneratedRlm,
-			RlsProvider rlsProvider, Optional<BeaconFeedback> beaconFeedback) {
+	        RlsProvider rlsProvider, Optional<BeaconFeedback> beaconFeedback) {
 		this.canProcessAutomaticallyGeneratedAckRlmType1 = canProcessAutomaticallyGeneratedAckRlmType1;
 		this.canProcessManuallyGeneratedRlm = canProcessManuallyGeneratedRlm;
 		this.rlsProvider = rlsProvider;
