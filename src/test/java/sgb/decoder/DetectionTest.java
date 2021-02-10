@@ -14,10 +14,9 @@ import java.time.ZoneOffset;
 
 import org.junit.Test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import sgb.decoder.internal.Bits;
 import sgb.decoder.internal.Util;
+import sgb.decoder.internal.json.Json;
 import sgb.decoder.rotatingfield.ActivationMethod;
 import sgb.decoder.rotatingfield.BeaconFeedback;
 import sgb.decoder.rotatingfield.Cancellation;
@@ -68,7 +67,7 @@ public class DetectionTest {
 		Detection d = Detection.fromHexGroundSegmentRepresentation(SAMPLE_HEX);
 		TestingUtil.assertResourceEqualsJson("/detection.json", d.toJson());
 		File file = new File("src/docs/detection.json");
-		Files.write(file.toPath(), TestingUtil.prettyPrintJson(d.toJson()).getBytes(StandardCharsets.UTF_8));
+		Files.write(file.toPath(), Json.prettyPrint(d.toJson()).getBytes(StandardCharsets.UTF_8));
 	}
 
 	private void checkDetection(Detection d) {

@@ -1,373 +1,289 @@
 {
-    "$schema" : "http://json-schema.org/draft/2019-09/schema#",
-    "$id" : "TODO",
-    "definitions" : {
-        "RotatingFieldType" : {
-            "type" : "string",
-            "enum" : [
-                "CANCELLATION",
-                "ELT_DT_IN_FLIGHT_EMERGENCY",
-                "NATIONAL_USE",
-                "OBJECTIVE_REQUIREMENTS",
-                "RLS",
-                "UNKNOWN"
-            ]
+  "$schema" : "http://json-schema.org/draft/2019-09/schema#",
+  "$id" : "TODO",
+  "definitions" : {
+    "RotatingFieldType" : {
+      "type" : "string",
+      "enum" : [ "CANCELLATION", "ELT_DT_IN_FLIGHT_EMERGENCY", "NATIONAL_USE", "OBJECTIVE_REQUIREMENTS", "RLS", "UNKNOWN" ]
+    },
+    "Cancellation" : {
+      "type" : "object",
+      "properties" : {
+        "rotatingFieldType" : {
+          "type" : "string"
         },
-        "Cancellation" : {
-            "type" : "object",
-            "properties" : {
-                "rotatingFieldType" : {
-                    "type" : "string"
-                },
-                "deactivationMethod" : {
-                    "type" : "string"
-                }
-            },
-            "required" : [
-                "rotatingFieldType",
-                "deactivationMethod"
-            ]
-        },
-        "Rls" : {
-            "type" : "object",
-            "properties" : {
-                "rotatingFieldType" : {
-                    "type" : "string"
-                },
-                "canProcessAutomaticallyGeneratedAckRlmType1" : {
-                    "type" : "boolean"
-                },
-                "canProcessManuallyGeneratedRlm" : {
-                    "type" : "boolean"
-                },
-                "rlsProvider" : {
-                    "type" : "string"
-                },
-                "beaconFeedback" : {
-                    "type" : "#/definitions/BeaconFeedback"
-                }
-            },
-            "required" : [
-                "rotatingFieldType",
-                "canProcessAutomaticallyGeneratedAckRlmType1",
-                "canProcessManuallyGeneratedRlm",
-                "rlsProvider"
-            ]
-        },
-        "AircraftRegistrationMarking" : {
-            "type" : "object",
-            "properties" : {
-                "vesselIdType" : {
-                    "type" : "string"
-                },
-                "value" : {
-                    "type" : "string"
-                }
-            },
-            "required" : [
-                "vesselIdType"
-            ]
-        },
-        "Mmsi" : {
-            "type" : "object",
-            "properties" : {
-                "vesselIdType" : {
-                    "type" : "string"
-                },
-                "mmsi" : {
-                    "type" : "integer"
-                },
-                "epirbMmsi" : {
-                    "type" : "integer"
-                }
-            },
-            "required" : [
-                "vesselIdType"
-            ]
-        },
-        "EltDtInFlightEmergency" : {
-            "type" : "object",
-            "properties" : {
-                "rotatingFieldType" : {
-                    "type" : "string"
-                },
-                "timeOfLastEncodedLocation" : {
-                    "type" : "time"
-                },
-                "altitudeEncodedLocationMetres" : {
-                    "type" : "integer"
-                },
-                "triggeringEvent" : {
-                    "type" : "string"
-                },
-                "gnssStatus" : {
-                    "type" : "string"
-                },
-                "remainingBatteryCapacityPercent" : {
-                    "type" : "#/definitions/Range"
-                }
-            },
-            "required" : [
-                "rotatingFieldType",
-                "timeOfLastEncodedLocation",
-                "altitudeEncodedLocationMetres",
-                "triggeringEvent",
-                "gnssStatus"
-            ]
-        },
-        "Range" : {
-            "type" : "object",
-            "properties" : {
-                "min" : {
-                    "type" : "integer"
-                },
-                "minType" : {
-                    "type" : "string"
-                },
-                "max" : {
-                    "type" : "integer"
-                },
-                "maxType" : {
-                    "type" : "string"
-                }
-            },
-            "required" : [
-                "min",
-                "minType",
-                "max",
-                "maxType"
-            ]
-        },
-        "BeaconFeedback" : {
-            "type" : "object",
-            "properties" : {
-                "rlmType1FeedbackReceived" : {
-                    "type" : "boolean"
-                },
-                "rlmType2FeedbackReceived" : {
-                    "type" : "boolean"
-                },
-                "rlsType" : {
-                    "type" : "string"
-                },
-                "shortRlmParametersBitString" : {
-                    "type" : "string"
-                }
-            },
-            "required" : [
-                "rlmType1FeedbackReceived",
-                "rlmType2FeedbackReceived",
-                "rlsType"
-            ]
-        },
-        "RadioCallSign" : {
-            "type" : "object",
-            "properties" : {
-                "vesselIdType" : {
-                    "type" : "string"
-                },
-                "value" : {
-                    "type" : "string"
-                }
-            },
-            "required" : [
-                "vesselIdType"
-            ]
-        },
-        "Detection" : {
-            "type" : "object",
-            "properties" : {
-                "tac" : {
-                    "type" : "integer"
-                },
-                "serialNo" : {
-                    "type" : "integer"
-                },
-                "countryCode" : {
-                    "type" : "integer"
-                },
-                "hasAtLeastOneEnabledHomingSignal" : {
-                    "type" : "boolean"
-                },
-                "hasEnabledRls" : {
-                    "type" : "boolean"
-                },
-                "testProtocolMessage" : {
-                    "type" : "boolean"
-                },
-                "encodedGnssPosition" : {
-                    "type" : "#/definitions/EncodedGnssPosition"
-                },
-                "vesselId" : {
-                    "type" : "#/definitions/VesselId"
-                },
-                "beaconType" : {
-                    "type" : "string"
-                },
-                "rotatingField" : {
-                    "type" : "#/definitions/RotatingField"
-                },
-                "beacon23HexId" : {
-                    "type" : "string"
-                },
-                "beacon15HexId" : {
-                    "type" : "string"
-                }
-            },
-            "required" : [
-                "tac",
-                "serialNo",
-                "countryCode",
-                "hasAtLeastOneEnabledHomingSignal",
-                "hasEnabledRls",
-                "testProtocolMessage",
-                "beaconType",
-                "rotatingField",
-                "beacon23HexId",
-                "beacon15HexId"
-            ]
-        },
-        "RotatingField" : {
-            "type" : [
-                "#/definitions/Cancellation",
-                "#/definitions/EltDtInFlightEmergency",
-                "#/definitions/NationalUse",
-                "#/definitions/ObjectiveRequirements",
-                "#/definitions/Rls",
-                "#/definitions/UnknownRotatingField"
-            ]
-        },
-        "Aviation24BitAddress" : {
-            "type" : "object",
-            "properties" : {
-                "vesselIdType" : {
-                    "type" : "string"
-                },
-                "addressHex" : {
-                    "type" : "string"
-                },
-                "aircraftOperatorDesignator" : {
-                    "type" : "string"
-                }
-            },
-            "required" : [
-                "vesselIdType",
-                "addressHex"
-            ]
-        },
-        "VesselId" : {
-            "type" : [
-                "#/definitions/AircraftOperatorAndSerialNumber",
-                "#/definitions/AircraftRegistrationMarking",
-                "#/definitions/Aviation24BitAddress",
-                "#/definitions/Mmsi",
-                "#/definitions/RadioCallSign"
-            ]
-        },
-        "ObjectiveRequirements" : {
-            "type" : "object",
-            "properties" : {
-                "rotatingFieldType" : {
-                    "type" : "string"
-                },
-                "elapsedTimeSinceActivationHours" : {
-                    "type" : "integer"
-                },
-                "timeSinceLastEncodedLocationMinutes" : {
-                    "type" : "integer"
-                },
-                "altitudeEncodedLocationMetres" : {
-                    "type" : "integer"
-                },
-                "dilutionPrecisionHdop" : {
-                    "type" : "integer"
-                },
-                "dilutionPrecisionDop" : {
-                    "type" : "#/definitions/Range"
-                },
-                "activationMethod" : {
-                    "type" : "string"
-                },
-                "remainingBatteryCapacityPercent" : {
-                    "type" : "#/definitions/Range"
-                },
-                "gnssStatus" : {
-                    "type" : "string"
-                }
-            },
-            "required" : [
-                "rotatingFieldType",
-                "elapsedTimeSinceActivationHours",
-                "timeSinceLastEncodedLocationMinutes",
-                "altitudeEncodedLocationMetres",
-                "dilutionPrecisionHdop",
-                "activationMethod",
-                "gnssStatus"
-            ]
-        },
-        "AircraftOperatorAndSerialNumber" : {
-            "type" : "object",
-            "properties" : {
-                "vesselIdType" : {
-                    "type" : "string"
-                },
-                "aircraftOperatorDesignator" : {
-                    "type" : "string"
-                },
-                "serialNumber" : {
-                    "type" : "integer"
-                }
-            },
-            "required" : [
-                "vesselIdType",
-                "aircraftOperatorDesignator",
-                "serialNumber"
-            ]
-        },
-        "NationalUse" : {
-            "type" : "object",
-            "properties" : {
-                "rotatingFieldType" : {
-                    "type" : "string"
-                },
-                "bitString" : {
-                    "type" : "string"
-                }
-            },
-            "required" : [
-                "rotatingFieldType",
-                "bitString"
-            ]
-        },
-        "EncodedGnssPosition" : {
-            "type" : "object",
-            "properties" : {
-                "lat" : {
-                    "type" : "number"
-                },
-                "lon" : {
-                    "type" : "number"
-                }
-            },
-            "required" : [
-                "lat",
-                "lon"
-            ]
-        },
-        "UnknownRotatingField" : {
-            "type" : "object",
-            "properties" : {
-                "rotatingFieldType" : {
-                    "type" : "string"
-                },
-                "bitString" : {
-                    "type" : "string"
-                }
-            },
-            "required" : [
-                "rotatingFieldType",
-                "bitString"
-            ]
+        "deactivationMethod" : {
+          "type" : "string"
         }
+      },
+      "required" : [ "rotatingFieldType", "deactivationMethod" ]
+    },
+    "Rls" : {
+      "type" : "object",
+      "properties" : {
+        "rotatingFieldType" : {
+          "type" : "string"
+        },
+        "canProcessAutomaticallyGeneratedAckRlmType1" : {
+          "type" : "boolean"
+        },
+        "canProcessManuallyGeneratedRlm" : {
+          "type" : "boolean"
+        },
+        "rlsProvider" : {
+          "type" : "string"
+        },
+        "beaconFeedback" : {
+          "type" : "#/definitions/BeaconFeedback"
+        }
+      },
+      "required" : [ "rotatingFieldType", "canProcessAutomaticallyGeneratedAckRlmType1", "canProcessManuallyGeneratedRlm", "rlsProvider" ]
+    },
+    "AircraftRegistrationMarking" : {
+      "type" : "object",
+      "properties" : {
+        "vesselIdType" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        }
+      },
+      "required" : [ "vesselIdType" ]
+    },
+    "Mmsi" : {
+      "type" : "object",
+      "properties" : {
+        "vesselIdType" : {
+          "type" : "string"
+        },
+        "mmsi" : {
+          "type" : "integer"
+        },
+        "epirbMmsi" : {
+          "type" : "integer"
+        }
+      },
+      "required" : [ "vesselIdType" ]
+    },
+    "EltDtInFlightEmergency" : {
+      "type" : "object",
+      "properties" : {
+        "rotatingFieldType" : {
+          "type" : "string"
+        },
+        "timeOfLastEncodedLocation" : {
+          "type" : "time"
+        },
+        "altitudeEncodedLocationMetres" : {
+          "type" : "integer"
+        },
+        "triggeringEvent" : {
+          "type" : "string"
+        },
+        "gnssStatus" : {
+          "type" : "string"
+        },
+        "remainingBatteryCapacityPercent" : {
+          "type" : "#/definitions/Range"
+        }
+      },
+      "required" : [ "rotatingFieldType", "timeOfLastEncodedLocation", "altitudeEncodedLocationMetres", "triggeringEvent", "gnssStatus" ]
+    },
+    "Range" : {
+      "type" : "object",
+      "properties" : {
+        "min" : {
+          "type" : "integer"
+        },
+        "minType" : {
+          "type" : "string"
+        },
+        "max" : {
+          "type" : "integer"
+        },
+        "maxType" : {
+          "type" : "string"
+        }
+      },
+      "required" : [ "min", "minType", "max", "maxType" ]
+    },
+    "BeaconFeedback" : {
+      "type" : "object",
+      "properties" : {
+        "rlmType1FeedbackReceived" : {
+          "type" : "boolean"
+        },
+        "rlmType2FeedbackReceived" : {
+          "type" : "boolean"
+        },
+        "rlsType" : {
+          "type" : "string"
+        },
+        "shortRlmParametersBitString" : {
+          "type" : "string"
+        }
+      },
+      "required" : [ "rlmType1FeedbackReceived", "rlmType2FeedbackReceived", "rlsType" ]
+    },
+    "RadioCallSign" : {
+      "type" : "object",
+      "properties" : {
+        "vesselIdType" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        }
+      },
+      "required" : [ "vesselIdType" ]
+    },
+    "Detection" : {
+      "type" : "object",
+      "properties" : {
+        "tac" : {
+          "type" : "integer"
+        },
+        "serialNo" : {
+          "type" : "integer"
+        },
+        "countryCode" : {
+          "type" : "integer"
+        },
+        "hasAtLeastOneEnabledHomingSignal" : {
+          "type" : "boolean"
+        },
+        "hasEnabledRls" : {
+          "type" : "boolean"
+        },
+        "testProtocolMessage" : {
+          "type" : "boolean"
+        },
+        "encodedGnssPosition" : {
+          "type" : "#/definitions/EncodedGnssPosition"
+        },
+        "vesselId" : {
+          "type" : "#/definitions/VesselId"
+        },
+        "beaconType" : {
+          "type" : "string"
+        },
+        "rotatingField" : {
+          "type" : "#/definitions/RotatingField"
+        },
+        "beacon23HexId" : {
+          "type" : "string"
+        },
+        "beacon15HexId" : {
+          "type" : "string"
+        }
+      },
+      "required" : [ "tac", "serialNo", "countryCode", "hasAtLeastOneEnabledHomingSignal", "hasEnabledRls", "testProtocolMessage", "beaconType", "rotatingField", "beacon23HexId", "beacon15HexId" ]
+    },
+    "RotatingField" : {
+      "type" : [ "#/definitions/Cancellation", "#/definitions/EltDtInFlightEmergency", "#/definitions/NationalUse", "#/definitions/ObjectiveRequirements", "#/definitions/Rls", "#/definitions/UnknownRotatingField" ]
+    },
+    "Aviation24BitAddress" : {
+      "type" : "object",
+      "properties" : {
+        "vesselIdType" : {
+          "type" : "string"
+        },
+        "addressHex" : {
+          "type" : "string"
+        },
+        "aircraftOperatorDesignator" : {
+          "type" : "string"
+        }
+      },
+      "required" : [ "vesselIdType", "addressHex" ]
+    },
+    "VesselId" : {
+      "type" : [ "#/definitions/AircraftOperatorAndSerialNumber", "#/definitions/AircraftRegistrationMarking", "#/definitions/Aviation24BitAddress", "#/definitions/Mmsi", "#/definitions/RadioCallSign" ]
+    },
+    "ObjectiveRequirements" : {
+      "type" : "object",
+      "properties" : {
+        "rotatingFieldType" : {
+          "type" : "string"
+        },
+        "elapsedTimeSinceActivationHours" : {
+          "type" : "integer"
+        },
+        "timeSinceLastEncodedLocationMinutes" : {
+          "type" : "integer"
+        },
+        "altitudeEncodedLocationMetres" : {
+          "type" : "integer"
+        },
+        "dilutionPrecisionHdop" : {
+          "type" : "integer"
+        },
+        "dilutionPrecisionDop" : {
+          "type" : "#/definitions/Range"
+        },
+        "activationMethod" : {
+          "type" : "string"
+        },
+        "remainingBatteryCapacityPercent" : {
+          "type" : "#/definitions/Range"
+        },
+        "gnssStatus" : {
+          "type" : "string"
+        }
+      },
+      "required" : [ "rotatingFieldType", "elapsedTimeSinceActivationHours", "timeSinceLastEncodedLocationMinutes", "altitudeEncodedLocationMetres", "dilutionPrecisionHdop", "activationMethod", "gnssStatus" ]
+    },
+    "AircraftOperatorAndSerialNumber" : {
+      "type" : "object",
+      "properties" : {
+        "vesselIdType" : {
+          "type" : "string"
+        },
+        "aircraftOperatorDesignator" : {
+          "type" : "string"
+        },
+        "serialNumber" : {
+          "type" : "integer"
+        }
+      },
+      "required" : [ "vesselIdType", "aircraftOperatorDesignator", "serialNumber" ]
+    },
+    "NationalUse" : {
+      "type" : "object",
+      "properties" : {
+        "rotatingFieldType" : {
+          "type" : "string"
+        },
+        "bitString" : {
+          "type" : "string"
+        }
+      },
+      "required" : [ "rotatingFieldType", "bitString" ]
+    },
+    "EncodedGnssPosition" : {
+      "type" : "object",
+      "properties" : {
+        "lat" : {
+          "type" : "number"
+        },
+        "lon" : {
+          "type" : "number"
+        }
+      },
+      "required" : [ "lat", "lon" ]
+    },
+    "UnknownRotatingField" : {
+      "type" : "object",
+      "properties" : {
+        "rotatingFieldType" : {
+          "type" : "string"
+        },
+        "bitString" : {
+          "type" : "string"
+        }
+      },
+      "required" : [ "rotatingFieldType", "bitString" ]
     }
+  }
 }

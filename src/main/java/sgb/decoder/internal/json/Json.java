@@ -55,4 +55,18 @@ public final class Json {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public static String prettyPrint(String json) {
+		ObjectMapper m = new ObjectMapper();
+		try {
+			Object v = m.readValue(json, Object.class);
+			return m.writerWithDefaultPrettyPrinter().writeValueAsString(v);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public static String toIndentedText(String json) {
+		return null;
+	}
 }
