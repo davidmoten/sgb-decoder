@@ -79,3 +79,4 @@ Note that the canonical form in JSON would not have to be exactly matched as a s
 * apply BCH error code correction (which will correct up to 6 bit errors in the first 202 bits of the 250 bit SGB detection message).
 * create a set of test messages for the Compliance Kit
 * discuss Compliance Kit with the specification authors
+* report error in example in specification to authors
