@@ -5,7 +5,6 @@ Java library that decodes Second Generation Beacon (SGB) detection messages and 
 
 * Decodes Second Generation Beacon (SGB) detection messages (250bit) to Java objects
 * Extracts Beacon 23 Hex Id from an SGB detection message
-* Provides a plain text view of resultant Java objects
 * Provides a JSON form of the SGB detection message
 * Provides a JSON Schema document for the JSON form
 * 100% unit test coverage
@@ -38,162 +37,33 @@ import sgb.decoder.Detection;
 String hex = "0039823D32618658622811F0000000000003FFF004030680258";
 Detection d = Detection.fromHexGroundSegmentRepresentation(hex);
 ``` 
-At that point you can browse the object representation of the message or dump a simple (but comprehensive) text representation to stdout.
+At that point you can browse the object representation of the message or dump a JSON text representation to stdout.
 
-```java
-System.out.println(d);
-```
-Output:
-```
-Detection
-  tac = 230
-  serial number = 573
-  country code = 201
-  has at least one enabled homing signal = true
-  has enabled RLS = false
-  is test protocol message = false
-  encoded GNSS position = 
-    lat = 48.79315185546875
-    long = 69.00875854492188
-  vessel ID = 
-  beacon type = ELT_NOT_DT
-  rotating field = 
-      rotating field type = Objective Requirements
-      elapsed time since activation (hours) = 1
-      time since last encoded location (minutes) = 6
-      altitude of encoded location (metres) = 432
-      dilution precision HDOP = 0
-      dilution precision DOP = >1 and <= 2
-      activation method = MANUAL_ACTIVATION_BY_USER
-      remaining battery capacity percent = >75 and <= 100
-      GNSS status = LOCATION_3D
-  beacon 23 hex ID = 9934039823d000000000000
-  beacon 15 hex ID = 9934039823d0000
-```
-
-To view the decoded message in JSON format:
 ```java
 System.out.println(d.toJson());
 ```
-Output:
-```json
-{
-    "tac" : 230,
-    "serialNo" : 573,
-    "countryCode" : 201,
-    "hasAtLeastOneEnabledHomingSignal" : true,
-    "hasEnabledRLS" : false,
-    "isTestProtocolMessage" : false,
-    "encodedGnssPosition" : {
-        "latitude" : 48.79315185546875,
-        "longitude" : 69.00875854492188
-    },
-    "beaconType" : "ELT_NOT_DT",
-    "rotatingField" : {
-        "rotatingFieldType" : "OBJECTIVE_REQUIREMENTS",
-        "elapsedTimeSinceActivationHours" : 1,
-        "timeSinceLastEncodedLocationMinutes" : 6,
-        "altitudeEncodedLocationMetres" : 432,
-        "dilutionPrecisionHdop" : 0,
-        "dilutionPrecisionDop" : {
-            "start" : 1,
-            "startInclusive" : false,
-            "finish" : 2,
-            "finishInclusive" : true
-        },
-        "activationMethod" : "MANUAL_ACTIVATION_BY_USER",
-        "remainingBatteryCapacityPercent" : {
-            "start" : 75,
-            "startInclusive" : false,
-            "finish" : 100,
-            "finishInclusive" : true
-        },
-        "gnssStatus" : "LOCATION_3D"
-    },
-    "beacon23HexId" : "9934039823d000000000000",
-    "beacon15HexId" : "9934039823d0000"
-}
-```
+Output is [here](src/main/docs/detection.json).
 
 The JSON Schema for the above is [here](src/main/json-schema/schema.json).
 
 ## Compliance Kit
-A suggestion for the creators of the SGB encoding specification is that they share a Compliance Kit which is a list of beacon detection messages in hex form together with the corresponding decoded human readable version of the detection message in some *canonical form*. An example of the canonical form is the plain text version of the detection above. Might equally be JSON, XML or something else. If this were the case then no matter what language a decoder was written in full test coverage of that decoder would be guaranteed by consuming the (comprehensive) Compliance Kit test data. An example of one item in the Compliance Kit would be a text file with name `general-detection-test.txt` and contents:
+A suggestion for the creators of the SGB encoding specification is that they share a Compliance Kit which is a list of beacon detection messages in hex form together with the corresponding decoded human readable version of the detection message in some *canonical form*. If this were the case then no matter what language a decoder was written in full test coverage of that decoder would be guaranteed by consuming the (comprehensive) Compliance Kit test data. An example of one item in the Compliance Kit would be the pair below:
 
+Ground Segment Representation Hex
 ```
 0039823D32618658622811F0000000000003FFF004030680258
-Detection
-  tac = 230
-  serialNo = 573
-  countryCode = 201
-  hasAtLeastOneEnabledHomingSignal = true
-  hasEnabledRLS = false
-  isTestProtocolMessage = false
-  encodedGnssPosition = 
-    latitude = 48.79315185546875
-    longitude = 69.00875854492188
-  beaconType = ELT_NOT_DT
-  rotatingField = 
-    rotatingFieldType = OBJECTIVE_REQUIREMENTS
-    elapsedTimeSinceActivationHours = 1
-    timeSinceLastEncodedLocationMinutes = 6
-    altitudeEncodedLocationMetres = 432
-    dilutionPrecisionHdop = 0
-    dilutionPrecisionDop = >1 and <=2
-    activationMethod = MANUAL_ACTIVATION_BY_USER
-    remainingBatteryCapacityPercent = >75 and <=100
-    gnssStatus = LOCATION_3D
-  beacon23HexId = 9934039823d000000000000
-  beacon15HexId = 9934039823d0000
 ```
+
+[detection.json](src/main/docs/detection.json)
+
 A consumer of the Compliance Kit would consume the first line of that file, decode it, generate the canonical form string and compare it to the rest of the file.
 
-Clearly one test file in the kit does not cut it. There are many variations on field values, some are derived from special binary codes, some field values are optional.
+Clearly one test in the kit does not cut it. There are many variations on field values, some are derived from special binary codes, some field values are optional.
 
-**TODO** make a list of the test files to achieve full coverage 
+**TODO** make a list of the tests to achieve full coverage 
 
 Given that a service implementation of the decoder would probably serialize the decoded structure into JSON or XML, it probably makes sense to use one of those text formats to hold the canonical decoded form so that the implementer can reuse the canonical form work.
 
-If JSON or XML was used for the canonical form then it should also be described by a schema document (JSON Schema or XSD). This library offers a JSON form.
+If JSON or XML was used for the canonical form then it should also be described by a schema document (JSON Schema or XSD). This library offers a JSON form and a JSON Schema document.
 
-Here's an example of a canonical form using JSON:
-```json
-{
-    "tac" : 230,
-    "serialNo" : 573,
-    "countryCode" : 201,
-    "hasAtLeastOneEnabledHomingSignal" : true,
-    "hasEnabledRLS" : false,
-    "isTestProtocolMessage" : false,
-    "encodedGnssPosition" : {
-        "latitude" : 48.79315185546875,
-        "longitude" : 69.00875854492188
-    },
-    "beaconType" : "ELT_NOT_DT",
-    "rotatingField" : {
-        "rotatingFieldType" : "OBJECTIVE_REQUIREMENTS",
-        "elapsedTimeSinceActivationHours" : 1,
-        "timeSinceLastEncodedLocationMinutes" : 6,
-        "altitudeEncodedLocationMetres" : 432,
-        "dilutionPrecisionHdop" : 0,
-        "dilutionPrecisionDop" : {
-            "start" : 1,
-            "startInclusive" : false,
-            "finish" : 2,
-            "finishInclusive" : true
-        },
-        "activationMethod" : "MANUAL_ACTIVATION_BY_USER",
-        "remainingBatteryCapacityPercent" : {
-            "start" : 75,
-            "startInclusive" : false,
-            "finish" : 100,
-            "finishInclusive" : true
-        },
-        "gnssStatus" : "LOCATION_3D"
-    },
-    "beacon23HexId" : "9934039823d000000000000",
-    "beacon15HexId" : "9934039823d0000"
-}
-```
-
-Note that the canonical form in JSON would not have to be exactly matched as a string during a test for compliance. We don't care about whitespace outside of expressions (new lines, indents) so the match would be based on JSON equality. Every major programming language has support for this sort of equality match (either in an open-source library or in the base platform).
+Note that the canonical form in JSON would not have to be exactly matched as a string during a test for compliance. We don't care about whitespace outside of expressions (new lines, indents) and even field order so the match would be based on JSON equality. Every major programming language has support for this sort of equality match (either in an open-source library or in the base platform).
