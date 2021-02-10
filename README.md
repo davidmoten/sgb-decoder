@@ -3,7 +3,7 @@ Java library that decodes [Cospas-Sarsat](https://en.wikipedia.org/wiki/Internat
 
 **Features**
 
-* Decodes Second Generation Beacon (SGB) detection messages (250bit) to Java objects
+* Decodes Second Generation Beacon (SGB) detection messages (202 bits) to Java objects
 * Extracts Beacon 23 Hex Id from an SGB detection message
 * Provides a JSON form of the SGB detection message
 * Provides a JSON Schema document for the JSON form
@@ -19,7 +19,7 @@ mvn clean install
 ```
 The library jar will be in `target` directory.
 
-## Usage
+## Getting started
 
 Add this dependency to your pom.xml:
 
@@ -31,7 +31,8 @@ Add this dependency to your pom.xml:
 </dependency>
 ```
 
-The most likely form that you will encounter a beacon detection message is in the hex encoded Cospas-Sarsat Ground Segment Representation. Here's an example:
+## Usage
+The most likely form that you will encounter a beacon detection message is in the hex encoded Cospas-Sarsat Ground Segment Representation (202 bits hex-encoded to 51 chars using left padded zero bits) Here's an example:
 
 ```java
 import sgb.decoder.Detection;
@@ -47,6 +48,16 @@ System.out.println(d.toJson());
 Output is [here](src/docs/detection.json).
 
 The JSON Schema for the above is [here](src/main/json-schema/schema.json).
+
+You can also decode the raw bits (as a bit string) using `Detection.fromBitString("1010000..")`.
+
+## BCH Error Correction
+A beacon transmits the 202 bit SGB detection message followed by a 48 bit BCH error correction code. You can calculate the code expected from the 202 bit SGB detection message like this:
+
+```java
+Bits bch = detection.calculateBchErrorCorrectionCode();
+System.out.println(bch.toBitString());
+```
 
 ## Performance
 Quick and dirty performance testing (without JMH) indicates that the the library can decode about 140,000 beacon detection messages a second. If you need faster performance than this raise an issue.
