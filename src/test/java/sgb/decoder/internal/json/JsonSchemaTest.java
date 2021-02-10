@@ -1,6 +1,7 @@
 package sgb.decoder.internal.json;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,4 +66,18 @@ public class JsonSchemaTest {
         Asserts.assertIsUtilityClass(JsonSchema.class);
     }
 
+    @Test
+    public void testRecursiveSchemaDoesNotOverflowStack() {
+        JsonSchema.generateSchema(Recursive.class, new HashMap<>());
+    }
+
+    @Test
+    public void testSchemaFromPrimitive() {
+        assertTrue(JsonSchema.generateSchema(Integer.class, new HashMap<>()).contains("\"definitions\" : {}"));
+    }
+
+    private static final class Recursive {
+        int number;
+        Recursive rec;
+    }
 }

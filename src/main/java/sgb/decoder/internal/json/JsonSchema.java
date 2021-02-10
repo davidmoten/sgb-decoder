@@ -7,9 +7,11 @@ import java.time.OffsetTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
@@ -58,8 +60,14 @@ public final class JsonSchema {
 
     private static void collectDefinitions(Class<?> cls, Map<String, Definition> clsNameDefinitions,
             Map<Class<?>, List<Class<?>>> subclasses) {
+        collectDefinitions(cls, clsNameDefinitions, new HashSet<String>(), subclasses);
+    }
+
+    private static void collectDefinitions(Class<?> cls, Map<String, Definition> clsNameDefinitions,
+            Set<String> classesAlreadyProcessed, Map<Class<?>, List<Class<?>>> subclasses) {
         JsonType t = toJsonType(cls.getName());
-        if (t.typeName.equals("object") && !clsNameDefinitions.containsKey(cls.getName())) {
+        if (t.typeName.equals("object") && !classesAlreadyProcessed.contains(cls.getName())) {
+            classesAlreadyProcessed.add(cls.getName());
             // will be an implementation of HasFormatter
             Arrays.stream(cls.getDeclaredFields()) //
                     .filter(f -> !isStatic(f)) //
@@ -67,7 +75,7 @@ public final class JsonSchema {
                     .forEach(f -> {
                         JsonType type = toJsonType(f.javaType);
                         if (type.typeName.equals("object")) {
-                            collectDefinitions(toClass(f.javaType), clsNameDefinitions, subclasses);
+                            collectDefinitions(toClass(f.javaType), clsNameDefinitions, classesAlreadyProcessed, subclasses);
                         } else if (type.typeName.equals("string") && !type.enumeration.isEmpty()) {
                             StringBuilder json = new StringBuilder();
                             json.append(quoted(definitionName(f.javaType)) + COLON + "{");
