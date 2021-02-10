@@ -64,8 +64,6 @@ A consumer of the Compliance Kit would consume decode the given hex and generate
 
 Clearly one test in the kit does not cut it. There are many variations on field values, some are derived from special binary codes, some field values are optional.
 
-**TODO** make a list of the tests to achieve full coverage 
-
 Given that a service implementation of the decoder would probably serialize the decoded structure into JSON or XML, it probably makes sense to use one of those text formats to hold the canonical decoded form so that the implementer can reuse the canonical form work.
 
 If JSON or XML was used for the canonical form then it should also be described by a schema document (JSON Schema or XSD). This library provides a JSON form and a JSON Schema document and the author suggests that **JSON format is used for the *canonical form***. 
