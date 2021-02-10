@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import sgb.decoder.DetectionTest;
+
 public final class BitsTest {
 
     @Test
@@ -143,6 +145,41 @@ public final class BitsTest {
     @Test
     public void testBitsConcat() {
         assertEquals("111000", Bits.from("111").concatWith("000").toBitString());
+    }
+
+    @Test
+    public void testTrimLeadingZeros() {
+        assertEquals("11", Bits.from("00011").trimLeadingZeros().toBitString());
+        assertEquals("0", Bits.from("0000").trimLeadingZeros().toBitString());
+        assertEquals("11111", Bits.from("00000000000011111").trimLeadingZeros().toBitString());
+    }
+
+    @Test
+    public void testRemainderOnPolynomialDivision() {
+        Bits a = Bits.from("10010011100101101");
+        Bits b = Bits.from("11010010101");
+        assertEquals("11111", a.remainderOnPolynomialDivision(b).trimLeadingZeros().toBitString());
+    }
+
+    @Test
+    public void testRemainderOnPolynomialDivisionSimple() {
+        {
+            Bits a = Bits.from("1");
+            Bits b = Bits.from("1");
+            assertEquals("0", a.remainderOnPolynomialDivision(b).trimLeadingZeros().toBitString());
+        }
+        {
+            Bits a = Bits.from("0111");
+            Bits b = Bits.from("0111");
+            assertEquals("0", a.remainderOnPolynomialDivision(b).trimLeadingZeros().toBitString());
+        }
+    }
+    
+    @Test
+    public void testRemainderOnPolynomialDivisionUsingSpecExample() {
+        Bits bits = Bits.from(DetectionTest.BITS);
+        Bits divisor = Bits.from("1110001111110101110000101110111110011110010010111");
+        System.out.println(bits.remainderOnPolynomialDivision(divisor).trimLeadingZeros());
     }
 
 }

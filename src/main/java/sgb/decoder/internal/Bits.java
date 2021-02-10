@@ -170,4 +170,36 @@ public final class Bits {
         return readBitsString(0, bits.length);
     }
 
+    public Bits remainderOnPolynomialDivision(Bits divisor) {
+        divisor = divisor.trimLeadingZeros();
+        Bits b = new Bits(this.bits);
+        int i = 0;
+        while (i <= b.length() - divisor.length()) {
+            if (b.bits[i]) {
+                for (int j = i; j < i + divisor.length(); j++) {
+                    b.bits[j] = b.bits[j] ^ divisor.bits[j - i];
+                }
+            }
+            i++;
+        }
+        return b;
+    }
+
+    public Bits trimLeadingZeros() {
+        int p = bits.length - 1;
+        for (int i = 0; i < bits.length - 1; i++) {
+            if (bits[i]) {
+                p = i;
+                break;
+            }
+        }
+        boolean[] b = Arrays.copyOfRange(bits, p, bits.length);
+        return Bits.from(b);
+    }
+
+    @Override
+    public String toString() {
+        return toBitString();
+    }
+
 }

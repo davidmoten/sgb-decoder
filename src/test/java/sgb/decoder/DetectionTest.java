@@ -42,7 +42,7 @@ import sgb.decoder.vesselid.RadioCallSign;
 public class DetectionTest {
 
     private static final String SAMPLE_HEX = "0039823D32618658622811F0000000000003FFF004030680258";
-    private final String BITS = "00000000111001100000100011110100" //
+    public static final String BITS = "00000000111001100000100011110100" //
             + "11001001100001100001100101100001" //
             + "10001000101000000100011111000000" //
             + "00000000000000000000000000000000" //
