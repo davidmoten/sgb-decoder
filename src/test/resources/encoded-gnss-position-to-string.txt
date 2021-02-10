@@ -1,3 +1,0 @@
-EncodedGnssPosition
-  latitude = -43.0
-  longitude = 140.0

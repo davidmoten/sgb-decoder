@@ -1,5 +1,0 @@
-Rls
-  rotatingFieldType = RLS
-  canProcessAutomaticallyGeneratedAckRlmType1 = true
-  canProcessManuallyGeneratedRlm = false
-  rlsProvider = GALILEO

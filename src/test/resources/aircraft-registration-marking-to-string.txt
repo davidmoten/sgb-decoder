@@ -1,3 +1,0 @@
-AircraftRegistrationMarking
-  vesselIdType = AIRCRAFT_REGISTRATION_MARKING
-  value = VH-ABC

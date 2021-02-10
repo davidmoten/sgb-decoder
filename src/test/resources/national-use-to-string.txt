@@ -1,3 +1,0 @@
-NationalUse
-  rotatingFieldType = NATIONAL_USE
-  bits = 11011

@@ -1,3 +1,0 @@
-UnknownRotatingField
-  rotatingFieldType = UNKNOWN
-  bits = 11011

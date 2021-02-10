@@ -1,4 +1,0 @@
-Aviation24BitAddress
-  vesselIdType = AVIATION_24_BIT_ADDRESS
-  addressHex = ab34
-  aircraftOperatorDesignator = ABCFR

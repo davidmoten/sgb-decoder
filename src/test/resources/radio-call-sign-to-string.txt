@@ -1,3 +1,0 @@
-RadioCallSign
-  vesselIdType = RADIO_CALL_SIGN
-  value = FLIGHT

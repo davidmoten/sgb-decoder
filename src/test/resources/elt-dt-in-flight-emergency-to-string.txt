@@ -1,7 +1,0 @@
-EltDtInFlightEmergency
-  rotatingFieldType = ELT_DT_IN_FLIGHT_EMERGENCY
-  timeOfLastEncodedLocation = 15:44:32Z
-  altitudeEncodedLocationMetres = 57
-  triggeringEvent = MANUAL_ACTIVATION_BY_CREW
-  gnssStatus = LOCATION_3D
-  remainingBatteryCapacityPercent = >50 and <=75

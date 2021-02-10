@@ -1,8 +1,0 @@
-ObjectiveRequirements
-  rotatingFieldType = OBJECTIVE_REQUIREMENTS
-  elapsedTimeSinceActivationHours = 13
-  timeSinceLastEncodedLocationMinutes = 47
-  altitudeEncodedLocationMetres = 60
-  dilutionPrecisionHdop = 3
-  activationMethod = MANUAL_ACTIVATION_BY_USER
-  gnssStatus = LOCATION_3D
