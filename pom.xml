@@ -40,6 +40,9 @@
 		<bundle.plugin.version>5.1.1</bundle.plugin.version>
 		<coverage.reports.dir>${project.build.directory}/target/coverage-reports</coverage.reports.dir>
 		<jacoco.version>0.8.6</jacoco.version>
+		
+		<line.coverage>1.00</line.coverage>
+		<branch.coverage>1.00</branch.coverage>
 
 	</properties>
 
@@ -185,12 +188,12 @@
 										<limit>
 											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>1.00</minimum>
+											<minimum>${line.coverage}</minimum>
 										</limit>
 										<limit>
 											<counter>BRANCH</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>1.00</minimum>
+											<minimum>${branch.coverage}</minimum>
 										</limit>
 									</limits>
 									<!-- <excludes> -->
