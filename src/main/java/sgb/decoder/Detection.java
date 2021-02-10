@@ -412,6 +412,7 @@ public final class Detection {
     private static double readPositionCoordinate(Bits bits, int numDegreesBits) {
         int sign = bits.readBoolean() ? -1 : 1;
         int degrees = bits.readUnsignedInt(numDegreesBits);
+        // use BigDecimal so don't lose precision
         BigDecimal d = readDecimalPart(bits);
         d = d.add(BigDecimal.valueOf(degrees));
         d = d.multiply(BigDecimal.valueOf(sign));

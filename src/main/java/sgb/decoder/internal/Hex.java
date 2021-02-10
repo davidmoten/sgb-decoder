@@ -33,7 +33,7 @@ public final class Hex {
     }
 
     public static String hexToBin(String s) {
-        char[] hex = s.toCharArray();
+        char[] hex = s.toUpperCase().toCharArray();
         StringBuilder b = new StringBuilder();
         for (char h : hex) {
             b.append(map.get(String.valueOf(h)));

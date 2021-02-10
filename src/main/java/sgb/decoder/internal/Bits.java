@@ -31,6 +31,10 @@ public final class Bits {
         return from(bits);
     }
 
+    public static Bits fromHex(String hex) {
+        return Bits.from(Hex.hexToBin(hex));
+    }
+
     public Bits concatWith(String bitString) {
         return concatWith(Bits.from(bitString));
     }
@@ -158,4 +162,5 @@ public final class Bits {
     public String toBitString() {
         return readBitsString(0, bits.length);
     }
+
 }
