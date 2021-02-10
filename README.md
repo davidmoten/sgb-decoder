@@ -80,3 +80,4 @@ Note that the canonical form in JSON would not have to be exactly matched as a s
 * create a set of test messages for the Compliance Kit
 * discuss Compliance Kit with the specification authors
 * report error in example in specification to authors
+* how to handle invalid message bit sequences (might only affect one field). How to represent this in canonical form?
