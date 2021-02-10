@@ -6,7 +6,6 @@ import com.github.davidmoten.guavamini.Preconditions;
 
 public final class AircraftRegistrationMarking implements VesselId {
 
-	@SuppressWarnings("unused")
 	// used for serialization
 	private final VesselIdType vesselIdType = VesselIdType.AIRCRAFT_REGISTRATION_MARKING;
 	private final Optional<String> value;
@@ -19,6 +18,10 @@ public final class AircraftRegistrationMarking implements VesselId {
 		} else {
 			this.value = Optional.of(s);
 		}
+	}
+
+	public VesselIdType vesselIdType() {
+		return vesselIdType;
 	}
 
 	public Optional<String> value() {

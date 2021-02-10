@@ -6,7 +6,6 @@ import com.github.davidmoten.guavamini.Preconditions;
 
 public final class RadioCallSign implements VesselId {
 
-	@SuppressWarnings("unused")
 	// used for serialization
 	private final VesselIdType vesselIdType = VesselIdType.RADIO_CALL_SIGN;
 	private final Optional<String> value;
@@ -19,6 +18,10 @@ public final class RadioCallSign implements VesselId {
 		} else {
 			this.value = Optional.of(s);
 		}
+	}
+
+	public VesselIdType vesselIdType() {
+		return vesselIdType;
 	}
 
 	public Optional<String> value() {

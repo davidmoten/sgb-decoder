@@ -8,9 +8,9 @@ import org.junit.Test;
 
 public class RlsTest {
 
-    @Test
-    public void testToString() {
-        Rls a = new Rls(true, false, RlsProvider.GALILEO, Optional.empty());
-        assertEquals(RotatingFieldType.RLS, a.rotatingFieldType());
-    }
+	@Test
+	public void testToString() {
+		Rls a = new Rls(true, false, RlsProvider.GALILEO, Optional.empty());
+		assertEquals(RotatingFieldType.RLS, a.rotatingFieldType());
+	}
 }

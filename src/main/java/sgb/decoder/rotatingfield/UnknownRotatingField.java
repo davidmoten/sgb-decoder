@@ -13,7 +13,7 @@ public final class UnknownRotatingField implements RotatingField {
 	public RotatingFieldType rotatingFieldType() {
 		return rotatingFieldType;
 	}
-	
+
 	public String bitString() {
 		return bitString;
 	}

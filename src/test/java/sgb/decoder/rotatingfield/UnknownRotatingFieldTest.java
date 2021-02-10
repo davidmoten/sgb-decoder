@@ -6,9 +6,9 @@ import org.junit.Test;
 
 public class UnknownRotatingFieldTest {
 
-    @Test
-    public void testToString() {
-        UnknownRotatingField a = new UnknownRotatingField("11011");
-        assertEquals(RotatingFieldType.UNKNOWN, a.rotatingFieldType());
-    }
+	@Test
+	public void testToString() {
+		UnknownRotatingField a = new UnknownRotatingField("11011");
+		assertEquals(RotatingFieldType.UNKNOWN, a.rotatingFieldType());
+	}
 }

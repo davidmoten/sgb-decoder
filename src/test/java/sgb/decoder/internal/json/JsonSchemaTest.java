@@ -59,7 +59,7 @@ public class JsonSchemaTest {
 	public void testToClassNotFound() {
 		JsonSchema.toClass("ThisClassDoesNotExist");
 	}
-	
+
 	@Test
 	public void isUtilityClass() {
 		Asserts.assertIsUtilityClass(JsonSchema.class);

@@ -1,9 +1,7 @@
 package sgb.decoder.vesselid;
 
-
 public final class AircraftOperatorAndSerialNumber implements VesselId {
 
-	@SuppressWarnings("unused")
 	// used for serialization
 	private final VesselIdType vesselIdType = VesselIdType.AIRCRAFT_OPERATOR_AND_SERIAL_NUMBER;
 	private final String aircraftOperatorDesignator;
@@ -12,6 +10,10 @@ public final class AircraftOperatorAndSerialNumber implements VesselId {
 	public AircraftOperatorAndSerialNumber(String aircraftOperatorDesignator, int serialNumber) {
 		this.aircraftOperatorDesignator = aircraftOperatorDesignator;
 		this.serialNumber = serialNumber;
+	}
+
+	public VesselIdType vesselIdType() {
+		return vesselIdType;
 	}
 
 	public String aircraftOperatorDesignator() {

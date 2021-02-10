@@ -4,7 +4,6 @@ import java.util.Optional;
 
 public final class Mmsi implements VesselId {
 
-	@SuppressWarnings("unused")
 	// used for serialization
 	private final VesselIdType vesselIdType = VesselIdType.MMSI;
 	private final Optional<Integer> mmsi;
@@ -13,6 +12,10 @@ public final class Mmsi implements VesselId {
 	public Mmsi(Optional<Integer> mmsi, Optional<Integer> epirbMmsi) {
 		this.mmsi = mmsi;
 		this.epirbMmsi = epirbMmsi;
+	}
+
+	public VesselIdType vesselIdType() {
+		return vesselIdType;
 	}
 
 	public Optional<Integer> mmsi() {

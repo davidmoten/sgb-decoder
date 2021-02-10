@@ -7,15 +7,15 @@ import org.junit.Test;
 import com.github.davidmoten.junit.Asserts;
 
 public class UtilTest {
-    
-    @Test
-    public void isUtilityClass() {
-        Asserts.assertIsUtilityClass(Util.class);
-    }
-    
-    @Test
-    public void testRepeat() {
-        assertEquals("aaa", Util.repeat('a', 3));
-    }
+
+	@Test
+	public void isUtilityClass() {
+		Asserts.assertIsUtilityClass(Util.class);
+	}
+
+	@Test
+	public void testRepeat() {
+		assertEquals("aaa", Util.repeat('a', 3));
+	}
 
 }

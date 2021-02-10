@@ -4,7 +4,6 @@ import java.util.Optional;
 
 public final class Aviation24BitAddress implements VesselId {
 
-	@SuppressWarnings("unused")
 	// used for serialization
 	private final VesselIdType vesselIdType = VesselIdType.AVIATION_24_BIT_ADDRESS;
 	private final String addressHex;
@@ -13,6 +12,10 @@ public final class Aviation24BitAddress implements VesselId {
 	public Aviation24BitAddress(String addressHex, Optional<String> aircraftOperatorDesignator) {
 		this.addressHex = addressHex;
 		this.aircraftOperatorDesignator = aircraftOperatorDesignator;
+	}
+
+	public VesselIdType vesselIdType() {
+		return vesselIdType;
 	}
 
 	public String addressHex() {

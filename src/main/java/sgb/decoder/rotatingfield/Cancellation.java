@@ -8,7 +8,7 @@ public final class Cancellation implements RotatingField {
 	public Cancellation(DeactivationMethod deactivationMethod) {
 		this.deactivationMethod = deactivationMethod;
 	}
-	
+
 	public RotatingFieldType rotatingFieldType() {
 		return rotatingFieldType;
 	}

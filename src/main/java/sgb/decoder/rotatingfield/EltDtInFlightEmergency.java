@@ -3,9 +3,8 @@ package sgb.decoder.rotatingfield;
 import java.time.OffsetTime;
 import java.util.Optional;
 
-
 public final class EltDtInFlightEmergency implements RotatingField {
-	
+
 	// used for serialization
 	private final RotatingFieldType rotatingFieldType = RotatingFieldType.ELT_DT_IN_FLIGHT_EMERGENCY;
 
@@ -23,7 +22,7 @@ public final class EltDtInFlightEmergency implements RotatingField {
 		this.gnssStatus = gnssStatus;
 		this.remainingBatteryCapacityPercent = remainingBatteryCapacityPercent;
 	}
-	
+
 	public RotatingFieldType rotatingFieldType() {
 		return rotatingFieldType;
 	}

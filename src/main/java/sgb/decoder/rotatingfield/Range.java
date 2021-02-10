@@ -19,8 +19,8 @@ public final class Range {
 	}
 
 	public static Range create(int min, RangeEndType minType, int max, RangeEndType maxType) {
-		return new Range(minType == RangeEndType.MISSING ? 0 : min, minType,
-				maxType == RangeEndType.MISSING ? 0 : max, maxType);
+		return new Range(minType == RangeEndType.MISSING ? 0 : min, minType, maxType == RangeEndType.MISSING ? 0 : max,
+				maxType);
 	}
 
 	public static Range createWithMin(int min, RangeEndType minType) {
@@ -76,8 +76,7 @@ public final class Range {
 
 	@Override
 	public String toString() {
-		return "Range [min=" + min + ", minType=" + minType + ", max=" + max + ", maxType="
-				+ maxType + "]";
+		return "Range [min=" + min + ", minType=" + minType + ", max=" + max + ", maxType=" + maxType + "]";
 	}
 
 //	@Override

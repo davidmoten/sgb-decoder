@@ -18,7 +18,7 @@ public final class Rls implements RotatingField {
 		this.rlsProvider = rlsProvider;
 		this.beaconFeedback = beaconFeedback;
 	}
-	
+
 	public RotatingFieldType rotatingFieldType() {
 		return rotatingFieldType;
 	}
