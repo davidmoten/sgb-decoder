@@ -68,8 +68,6 @@ With the arrival of second generation Beacons on the market sometime from July 2
 
 Producing a programming library that decodes an SGB detection message is a non-trivial task that has one important risk: **correctness**. As a developer how do I confirm that my code correctly decodes all variations of SGB detection messages? Writing unit tests still has the risk that my *interpretation* of the specification might not match the intent of the specification.
 
-If you language of choice is Java (or a language on the JVM) then of course you can use this library for SGB detection decoding. If it doesn't meet your requirements in some regard then raise a github issue on this project.
-
 A suggestion for the creators of the SGB encoding specification is that they share a Compliance Kit which is a list of beacon detection messages in hex form together with the corresponding decoded human readable version of the detection message in some *canonical form*. If this were the case then no matter what language a decoder was written in full test coverage of that decoder would be guaranteed by consuming the (comprehensive) Compliance Kit test data. An example of one test in the Compliance Kit would be the pair below:
 
 * Ground Segment Representation Hex
