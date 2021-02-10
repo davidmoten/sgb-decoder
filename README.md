@@ -63,6 +63,9 @@ Application of error corrections (when required) is presumed to happen upstream 
 ## Performance
 Quick and dirty performance testing (without JMH) indicates that the the library can decode about 140,000 beacon detection messages a second. If you need faster performance than this raise an issue.
 
+## Semantic Versioning
+This project follows [Semantic Versioning 2.0](https://semver.org/).
+
 ## Compliance Kit
 With the arrival of second generation Beacons on the market sometime from July 2021, many of the National Rescue Coordination Centres (RCCs) throughout the world will want to be able to decode the hex detection messages into a human readable form. This might be simply a web page that performs the decode but could equally be a programming library that developers might use to customize their use of the hex detection message.
 
