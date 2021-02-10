@@ -51,6 +51,18 @@
       },
       "required" : [ "vesselIdType" ]
     },
+    "Bits" : {
+      "type" : "object",
+      "properties" : {
+        "bits" : {
+          "type" : "#/definitions/[Z"
+        },
+        "pos" : {
+          "type" : "integer"
+        }
+      },
+      "required" : [ "bits", "pos" ]
+    },
     "Mmsi" : {
       "type" : "object",
       "properties" : {
@@ -141,6 +153,9 @@
     "Detection" : {
       "type" : "object",
       "properties" : {
+        "bits" : {
+          "type" : "#/definitions/Bits"
+        },
         "tac" : {
           "type" : "integer"
         },
@@ -178,7 +193,7 @@
           "type" : "string"
         }
       },
-      "required" : [ "tac", "serialNo", "countryCode", "hasAtLeastOneEnabledHomingSignal", "hasEnabledRls", "testProtocolMessage", "beaconType", "rotatingField", "beacon23HexId", "beacon15HexId" ]
+      "required" : [ "bits", "tac", "serialNo", "countryCode", "hasAtLeastOneEnabledHomingSignal", "hasEnabledRls", "testProtocolMessage", "beaconType", "rotatingField", "beacon23HexId", "beacon15HexId" ]
     },
     "RotatingField" : {
       "type" : [ "#/definitions/Cancellation", "#/definitions/EltDtInFlightEmergency", "#/definitions/NationalUse", "#/definitions/ObjectiveRequirements", "#/definitions/Rls", "#/definitions/UnknownRotatingField" ]
@@ -284,6 +299,9 @@
         }
       },
       "required" : [ "rotatingFieldType", "bitString" ]
+    },
+    "[Z" : {
+      "type" : "object"
     }
   }
 }

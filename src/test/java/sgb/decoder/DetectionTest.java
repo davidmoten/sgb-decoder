@@ -3,6 +3,8 @@ package sgb.decoder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static sgb.decoder.TestingUtil.ones;
+import static sgb.decoder.TestingUtil.zeros;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +18,6 @@ import java.time.ZoneOffset;
 import org.junit.Test;
 
 import sgb.decoder.internal.Bits;
-import sgb.decoder.internal.Util;
 import sgb.decoder.internal.json.Json;
 import sgb.decoder.rotatingfield.ActivationMethod;
 import sgb.decoder.rotatingfield.BeaconFeedback;
@@ -118,14 +119,16 @@ public class DetectionTest {
     @Test
     public void testReadVesselIdAviation24BitAddressNoDesignator() {
         String address = "101011001000001011101100";
-        Aviation24BitAddress a = Detection.readVesselIdAviation24BitAddress(Bits.from(address + zeros(20)));
+        Aviation24BitAddress a = Detection
+                .readVesselIdAviation24BitAddress(Bits.from(address + zeros(20)));
         assertEquals("ac82ec", a.addressHex());
         assertFalse(a.aircraftOperatorDesignator().isPresent());
     }
 
     @Test
     public void testReadVesselIdAviation24BitAddressWithDesignator() {
-        Aviation24BitAddress a = Detection.readVesselIdAviation24BitAddress(createVesselIdAviation24BitAddress());
+        Aviation24BitAddress a = Detection
+                .readVesselIdAviation24BitAddress(createVesselIdAviation24BitAddress());
         assertEquals("ac82ec", a.addressHex());
         assertEquals("ABC", a.aircraftOperatorDesignator().get());
     }
@@ -133,7 +136,8 @@ public class DetectionTest {
     @Test
     public void testReadVesselIdWithAviation24BitAddress() {
         Aviation24BitAddress a = (Aviation24BitAddress) Detection
-                .readVesselId(Bits.from("100").concatWith(createVesselIdAviation24BitAddress())).get();
+                .readVesselId(Bits.from("100").concatWith(createVesselIdAviation24BitAddress()))
+                .get();
         assertEquals("ac82ec", a.addressHex());
     }
 
@@ -165,8 +169,9 @@ public class DetectionTest {
 
     @Test
     public void testReadVesselIdWithAircraftRegistrationMarking() {
-        AircraftRegistrationMarking a = (AircraftRegistrationMarking) Detection
-                .readVesselId(Bits.from("011").concatWith(createVesselIdAircraftRegistrationMarkingVhAbc())).get();
+        AircraftRegistrationMarking a = (AircraftRegistrationMarking) Detection.readVesselId(
+                Bits.from("011").concatWith(createVesselIdAircraftRegistrationMarkingVhAbc()))
+                .get();
         assertEquals("VH-ABC", a.value().get());
     }
 
@@ -191,7 +196,8 @@ public class DetectionTest {
     @Test
     public void testReadVesselIdWithRadioCallSign() {
         RadioCallSign a = (RadioCallSign) Detection
-                .readVesselId(Bits.from("010").concatWith(createVesselIdRadioCallSignForBingo())).get();
+                .readVesselId(Bits.from("010").concatWith(createVesselIdRadioCallSignForBingo()))
+                .get();
         assertEquals("BINGO", a.value().get());
     }
 
@@ -280,8 +286,10 @@ public class DetectionTest {
 
     @Test
     public void testReadActivationMethod() {
-        assertEquals(ActivationMethod.MANUAL_ACTIVATION_BY_USER, Detection.readActivationMethod(Bits.from("00")));
-        assertEquals(ActivationMethod.AUTOMATIC_ACTIVATION_BY_BEACON, Detection.readActivationMethod(Bits.from("01")));
+        assertEquals(ActivationMethod.MANUAL_ACTIVATION_BY_USER,
+                Detection.readActivationMethod(Bits.from("00")));
+        assertEquals(ActivationMethod.AUTOMATIC_ACTIVATION_BY_BEACON,
+                Detection.readActivationMethod(Bits.from("01")));
         assertEquals(ActivationMethod.AUTOMATIC_ACTIVATION_BY_EXTERNAL_MEANS,
                 Detection.readActivationMethod(Bits.from("10")));
         assertEquals(ActivationMethod.OTHER, Detection.readActivationMethod(Bits.from("11")));
@@ -299,7 +307,9 @@ public class DetectionTest {
     @Test
     public void testReadVesselIdWithAircraftOperatorAndSerialNumber() {
         AircraftOperatorAndSerialNumber a = (AircraftOperatorAndSerialNumber) Detection
-                .readVesselId(Bits.from("101").concatWith(createVesselIdAircraftOperatorAndSerialNumber())).get();
+                .readVesselId(Bits.from("101")
+                        .concatWith(createVesselIdAircraftOperatorAndSerialNumber()))
+                .get();
         assertEquals("XYZ", a.aircraftOperatorDesignator());
     }
 
@@ -367,7 +377,8 @@ public class DetectionTest {
 
     @Test
     public void testReadTriggeringEvent() {
-        assertEquals(TriggeringEvent.MANUAL_ACTIVATION_BY_CREW, Detection.readTriggeringEvent(Bits.from("0001")));
+        assertEquals(TriggeringEvent.MANUAL_ACTIVATION_BY_CREW,
+                Detection.readTriggeringEvent(Bits.from("0001")));
         assertEquals(TriggeringEvent.G_SWITCH_OR_DEFORMATION_ACTIVATION,
                 Detection.readTriggeringEvent(Bits.from("0100")));
         assertEquals(TriggeringEvent.AUTOMATIC_ACTIVATION_FROM_AVIONICS_OR_TRIGGERING_SYSTEM,
@@ -378,11 +389,14 @@ public class DetectionTest {
     @Test
     public void testReadRotatingFieldCancellationMessage() {
         assertEquals(DeactivationMethod.MANUAL_DEACTIVATION_BY_USER,
-                Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "10")).deactivationMethod());
+                Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "10"))
+                        .deactivationMethod());
         assertEquals(DeactivationMethod.AUTOMATIC_DEACTIVATION_BY_EXTERNAL_MEANS,
-                Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "01")).deactivationMethod());
+                Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "01"))
+                        .deactivationMethod());
         assertEquals(DeactivationMethod.OTHER,
-                Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "11")).deactivationMethod());
+                Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "11"))
+                        .deactivationMethod());
     }
 
     @Test
@@ -408,7 +422,9 @@ public class DetectionTest {
 
     @Test
     public void testReadPositionNotAvailable() {
-        assertFalse(Detection.readPosition(Bits.from("11111111000001111100000111111111111110000011111")).isPresent());
+        assertFalse(
+                Detection.readPosition(Bits.from("11111111000001111100000111111111111110000011111"))
+                        .isPresent());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -429,7 +445,8 @@ public class DetectionTest {
         int hours = n / 3600;
         int mins = (n - hours * 3600) / 60;
         int secs = n - hours * 3600 - mins * 60;
-        OffsetTime time = Detection.readTimeOfLastEncodedLocationSeconds(Bits.from(zeros(17 - c) + ones(c)));
+        OffsetTime time = Detection
+                .readTimeOfLastEncodedLocationSeconds(Bits.from(zeros(17 - c) + ones(c)));
         assertEquals(OffsetTime.of(hours, mins, secs, 0, ZoneOffset.UTC), time);
     }
 
@@ -515,6 +532,13 @@ public class DetectionTest {
     }
 
     @Test
+    public void testDetectionBchCalculation() {
+        Detection d = Detection.fromHexGroundSegmentRepresentation(SAMPLE_HEX);
+        assertEquals("010010010010101001001111110001010111101001001001",
+                d.calculateBchErrorCorrectionCode().toBitString());
+    }
+
+    @Test
     public void testReadLocationNegativeLatNegativeLon() {
         Bits bits = Bits.from("10110000110010110000110101000101000000100011111");
         EncodedGnssPosition p = Detection.readPosition(bits).get();
@@ -529,23 +553,15 @@ public class DetectionTest {
         return s;
     }
 
-    private static String ones(int n) {
-        return Util.repeat('1', n);
-    }
-
-    private static String zeros(int n) {
-        return Util.repeat('0', n);
-    }
-
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
             long t = System.currentTimeMillis();
             long n = 1000000;
             for (long j = 0; j < n; j++) {
-                Detection d = Detection.fromHexGroundSegmentRepresentation(SAMPLE_HEX);
+                Detection.fromHexGroundSegmentRepresentation(SAMPLE_HEX);
             }
-            System.out.println("rate=" + new DecimalFormat("0.00").format(n * 1000.0 / (System.currentTimeMillis() - t))
-                    + "msg/s");
+            System.out.println("rate=" + new DecimalFormat("0.00")
+                    .format(n * 1000.0 / (System.currentTimeMillis() - t)) + "msg/s");
         }
 
     }

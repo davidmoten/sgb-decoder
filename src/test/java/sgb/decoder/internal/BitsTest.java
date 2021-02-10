@@ -177,9 +177,16 @@ public final class BitsTest {
     
     @Test
     public void testRemainderOnPolynomialDivisionUsingSpecExample() {
-        Bits bits = Bits.from(DetectionTest.BITS);
+        //From Appendix B4
+        Bits bits = Bits.from(DetectionTest.BITS).concatWith(Bits.zeros(48));
         Bits divisor = Bits.from("1110001111110101110000101110111110011110010010111");
-        System.out.println(bits.remainderOnPolynomialDivision(divisor).trimLeadingZeros());
+        assertEquals("10010010010101001001111110001010111101001001001",
+                bits.remainderOnPolynomialDivision(divisor).trimLeadingZeros().toBitString());
+    }
+    
+    @Test
+    public void testToString() {
+        assertEquals("101", Bits.from("101").toString());
     }
 
 }

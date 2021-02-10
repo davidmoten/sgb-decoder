@@ -18,6 +18,10 @@ public final class Bits {
     public static Bits from(boolean[] bits) {
         return new Bits(bits);
     }
+    
+    public static Bits zeros(int length) {
+        return Bits.from(new boolean[length]);
+    }
 
     public static Bits from(String bitString) {
         boolean[] bits = new boolean[bitString.length()];
@@ -200,6 +204,11 @@ public final class Bits {
     @Override
     public String toString() {
         return toBitString();
+    }
+
+    public Bits last(int numBits) {
+        position(length() - numBits);
+        return readBits(numBits);
     }
 
 }

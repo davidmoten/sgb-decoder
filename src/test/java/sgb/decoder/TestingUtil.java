@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.junit.ComparisonFailure;
 
+import sgb.decoder.internal.Util;
 import sgb.decoder.internal.json.Json;
 
 public final class TestingUtil {
@@ -32,6 +33,14 @@ public final class TestingUtil {
         if (!Json.equals(expected, json)) {
             throw new ComparisonFailure("unequal json", expected, Json.prettyPrint(json));
         }
+    }
+    
+    public static String ones(int n) {
+        return Util.repeat('1', n);
+    }
+
+    public static String zeros(int n) {
+        return Util.repeat('0', n);
     }
 
 }

@@ -6,6 +6,7 @@ import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.davidmoten.guavamini.Preconditions;
 import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
 
@@ -43,6 +44,11 @@ public final class Detection {
     private static final Bits NO_ENCODED_LOCATION_CAPABILITY = Bits
             .from("11111111000001111100000111111111111110000011111");
 
+    private static final Bits BCH_DIVISOR = Bits
+            .from("1110001111110101110000101110111110011110010010111");
+
+    @JsonIgnore
+    private final Bits bits;
     private final int tac;
     private final int serialNo;
     private final int countryCode;
@@ -57,7 +63,9 @@ public final class Detection {
     private final String beacon15HexId;
 
     private Detection(Bits bits) {
-        Preconditions.checkArgument(bits.length() == 202, "length should be 202 but was " + bits.length());
+        Preconditions.checkArgument(bits.length() == 202,
+                "length should be 202 but was " + bits.length());
+        this.bits = bits;
         tac = bits.readUnsignedInt(16);
         serialNo = bits.readUnsignedInt(14);
         countryCode = bits.readUnsignedInt(10);
@@ -136,8 +144,9 @@ public final class Detection {
         Optional<Range> remainingBatteryCapacityPercent = readBatteryPercent(bits);
         GnssStatus gnssStatus = readGnssStatus(bits);
         bits.skip(2);
-        return new ObjectiveRequirements(elapsedTimeSinceActivationHours, timeSinceLastEncodedLocationMinutes,
-                altitudeEncodedLocationMetres, dilutionPrecisionHdop, dilutionPrecisionDop, activationMethod,
+        return new ObjectiveRequirements(elapsedTimeSinceActivationHours,
+                timeSinceLastEncodedLocationMinutes, altitudeEncodedLocationMetres,
+                dilutionPrecisionHdop, dilutionPrecisionDop, activationMethod,
                 remainingBatteryCapacityPercent, gnssStatus);
     }
 
@@ -169,13 +178,17 @@ public final class Detection {
         } else if (code == 1) {
             return Optional.of(Range.create(5, RangeEndType.EXCLUSIVE, 10, RangeEndType.INCLUSIVE));
         } else if (code == 2) {
-            return Optional.of(Range.create(10, RangeEndType.EXCLUSIVE, 25, RangeEndType.INCLUSIVE));
+            return Optional
+                    .of(Range.create(10, RangeEndType.EXCLUSIVE, 25, RangeEndType.INCLUSIVE));
         } else if (code == 3) {
-            return Optional.of(Range.create(25, RangeEndType.EXCLUSIVE, 50, RangeEndType.INCLUSIVE));
+            return Optional
+                    .of(Range.create(25, RangeEndType.EXCLUSIVE, 50, RangeEndType.INCLUSIVE));
         } else if (code == 4) {
-            return Optional.of(Range.create(50, RangeEndType.EXCLUSIVE, 75, RangeEndType.INCLUSIVE));
+            return Optional
+                    .of(Range.create(50, RangeEndType.EXCLUSIVE, 75, RangeEndType.INCLUSIVE));
         } else if (code == 5) {
-            return Optional.of(Range.create(75, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE));
+            return Optional
+                    .of(Range.create(75, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE));
         } else {
             return Optional.empty();
         }
@@ -206,15 +219,20 @@ public final class Detection {
         } else if (code == 8) {
             return Optional.of(Range.create(8, RangeEndType.EXCLUSIVE, 10, RangeEndType.INCLUSIVE));
         } else if (code == 9) {
-            return Optional.of(Range.create(10, RangeEndType.EXCLUSIVE, 12, RangeEndType.INCLUSIVE));
+            return Optional
+                    .of(Range.create(10, RangeEndType.EXCLUSIVE, 12, RangeEndType.INCLUSIVE));
         } else if (code == 10) {
-            return Optional.of(Range.create(12, RangeEndType.EXCLUSIVE, 15, RangeEndType.INCLUSIVE));
+            return Optional
+                    .of(Range.create(12, RangeEndType.EXCLUSIVE, 15, RangeEndType.INCLUSIVE));
         } else if (code == 11) {
-            return Optional.of(Range.create(15, RangeEndType.EXCLUSIVE, 20, RangeEndType.INCLUSIVE));
+            return Optional
+                    .of(Range.create(15, RangeEndType.EXCLUSIVE, 20, RangeEndType.INCLUSIVE));
         } else if (code == 12) {
-            return Optional.of(Range.create(20, RangeEndType.EXCLUSIVE, 30, RangeEndType.INCLUSIVE));
+            return Optional
+                    .of(Range.create(20, RangeEndType.EXCLUSIVE, 30, RangeEndType.INCLUSIVE));
         } else if (code == 13) {
-            return Optional.of(Range.create(30, RangeEndType.EXCLUSIVE, 50, RangeEndType.INCLUSIVE));
+            return Optional
+                    .of(Range.create(30, RangeEndType.EXCLUSIVE, 50, RangeEndType.INCLUSIVE));
         } else if (code == 14) {
             return Optional.of(Range.createWithMin(50, RangeEndType.EXCLUSIVE));
         } else {
@@ -246,8 +264,9 @@ public final class Detection {
         GnssStatus gnssStatus = readGnssStatus(bits);
         Optional<Range> remainingBatteryCapacityPercent = readBatteryPercentInFlightEmergency(bits);
         bits.skip(9);
-        return new EltDtInFlightEmergency(timeOfLastEncodedLocationSeconds, altitudeEncodedLocationMetres,
-                triggeringEvent, gnssStatus, remainingBatteryCapacityPercent);
+        return new EltDtInFlightEmergency(timeOfLastEncodedLocationSeconds,
+                altitudeEncodedLocationMetres, triggeringEvent, gnssStatus,
+                remainingBatteryCapacityPercent);
     }
 
     private static int readAltitudeEncodedLocationMetres(Bits bits) {
@@ -269,9 +288,11 @@ public final class Detection {
         if (code == 0) {
             return Optional.of(Range.create(0, RangeEndType.INCLUSIVE, 33, RangeEndType.INCLUSIVE));
         } else if (code == 1) {
-            return Optional.of(Range.create(33, RangeEndType.EXCLUSIVE, 66, RangeEndType.INCLUSIVE));
+            return Optional
+                    .of(Range.create(33, RangeEndType.EXCLUSIVE, 66, RangeEndType.INCLUSIVE));
         } else if (code == 2) {
-            return Optional.of(Range.create(66, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE));
+            return Optional
+                    .of(Range.create(66, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE));
         } else {
             return Optional.empty();
         }
@@ -302,8 +323,8 @@ public final class Detection {
         RlsProvider rlsProvider = readRlsProvider(bits);
         Optional<BeaconFeedback> beaconFeedback = readBeaconFeadback(bits, rlsProvider);
         bits.skip(11);
-        return new Rls(canProcessAutomaticallyGeneratedAckRlmType1, canProcessManuallyGeneratedRlm, rlsProvider,
-                beaconFeedback);
+        return new Rls(canProcessAutomaticallyGeneratedAckRlmType1, canProcessManuallyGeneratedRlm,
+                rlsProvider, beaconFeedback);
     }
 
     @VisibleForTesting
@@ -340,8 +361,8 @@ public final class Detection {
             } else {// OTHER
                 shortRlmParametersBitString = Optional.of(bits.readBitString(15));
             }
-            return Optional.of(new BeaconFeedback(rlmType1FeedbackReceived, rlmType2FeedbackReceived, rlsType,
-                    shortRlmParametersBitString));
+            return Optional.of(new BeaconFeedback(rlmType1FeedbackReceived,
+                    rlmType2FeedbackReceived, rlsType, shortRlmParametersBitString));
         } else {
             return Optional.empty();
         }
@@ -587,13 +608,20 @@ public final class Detection {
         return beacon15HexId;
     }
 
-    @Override
-    public String toString() {
-        return "";
+    public Bits calculateBchErrorCorrectionCode() {
+        return bits //
+                .concatWith(Bits.zeros(48)) //
+                .remainderOnPolynomialDivision(BCH_DIVISOR) //
+                .last(48);
     }
 
     public String toJson() {
         return Json.toJson(this);
+    }
+
+    @Override
+    public String toString() {
+        return toJson();
     }
 
 }
