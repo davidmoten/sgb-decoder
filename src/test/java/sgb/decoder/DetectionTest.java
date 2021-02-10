@@ -54,7 +54,7 @@ public class DetectionTest {
 		Detection d = Detection.fromHexGroundSegmentRepresentation(SAMPLE_HEX);
 		checkDetection(d);
 	}
-
+	
 	@Test
 	public void testToBits() {
 		Detection d = Detection.fromBitString(BITS);

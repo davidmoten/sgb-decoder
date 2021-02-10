@@ -594,4 +594,5 @@ public final class Detection {
 	public String toJson() {
 		return Json.toJson(this);
 	}
+	
 }

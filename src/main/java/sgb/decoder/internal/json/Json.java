@@ -55,7 +55,7 @@ public final class Json {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public static String prettyPrint(String json) {
 		ObjectMapper m = new ObjectMapper();
 		try {
@@ -64,9 +64,5 @@ public final class Json {
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException(e);
 		}
-	}
-	
-	public static String toIndentedText(String json) {
-		return null;
 	}
 }
