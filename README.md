@@ -51,7 +51,7 @@ With the arrival of second generation Beacons on the market sometime from July 2
 
 Producing a programming library that decodes an SGB detection message is a non-trivial task that has one important risk: **correctness**. As a developer how do I confirm that my code correctly decodes all variations of SGB detection messages? Writing unit tests still has the risk that my *interpretation* of the specification might not match the intent of the specification.
 
-A suggestion for the creators of the SGB encoding specification is that they share a Compliance Kit which is a list of beacon detection messages in hex form together with the corresponding decoded human readable version of the detection message in some *canonical form*. If this were the case then no matter what language a decoder was written in full test coverage of that decoder would be guaranteed by consuming the (comprehensive) Compliance Kit test data. An example of one item in the Compliance Kit would be the pair below:
+A suggestion for the creators of the SGB encoding specification is that they share a Compliance Kit which is a list of beacon detection messages in hex form together with the corresponding decoded human readable version of the detection message in some *canonical form*. If this were the case then no matter what language a decoder was written in full test coverage of that decoder would be guaranteed by consuming the (comprehensive) Compliance Kit test data. An example of one test in the Compliance Kit would be the pair below:
 
 Ground Segment Representation Hex
 ```
@@ -60,7 +60,7 @@ Ground Segment Representation Hex
 
 [detection.json](src/docs/detection.json)
 
-A consumer of the Compliance Kit would consume the first line of that file, decode it, generate the canonical form string and compare it to the rest of the file.
+A consumer of the Compliance Kit would consume decode the given hex and generate the JSON canonical form string and compare it to the given JSON file (using JSON equivalence rathen exact string equality).
 
 Clearly one test in the kit does not cut it. There are many variations on field values, some are derived from special binary codes, some field values are optional.
 
@@ -68,6 +68,6 @@ Clearly one test in the kit does not cut it. There are many variations on field 
 
 Given that a service implementation of the decoder would probably serialize the decoded structure into JSON or XML, it probably makes sense to use one of those text formats to hold the canonical decoded form so that the implementer can reuse the canonical form work.
 
-If JSON or XML was used for the canonical form then it should also be described by a schema document (JSON Schema or XSD). This library offers a JSON form and a JSON Schema document.
+If JSON or XML was used for the canonical form then it should also be described by a schema document (JSON Schema or XSD). This library provides a JSON form and a JSON Schema document and the author suggests that **JSON format is used for the *canonical form***. 
 
 Note that the canonical form in JSON would not have to be exactly matched as a string during a test for compliance. We don't care about whitespace outside of expressions (new lines, indents) and even field order so the match would be based on JSON equality. Every major programming language has support for this sort of equality match (either in an open-source library or in the base platform).
