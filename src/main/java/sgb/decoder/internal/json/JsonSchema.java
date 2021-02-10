@@ -75,7 +75,8 @@ public final class JsonSchema {
                     .forEach(f -> {
                         JsonType type = toJsonType(f.javaType);
                         if (type.typeName.equals("object")) {
-                            collectDefinitions(toClass(f.javaType), clsNameDefinitions, classesAlreadyProcessed, subclasses);
+                            collectDefinitions(toClass(f.javaType), clsNameDefinitions, classesAlreadyProcessed,
+                                    subclasses);
                         } else if (type.typeName.equals("string") && !type.enumeration.isEmpty()) {
                             StringBuilder json = new StringBuilder();
                             json.append(quoted(definitionName(f.javaType)) + COLON + "{");
