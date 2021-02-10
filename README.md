@@ -1,5 +1,5 @@
 # sgb-decoder
-Java library that decodes Second Generation Beacon (SGB) detection messages and is compliant with C/S T.018 Rev. 6 specification.
+Java library that decodes [Cospas-Sarsat](https://en.wikipedia.org/wiki/International_Cospas-Sarsat_Programme) Second Generation Beacon (SGB) detection messages and is compliant with the C/S T.018 Rev. 6 [specification](https://vnmcc.vishipel.vn/images/uploads/attach/T018-MAY-2020.pdf).
 
 **Features**
 
