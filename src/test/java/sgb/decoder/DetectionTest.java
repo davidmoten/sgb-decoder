@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.text.DecimalFormat;
 import java.time.OffsetTime;
 import java.time.ZoneOffset;
 
@@ -536,4 +537,16 @@ public class DetectionTest {
         return Util.repeat('0', n);
     }
 
+    public static void main(String[] args) {
+        for (int i = 0; i < 10; i++) {
+            long t = System.currentTimeMillis();
+            long n = 1000000;
+            for (long j = 0; j < n; j++) {
+                Detection d = Detection.fromHexGroundSegmentRepresentation(SAMPLE_HEX);
+            }
+            System.out.println("rate=" + new DecimalFormat("0.00").format(n * 1000.0 / (System.currentTimeMillis() - t))
+                    + "msg/s");
+        }
+
+    }
 }
