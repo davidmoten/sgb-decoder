@@ -26,7 +26,7 @@ public final class TestingUtil {
 	public static void assertResourceEqualsJson(String resourceName, String json) {
 		String expected = readResource(resourceName);
 		if (!Json.equals(expected, json)) {
-			throw new ComparisonFailure("unequal json", expected, json);
+			throw new ComparisonFailure("unequal json", expected, prettyPrintJson(json));
 		}
 	}
 

@@ -4,7 +4,7 @@
     "countryCode" : 201,
     "hasAtLeastOneEnabledHomingSignal" : true,
     "hasEnabledRls" : false,
-    "isTestProtocolMessage" : false,
+    "testProtocolMessage" : false,
     "encodedGnssPosition" : {
         "lat" : 48.79315185546875,
         "lon" : 69.00875854492188
@@ -33,6 +33,5 @@
         "gnssStatus" : "LOCATION_3D"
     },
     "beacon23HexId" : "9934039823d000000000000",
-    "beacon15HexId" : "9934039823d0000",
-    "testProtocolMessage" : false
+    "beacon15HexId" : "9934039823d0000"
 }

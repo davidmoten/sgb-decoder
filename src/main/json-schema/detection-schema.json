@@ -192,7 +192,7 @@
                 "hasEnabledRls" : {
                     "type" : "boolean"
                 },
-                "isTestProtocolMessage" : {
+                "testProtocolMessage" : {
                     "type" : "boolean"
                 },
                 "encodedGnssPosition" : {
@@ -220,7 +220,7 @@
                 "countryCode",
                 "hasAtLeastOneEnabledHomingSignal",
                 "hasEnabledRls",
-                "isTestProtocolMessage",
+                "testProtocolMessage",
                 "beaconType",
                 "rotatingField",
                 "beacon23HexId",

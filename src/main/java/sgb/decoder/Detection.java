@@ -48,7 +48,7 @@ public final class Detection {
 	private final int countryCode;
 	private final boolean hasAtLeastOneEnabledHomingSignal;
 	private final boolean hasEnabledRls;
-	private final boolean isTestProtocolMessage;
+	private final boolean testProtocolMessage;
 	private final Optional<EncodedGnssPosition> encodedGnssPosition;
 	private final Optional<VesselId> vesselId;
 	private final BeaconType beaconType;
@@ -63,7 +63,7 @@ public final class Detection {
 		countryCode = bits.readUnsignedInt(10);
 		hasAtLeastOneEnabledHomingSignal = bits.readBoolean();
 		hasEnabledRls = bits.readBoolean();
-		isTestProtocolMessage = bits.readBoolean();
+		testProtocolMessage = bits.readBoolean();
 		encodedGnssPosition = readPosition(bits.readBits(47));
 		vesselId = readVesselId(bits);
 		beaconType = readBeaconType(bits);
@@ -559,7 +559,7 @@ public final class Detection {
 	}
 
 	public boolean isTestProtocolMessage() {
-		return isTestProtocolMessage;
+		return testProtocolMessage;
 	}
 
 	public Optional<EncodedGnssPosition> encodedGnssPosition() {
