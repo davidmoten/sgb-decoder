@@ -42,7 +42,7 @@ At that point you can browse the object representation of the message or dump a 
 ```java
 System.out.println(d.toJson());
 ```
-Output is [here](src/main/docs/detection.json).
+Output is [here](src/docs/detection.json).
 
 The JSON Schema for the above is [here](src/main/json-schema/schema.json).
 
@@ -54,7 +54,7 @@ Ground Segment Representation Hex
 0039823D32618658622811F0000000000003FFF004030680258
 ```
 
-[detection.json](src/main/docs/detection.json)
+[detection.json](src/docs/detection.json)
 
 A consumer of the Compliance Kit would consume the first line of that file, decode it, generate the canonical form string and compare it to the rest of the file.
 
