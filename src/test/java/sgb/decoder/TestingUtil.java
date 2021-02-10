@@ -10,9 +10,6 @@ import java.util.stream.Collectors;
 
 import org.junit.ComparisonFailure;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import sgb.decoder.internal.json.Json;
 
 public final class TestingUtil {
@@ -28,6 +25,10 @@ public final class TestingUtil {
 
 	public static void assertResourceEqualsJson(String resourceName, String json) {
 		String expected = readResource(resourceName);
+		assertJsonEquals(json, expected);
+	}
+
+	public static void assertJsonEquals(String json, String expected) throws ComparisonFailure {
 		if (!Json.equals(expected, json)) {
 			throw new ComparisonFailure("unequal json", expected, Json.prettyPrint(json));
 		}
