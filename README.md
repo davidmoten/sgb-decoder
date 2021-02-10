@@ -74,3 +74,8 @@ Given that a service implementation of the decoder would probably serialize the 
 If JSON or XML was used for the canonical form then it should also be described by a schema document (JSON Schema or XSD). This library provides a JSON form and a JSON Schema document and the author suggests that **JSON format is used for the *canonical form***. 
 
 Note that the canonical form in JSON would not have to be exactly matched as a string during a test for compliance. We don't care about whitespace outside of expressions (new lines, indents) and even field order so the match would be based on JSON equality. Every major programming language has support for this sort of equality match (either in an open-source library or in the base platform).
+
+## TODO
+* apply BCH error code correction (which will correct up to 6 bit errors in the first 202 bits of the 250 bit SGB detection message).
+* create a set of test messages for the Compliance Kit
+* discuss Compliance Kit with the specification authors
