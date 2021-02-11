@@ -52,7 +52,7 @@ The JSON Schema for the above is [here](src/main/json-schema/schema.json).
 
 You can also decode the raw bits (as a bit string) using `Detection.fromBitString("1010000..")`.
 
-Note that a unit [test](src/test/java/au/gov/amsa/sgb/decoder/internal/JsonSchemaTest.java) ensures that the abovementioned sample json complies with the JSON Schema.
+Note that a unit [test](src/test/java/au/gov/amsa/sgb/decoder/internal/json/JsonSchemaTest.java) ensures that the abovementioned sample json complies with the JSON Schema.
 
 ## BCH Error Correction
 A beacon transmits the 202 bit SGB detection message followed by a 48 bit BCH error correction code. You can calculate the code expected from the 202 bit SGB detection message like this:
