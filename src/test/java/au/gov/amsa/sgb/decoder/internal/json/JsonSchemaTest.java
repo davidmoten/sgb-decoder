@@ -23,8 +23,6 @@ import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
 import au.gov.amsa.sgb.decoder.Detection;
 import au.gov.amsa.sgb.decoder.TestingUtil;
-import au.gov.amsa.sgb.decoder.internal.json.Json;
-import au.gov.amsa.sgb.decoder.internal.json.JsonSchema;
 import au.gov.amsa.sgb.decoder.rotatingfield.Cancellation;
 import au.gov.amsa.sgb.decoder.rotatingfield.EltDtInFlightEmergency;
 import au.gov.amsa.sgb.decoder.rotatingfield.NationalUse;
@@ -42,16 +40,9 @@ import au.gov.amsa.sgb.decoder.vesselid.VesselId;
 public class JsonSchemaTest {
 
     @Test
-    public void updateSchema() throws IOException, ProcessingException {
-        Map<Class<?>, List<Class<?>>> map = new HashMap<>();
-        map.put(VesselId.class,
-                Arrays.asList(AircraftOperatorAndSerialNumber.class,
-                        AircraftRegistrationMarking.class, Aviation24BitAddress.class, Mmsi.class,
-                        RadioCallSign.class));
-        map.put(RotatingField.class,
-                Arrays.asList(Cancellation.class, EltDtInFlightEmergency.class, NationalUse.class,
-                        ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
-        String schema = Json.prettyPrint(JsonSchema.generateSchema(Detection.class, map));
+    public void updateSchemaInSourceAndEnsureExampleJsonCompliesWithSchema()
+            throws IOException, ProcessingException {
+        String schema = generateSchemaFromDetectionClass();
         File file = new File("src/main/resources/detection-schema.json");
         file.delete();
         Files.write(file.toPath(), schema.getBytes(StandardCharsets.UTF_8));
@@ -65,6 +56,18 @@ public class JsonSchemaTest {
         ProcessingReport report = jsonSchema.validate(json);
         System.out.println(report);
         assertTrue(report.isSuccess());
+    }
+
+    private static String generateSchemaFromDetectionClass() {
+        Map<Class<?>, List<Class<?>>> map = new HashMap<>();
+        map.put(VesselId.class,
+                Arrays.asList(AircraftOperatorAndSerialNumber.class,
+                        AircraftRegistrationMarking.class, Aviation24BitAddress.class, Mmsi.class,
+                        RadioCallSign.class));
+        map.put(RotatingField.class,
+                Arrays.asList(Cancellation.class, EltDtInFlightEmergency.class, NationalUse.class,
+                        ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
+        return Json.prettyPrint(JsonSchema.generateSchema(Detection.class, map));
     }
 
     @Test
