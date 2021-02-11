@@ -78,7 +78,7 @@ A suggestion for the creators of the SGB encoding specification is that they hel
 
 An example of a test kit is [here](src/test/resources/compliance-kit) and comprises:
 * [`tests.csv`](src/test/resources/compliance-kit/tests.csv) file with columns *TITLE*, *HEX*, *JSON*
-* json files
+* JSON files referenced by `tests.csv`
 
 A consumer of the Compliance Kit would decode the given hex and generate the JSON canonical form string and compare it to the given JSON file (using JSON equivalence rathen exact string equality).
 
