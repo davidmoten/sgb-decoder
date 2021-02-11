@@ -39,6 +39,7 @@ import au.gov.amsa.sgb.decoder.vesselid.AircraftRegistrationMarking;
 import au.gov.amsa.sgb.decoder.vesselid.Aviation24BitAddress;
 import au.gov.amsa.sgb.decoder.vesselid.Mmsi;
 import au.gov.amsa.sgb.decoder.vesselid.RadioCallSign;
+import au.gov.amsa.sgb.decoder.vesselid.VesselIdType;
 
 public class DetectionTest {
 
@@ -336,6 +337,16 @@ public class DetectionTest {
         String last4 = leftPadWithZeros(new BigInteger("4287").toString(2), 14);
         Bits bits = Bits.from(mmsi + last4);
         return bits;
+    }
+
+    @Test
+    public void testCreateHexWithMmsiVesselId() {
+        Bits vid = Bits.from("001").concatWith(createMmsiWithEpirbMmsiBits());
+        Bits b = Bits.from(BITS).replace(90, vid);
+        Detection d = Detection.from(b);
+        assertEquals(VesselIdType.MMSI, d.vesselId().get().vesselIdType());
+        System.out.println(Json.prettyPrint(d.toJson()));
+        System.out.println(Bits.from("00").concatWith(b).toHex());
     }
 
     @Test

@@ -213,4 +213,14 @@ public final class Bits {
     public String toString() {
         return toBitString();
     }
+
+    public Bits replace(int i, Bits b) {
+        boolean[] a = Arrays.copyOf(bits, bits.length);
+        System.arraycopy(b.bits, 0, a, i, b.bits.length);
+        return Bits.from(a);
+    }
+
+    public String toHex() {
+        return new BigInteger(toBitString(), 2).toString(16);
+    }
 }
