@@ -62,6 +62,7 @@ public class JsonSchemaTest {
         JsonNode json = m.readTree(TestingUtil.readResource("/detection.json"));
         ProcessingReport report = jsonSchema.validate(json);
         System.out.println(report);
+        assertTrue(report.isSuccess());
     }
 
     @Test
