@@ -1,0 +1,46 @@
+{
+  "tac" : 230,
+  "serialNo" : 573,
+  "countryCode" : 201,
+  "hasAtLeastOneEnabledHomingSignal" : true,
+  "hasEnabledRls" : false,
+  "testProtocolMessage" : false,
+  "encodedGnssPosition" : {
+    "lat" : 48.79315185546875,
+    "lon" : 69.00875854492188
+  },
+  "vesselId" : {
+    "vesselIdType" : "MMSI",
+    "mmsi" : 123456789,
+    "epirbMmsi" : 974454287
+  },
+  "beaconType" : "ELT_NOT_DT",
+  "rotatingField" : {
+    "rotatingFieldType" : "OBJECTIVE_REQUIREMENTS",
+    "elapsedTimeSinceActivationHours" : 1,
+    "timeSinceLastEncodedLocationMinutes" : 6,
+    "altitudeEncodedLocationMetres" : 432,
+    "dilutionPrecisionHdop" : {
+      "min" : 0,
+      "minInclusive" : true,
+      "max" : 1,
+      "maxInclusive" : true
+    },
+    "dilutionPrecisionVdop" : {
+      "min" : 1,
+      "minInclusive" : false,
+      "max" : 2,
+      "maxInclusive" : true
+    },
+    "activationMethod" : "MANUAL_ACTIVATION_BY_USER",
+    "remainingBatteryCapacityPercent" : {
+      "min" : 75,
+      "minInclusive" : false,
+      "max" : 100,
+      "maxInclusive" : true
+    },
+    "gnssStatus" : "LOCATION_3D"
+  },
+  "beacon23HexId" : "9934039823D11D6F34550BF",
+  "beacon15HexId" : "9934039823D11D6"
+}

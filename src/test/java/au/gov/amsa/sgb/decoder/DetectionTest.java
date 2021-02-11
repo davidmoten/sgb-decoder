@@ -350,6 +350,7 @@ public class DetectionTest {
         Bits b2 = Bits.from("00").concatWith(b);
         String hex = b2.toHex().toUpperCase();
         System.out.println(hex);
+        System.out.println(Json.prettyPrint(d.toJson()));
         assertEquals(51, hex.length());
     }
 
