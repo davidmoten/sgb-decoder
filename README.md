@@ -30,6 +30,7 @@ Add this dependency to your pom.xml:
   <version>VERSION_HERE</version>
 </dependency>
 ```
+Note that this library is not stand-alone and has a number of runtime dependencies. Use Maven (or Gradle etc)! 
 
 ## Usage
 The most likely form that consumers will encounter a beacon detection message is in the hex encoded Cospas-Sarsat Ground Segment Representation (202 bits hex-encoded to 51 chars using left padded zero bits) Here's an example:
