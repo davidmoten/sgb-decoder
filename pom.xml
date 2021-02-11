@@ -11,6 +11,7 @@
         <version>0.1</version>
     </parent>
 
+    <groupId>au.gov.amsa</groupId>
     <artifactId>sgb-decoder</artifactId>
     <version>0.1-SNAPSHOT</version>
 
