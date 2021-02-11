@@ -35,7 +35,7 @@ public final class RangeTest {
         Range r = Range.create(1, RangeEndType.EXCLUSIVE, 6, RangeEndType.INCLUSIVE);
         assertFalse(r.equals(null));
         assertTrue(r.equals(r));
-        assertFalse(r.equals(123));
+        assertFalse(r.equals(new Object()));
         assertFalse(r.equals(Range.create(2, RangeEndType.EXCLUSIVE, 6, RangeEndType.INCLUSIVE)));
         assertFalse(r.equals(Range.create(1, RangeEndType.INCLUSIVE, 6, RangeEndType.INCLUSIVE)));
         assertFalse(r.equals(Range.create(1, RangeEndType.EXCLUSIVE, 7, RangeEndType.INCLUSIVE)));
