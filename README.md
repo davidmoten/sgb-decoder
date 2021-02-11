@@ -48,7 +48,7 @@ System.out.println(d.toJson());
 ```
 Output is [here](src/docs/detection.json).
 
-The JSON Schema for the above is [here](src/main/json-schema/schema.json).
+The JSON Schema for the above is [here](src/main/resources/detection-schema.json).
 
 You can also decode the raw bits (as a bit string) using `Detection.fromBitString("1010000..")`.
 
