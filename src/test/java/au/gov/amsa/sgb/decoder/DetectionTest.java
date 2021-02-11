@@ -345,7 +345,7 @@ public class DetectionTest {
         Bits b = Bits.from(BITS).replace(90, vid);
         Detection d = Detection.from(b);
         assertEquals(VesselIdType.MMSI, d.vesselId().get().vesselIdType());
-        System.out.println(Json.prettyPrint(d.toJson()));
+        assertTrue(Json.prettyPrint(d.toJson()).contains("epirbMmsi"));
         System.out.println(Bits.from("00").concatWith(b).toHex());
     }
 
