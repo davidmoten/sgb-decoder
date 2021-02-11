@@ -74,14 +74,11 @@ With the arrival of second generation Beacons on the market sometime from July 2
 
 Producing a programming library that decodes an SGB detection message is a non-trivial task that has one important risk: **correctness**. As a developer how do I confirm that my code correctly decodes all variations of SGB detection messages? Writing unit tests still has the risk that my *interpretation* of the specification might not match the intent of the specification.
 
-A suggestion for the creators of the SGB encoding specification is that they help to build a Compliance Kit which is a list of beacon detection messages in hex form together with the corresponding decoded human readable version of the detection message in some *canonical form*. If this were the case then no matter what language a decoder was written in full test coverage of that decoder would be guaranteed by consuming the (comprehensive) Compliance Kit test data. An example of one test in the Compliance Kit would be the pair below:
+A suggestion for the creators of the SGB encoding specification is that they help to build a Compliance Kit which is a list of beacon detection messages in hex form together with the corresponding decoded human readable version of the detection message in some *canonical form*. If this were the case then no matter what language a decoder was written in full test coverage of that decoder would be guaranteed by consuming the (comprehensive) Compliance Kit test data. 
 
-* Ground Segment Representation Hex
-```
-0039823D32618658622811F0000000000003FFF004030680258
-```
-
-* [detection-without-vessel-id.json](src/test/resources/compliance-kit/detection-specification-example.json)
+An example of a test kit is [here](src/test/resources/compliance-kit) and comprises:
+* `tests.csv` file with columns *Title*, *Hex*, *Json*
+* json files
 
 A consumer of the Compliance Kit would consume decode the given hex and generate the JSON canonical form string and compare it to the given JSON file (using JSON equivalence rathen exact string equality).
 
