@@ -80,7 +80,7 @@ An example of a test kit is [here](src/test/resources/compliance-kit) and compri
 * `tests.csv` file with columns *Title*, *Hex*, *Json*
 * json files
 
-A consumer of the Compliance Kit would consume decode the given hex and generate the JSON canonical form string and compare it to the given JSON file (using JSON equivalence rathen exact string equality).
+A consumer of the Compliance Kit would decode the given hex and generate the JSON canonical form string and compare it to the given JSON file (using JSON equivalence rathen exact string equality).
 
 Clearly one test in the kit does not cut it. There are many variations on field values, some are derived from special binary codes, some field values are optional.
 
