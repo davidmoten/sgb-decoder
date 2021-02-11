@@ -77,7 +77,7 @@ Producing a programming library that decodes an SGB detection message is a non-t
 A suggestion for the creators of the SGB encoding specification is that they help to build a Compliance Kit which is a list of beacon detection messages in hex form together with the corresponding decoded human readable version of the detection message in some *canonical form*. If this were the case then no matter what language a decoder was written in full test coverage of that decoder would be guaranteed by consuming the (comprehensive) Compliance Kit test data. 
 
 An example of a test kit is [here](src/test/resources/compliance-kit) and comprises:
-* `tests.csv` file with columns *Title*, *Hex*, *Json*
+* [`tests.csv`](src/test/resources/compliance-kit/tests.csv) file with columns *TITLE*, *HEX*, *JSON*
 * json files
 
 A consumer of the Compliance Kit would decode the given hex and generate the JSON canonical form string and compare it to the given JSON file (using JSON equivalence rathen exact string equality).
