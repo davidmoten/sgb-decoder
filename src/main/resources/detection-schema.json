@@ -1,6 +1,6 @@
 {
-  "$schema" : "http://json-schema.org/draft/2019-09/schema#",
-  "$id" : "TODO",
+  "$id" : "https://amsa.gov.au/sgb",
+  "$schema" : "http://json-schema.org/draft/2019-09/schema",
   "definitions" : {
     "RotatingFieldType" : {
       "type" : "string",
@@ -34,7 +34,7 @@
           "type" : "string"
         },
         "beaconFeedback" : {
-          "type" : "#/definitions/BeaconFeedback"
+          "$ref" : "#/definitions/BeaconFeedback"
         }
       },
       "required" : [ "rotatingFieldType", "canProcessAutomaticallyGeneratedAckRlmType1", "canProcessManuallyGeneratedRlm", "rlsProvider" ]
@@ -73,7 +73,8 @@
           "type" : "string"
         },
         "timeOfLastEncodedLocation" : {
-          "type" : "time"
+          "type" : "string",
+          "format" : "time"
         },
         "altitudeEncodedLocationMetres" : {
           "type" : "integer"
@@ -85,7 +86,7 @@
           "type" : "string"
         },
         "remainingBatteryCapacityPercent" : {
-          "type" : "#/definitions/Range"
+          "$ref" : "#/definitions/Range"
         }
       },
       "required" : [ "rotatingFieldType", "timeOfLastEncodedLocation", "altitudeEncodedLocationMetres", "triggeringEvent", "gnssStatus" ]
@@ -142,7 +143,7 @@
       "type" : "object",
       "properties" : {
         "bits" : {
-          "type" : "#/definitions/Bits"
+          "$ref" : "#/definitions/Bits"
         },
         "tac" : {
           "type" : "integer"
@@ -163,16 +164,16 @@
           "type" : "boolean"
         },
         "encodedGnssPosition" : {
-          "type" : "#/definitions/EncodedGnssPosition"
+          "$ref" : "#/definitions/EncodedGnssPosition"
         },
         "vesselId" : {
-          "type" : "#/definitions/VesselId"
+          "$ref" : "#/definitions/VesselId"
         },
         "beaconType" : {
           "type" : "string"
         },
         "rotatingField" : {
-          "type" : "#/definitions/RotatingField"
+          "$ref" : "#/definitions/RotatingField"
         },
         "beacon23HexId" : {
           "type" : "string"
@@ -184,7 +185,19 @@
       "required" : [ "bits", "tac", "serialNo", "countryCode", "hasAtLeastOneEnabledHomingSignal", "hasEnabledRls", "testProtocolMessage", "beaconType", "rotatingField", "beacon23HexId", "beacon15HexId" ]
     },
     "RotatingField" : {
-      "type" : [ "#/definitions/Cancellation", "#/definitions/EltDtInFlightEmergency", "#/definitions/NationalUse", "#/definitions/ObjectiveRequirements", "#/definitions/Rls", "#/definitions/UnknownRotatingField" ]
+      "oneOf" : [ {
+        "$ref" : "#/definitions/Cancellation"
+      }, {
+        "$ref" : "#/definitions/EltDtInFlightEmergency"
+      }, {
+        "$ref" : "#/definitions/NationalUse"
+      }, {
+        "$ref" : "#/definitions/ObjectiveRequirements"
+      }, {
+        "$ref" : "#/definitions/Rls"
+      }, {
+        "$ref" : "#/definitions/UnknownRotatingField"
+      } ]
     },
     "Aviation24BitAddress" : {
       "type" : "object",
@@ -202,7 +215,17 @@
       "required" : [ "vesselIdType", "addressHex" ]
     },
     "VesselId" : {
-      "type" : [ "#/definitions/AircraftOperatorAndSerialNumber", "#/definitions/AircraftRegistrationMarking", "#/definitions/Aviation24BitAddress", "#/definitions/Mmsi", "#/definitions/RadioCallSign" ]
+      "oneOf" : [ {
+        "$ref" : "#/definitions/AircraftOperatorAndSerialNumber"
+      }, {
+        "$ref" : "#/definitions/AircraftRegistrationMarking"
+      }, {
+        "$ref" : "#/definitions/Aviation24BitAddress"
+      }, {
+        "$ref" : "#/definitions/Mmsi"
+      }, {
+        "$ref" : "#/definitions/RadioCallSign"
+      } ]
     },
     "ObjectiveRequirements" : {
       "type" : "object",
@@ -220,16 +243,16 @@
           "type" : "integer"
         },
         "dilutionPrecisionHdop" : {
-          "type" : "#/definitions/Range"
+          "$ref" : "#/definitions/Range"
         },
         "dilutionPrecisionVdop" : {
-          "type" : "#/definitions/Range"
+          "$ref" : "#/definitions/Range"
         },
         "activationMethod" : {
           "type" : "string"
         },
         "remainingBatteryCapacityPercent" : {
-          "type" : "#/definitions/Range"
+          "$ref" : "#/definitions/Range"
         },
         "gnssStatus" : {
           "type" : "string"

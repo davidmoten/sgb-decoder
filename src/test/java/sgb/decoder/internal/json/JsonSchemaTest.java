@@ -14,9 +14,15 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.davidmoten.junit.Asserts;
+import com.github.fge.jsonschema.core.exceptions.ProcessingException;
+import com.github.fge.jsonschema.core.report.ProcessingReport;
+import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
 import sgb.decoder.Detection;
+import sgb.decoder.TestingUtil;
 import sgb.decoder.rotatingfield.Cancellation;
 import sgb.decoder.rotatingfield.EltDtInFlightEmergency;
 import sgb.decoder.rotatingfield.NationalUse;
@@ -34,16 +40,28 @@ import sgb.decoder.vesselid.VesselId;
 public class JsonSchemaTest {
 
     @Test
-    public void updateSchema() throws IOException {
+    public void updateSchema() throws IOException, ProcessingException {
         Map<Class<?>, List<Class<?>>> map = new HashMap<>();
-        map.put(VesselId.class, Arrays.asList(AircraftOperatorAndSerialNumber.class, AircraftRegistrationMarking.class,
-                Aviation24BitAddress.class, Mmsi.class, RadioCallSign.class));
-        map.put(RotatingField.class, Arrays.asList(Cancellation.class, EltDtInFlightEmergency.class, NationalUse.class,
-                ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
+        map.put(VesselId.class,
+                Arrays.asList(AircraftOperatorAndSerialNumber.class,
+                        AircraftRegistrationMarking.class, Aviation24BitAddress.class, Mmsi.class,
+                        RadioCallSign.class));
+        map.put(RotatingField.class,
+                Arrays.asList(Cancellation.class, EltDtInFlightEmergency.class, NationalUse.class,
+                        ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
         String schema = Json.prettyPrint(JsonSchema.generateSchema(Detection.class, map));
-        File file = new File("src/main/json-schema/detection-schema.json");
+        File file = new File("src/main/resources/detection-schema.json");
         file.delete();
         Files.write(file.toPath(), schema.getBytes(StandardCharsets.UTF_8));
+
+        // check detection.json is valid with schema
+        JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
+        ObjectMapper m = new ObjectMapper();
+        com.github.fge.jsonschema.main.JsonSchema jsonSchema = factory
+                .getJsonSchema(m.readTree(file));
+        JsonNode json = m.readTree(TestingUtil.readResource("/detection.json"));
+        ProcessingReport report = jsonSchema.validate(json);
+        System.out.println(report);
     }
 
     @Test
@@ -73,7 +91,8 @@ public class JsonSchemaTest {
 
     @Test
     public void testSchemaFromPrimitive() {
-        assertTrue(JsonSchema.generateSchema(Integer.class, new HashMap<>()).contains("\"definitions\" : {}"));
+        assertTrue(JsonSchema.generateSchema(Integer.class, new HashMap<>())
+                .contains("\"definitions\" : {}"));
     }
 
     private static final class Recursive {

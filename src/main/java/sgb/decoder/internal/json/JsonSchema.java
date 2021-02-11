@@ -38,9 +38,9 @@ public final class JsonSchema {
         Map<String, Definition> clsNameDefinitions = new HashMap<>();
         collectDefinitions(cls, clsNameDefinitions, subclasses);
         StringBuilder s = new StringBuilder();
-        add(s, "$schema", "http://json-schema.org/draft/2019-09/schema#");
+        add(s, "$id", "https://amsa.gov.au/sgb");
         s.append(COMMA);
-        add(s, "$id", "TODO");
+        add(s, "$schema", "http://json-schema.org/draft/2019-09/schema");
         s.append(COMMA);
         s.append(quoted("definitions") + COLON + "{");
         s.append(clsNameDefinitions.values() //
@@ -91,7 +91,8 @@ public final class JsonSchema {
                             clsNameDefinitions.put(type.typeName, new Definition(json.toString()));
                         }
                     });
-            final String type;
+            StringBuilder json = new StringBuilder();
+            json.append(quoted(definitionName(cls)) + COLON + "{");
             List<Class<?>> list = subclasses.get(cls);
             if (list != null) {
                 StringBuilder s = new StringBuilder();
@@ -101,15 +102,15 @@ public final class JsonSchema {
                     if (s.length() > 0) {
                         s.append(", ");
                     }
-                    s.append(quoted(toRef(c)));
+                    s.append("{" + quoted("$ref") + COLON + quoted(toRef(c)) + "}");
+
                 }
-                type = "[" + s.toString() + "]";
+                String types = "[" + s.toString() + "]";
+                json.append(quoted("oneOf") + COLON + types);
             } else {
-                type = quoted("object");
+                json.append(quoted("type") + COLON + quoted("object"));
             }
-            StringBuilder json = new StringBuilder();
-            json.append(quoted(definitionName(cls)) + COLON + "{");
-            json.append(quoted("type") + COLON + type);
+
             String properties = properties(cls);
             if (!properties.isEmpty()) {
                 json.append(", ");
@@ -154,13 +155,16 @@ public final class JsonSchema {
         b.append(" : ");
         b.append("{");
         JsonType t = toJsonType(f.javaType);
-        final String type;
         if (t.typeName.equals("object")) {
-            type = toRef(f.javaType);
+            add(b, "$ref", toRef(f.javaType));
+        } else if (t.typeName.equals("time")) {
+            add(b, "type", "string");
+            b.append(COMMA);
+            add(b, "format", "time");
         } else {
-            type = t.typeName;
+            add(b, "type", t.typeName);
         }
-        add(b, "type", type);
+
         b.append("}");
         return b.toString();
     }
