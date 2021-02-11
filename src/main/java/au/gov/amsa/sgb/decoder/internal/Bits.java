@@ -1,6 +1,5 @@
 package au.gov.amsa.sgb.decoder.internal;
 
-import java.math.BigInteger;
 import java.util.Arrays;
 
 import com.github.davidmoten.guavamini.Preconditions;
@@ -37,7 +36,7 @@ public final class Bits {
     }
 
     public static Bits fromHex(String hex) {
-        return Bits.from(Hex.hexToBin(hex));
+        return Bits.from(Hex.hexToBinary(hex));
     }
 
     public Bits concatWith(String bitString) {
@@ -120,7 +119,7 @@ public final class Bits {
     }
 
     public String readHex(int numChars) {
-        return new BigInteger(readBitString(numChars * BITS_PER_HEX_CHAR), 2).toString(16);
+        return Hex.bitStringToHex(readBitString(numChars * BITS_PER_HEX_CHAR));
     }
 
     public String readBitString(int numBits) {
@@ -221,6 +220,6 @@ public final class Bits {
     }
 
     public String toHex() {
-        return new BigInteger(toBitString(), 2).toString(16);
+        return Hex.bitStringToHex(toBitString());
     }
 }

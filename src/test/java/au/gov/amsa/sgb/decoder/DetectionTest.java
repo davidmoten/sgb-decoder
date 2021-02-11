@@ -68,7 +68,8 @@ public class DetectionTest {
     @Test
     public void testDetectionToJsonUsingJackson() throws IOException {
         Detection d = Detection.fromHexGroundSegmentRepresentation(SAMPLE_HEX);
-        TestingUtil.assertResourceEqualsJson("/detection.json", d.toJson());
+        TestingUtil.assertResourceEqualsJson("/compliance-kit/detection-specification-example.json",
+                d.toJson());
         File file = new File("src/docs/detection.json");
         Files.write(file.toPath(), Json.prettyPrint(d.toJson()).getBytes(StandardCharsets.UTF_8));
     }
@@ -97,8 +98,8 @@ public class DetectionTest {
         assertEquals(Range.create(75, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE),
                 r.remainingBatteryCapacityPercent().get());
         assertEquals(GnssStatus.LOCATION_3D, r.gnssStatus());
-        assertEquals("9934039823d000000000000", d.beacon23HexId());
-        assertEquals("9934039823d0000", d.beacon15HexId());
+        assertEquals("9934039823D000000000000", d.beacon23HexId());
+        assertEquals("9934039823D0000", d.beacon15HexId());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -123,7 +124,7 @@ public class DetectionTest {
         String address = "101011001000001011101100";
         Aviation24BitAddress a = Detection
                 .readVesselIdAviation24BitAddress(Bits.from(address + zeros(20)));
-        assertEquals("ac82ec", a.addressHex());
+        assertEquals("AC82EC", a.addressHex());
         assertFalse(a.aircraftOperatorDesignator().isPresent());
     }
 
@@ -131,7 +132,7 @@ public class DetectionTest {
     public void testReadVesselIdAviation24BitAddressWithDesignator() {
         Aviation24BitAddress a = Detection
                 .readVesselIdAviation24BitAddress(createVesselIdAviation24BitAddress());
-        assertEquals("ac82ec", a.addressHex());
+        assertEquals("AC82EC", a.addressHex());
         assertEquals("ABC", a.aircraftOperatorDesignator().get());
     }
 
@@ -140,7 +141,7 @@ public class DetectionTest {
         Aviation24BitAddress a = (Aviation24BitAddress) Detection
                 .readVesselId(Bits.from("100").concatWith(createVesselIdAviation24BitAddress()))
                 .get();
-        assertEquals("ac82ec", a.addressHex());
+        assertEquals("AC82EC", a.addressHex());
     }
 
     private static Bits createVesselIdAviation24BitAddress() {
@@ -346,7 +347,10 @@ public class DetectionTest {
         Detection d = Detection.from(b);
         assertEquals(VesselIdType.MMSI, d.vesselId().get().vesselIdType());
         assertTrue(Json.prettyPrint(d.toJson()).contains("epirbMmsi"));
-        System.out.println(Bits.from("00").concatWith(b).toHex());
+        Bits b2 = Bits.from("00").concatWith(b);
+        String hex = b2.toHex().toUpperCase();
+        System.out.println(hex);
+        assertEquals(51, hex.length());
     }
 
     @Test

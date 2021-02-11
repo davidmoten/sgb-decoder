@@ -46,7 +46,7 @@ At that point you can browse the object representation of the message or dump a 
 ```java
 System.out.println(d.toJson());
 ```
-Output is [here](src/docs/detection.json).
+Output is [here](src/test/resources/compliance-kit/detection-specification-example.json).
 
 The JSON Schema for the above is [here](src/main/resources/detection-schema.json).
 
@@ -81,7 +81,7 @@ A suggestion for the creators of the SGB encoding specification is that they hel
 0039823D32618658622811F0000000000003FFF004030680258
 ```
 
-* [detection-without-vessel-id.json](src/docs/detection.json)
+* [detection-without-vessel-id.json](src/test/resources/compliance-kit/detection-specification-example.json)
 
 A consumer of the Compliance Kit would consume decode the given hex and generate the JSON canonical form string and compare it to the given JSON file (using JSON equivalence rathen exact string equality).
 

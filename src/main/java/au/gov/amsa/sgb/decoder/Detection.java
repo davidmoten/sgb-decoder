@@ -87,7 +87,7 @@ public final class Detection {
     }
 
     public static Detection fromHexGroundSegmentRepresentation(String hex) {
-        String bitString = Hex.hexToBin(hex).substring(2);
+        String bitString = Hex.hexToBinary(hex).substring(2);
         return fromBitString(bitString);
     }
 

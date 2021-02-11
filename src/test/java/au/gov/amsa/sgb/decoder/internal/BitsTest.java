@@ -88,7 +88,7 @@ public final class BitsTest {
     @Test
     public void testToHex() {
         Bits b = Bits.from("01101010");
-        assertEquals("6a", b.readHex(2));
+        assertEquals("6A", b.readHex(2));
     }
 
     @Test
@@ -139,7 +139,7 @@ public final class BitsTest {
 
     @Test
     public void testReadHex24Bit() {
-        assertEquals("ac82ec", Bits.from("101011001000001011101100").readHex(6));
+        assertEquals("AC82EC", Bits.from("101011001000001011101100").readHex(6));
     }
 
     @Test
@@ -193,6 +193,11 @@ public final class BitsTest {
     @Test
     public void testToString() {
         assertEquals("101", Bits.from("101").toString());
+    }
+    
+    @Test
+    public void testToHexWithLeadingZeros() {
+        assertEquals("00", Bits.from("00000000").toHex());
     }
 
 }

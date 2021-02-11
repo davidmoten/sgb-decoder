@@ -37,6 +37,6 @@
     },
     "gnssStatus" : "LOCATION_3D"
   },
-  "beacon23HexId" : "9934039823d000000000000",
-  "beacon15HexId" : "9934039823d0000"
+  "beacon23HexId" : "9934039823D000000000000",
+  "beacon15HexId" : "9934039823D0000"
 }

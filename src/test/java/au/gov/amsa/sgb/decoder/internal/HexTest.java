@@ -11,4 +11,9 @@ public class HexTest {
         Asserts.assertIsUtilityClass(Hex.class);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testBitStringToHexWrongLength() {
+        Hex.bitStringToHex("000");
+    }
+
 }

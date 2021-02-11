@@ -55,7 +55,7 @@ public class JsonSchemaTest {
         ObjectMapper m = new ObjectMapper();
         com.github.fge.jsonschema.main.JsonSchema jsonSchema = factory
                 .getJsonSchema(m.readTree(file));
-        JsonNode json = m.readTree(TestingUtil.readResource("/detection.json"));
+        JsonNode json = m.readTree(TestingUtil.readResource("/compliance-kit/detection-specification-example.json"));
         ProcessingReport report = jsonSchema.validate(json);
         System.out.println(report);
         assertTrue(report.isSuccess());

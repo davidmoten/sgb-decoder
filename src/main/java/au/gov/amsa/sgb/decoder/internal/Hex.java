@@ -3,6 +3,9 @@ package au.gov.amsa.sgb.decoder.internal;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import com.github.davidmoten.guavamini.Preconditions;
 
 public final class Hex {
 
@@ -11,6 +14,7 @@ public final class Hex {
     }
 
     private static Map<String, String> map = createMap();
+    private static Map<String, String> inverse = createInverse();
 
     private static Map<String, String> createMap() {
         Map<String, String> m = new HashMap<>();
@@ -33,7 +37,12 @@ public final class Hex {
         return m;
     }
 
-    public static String hexToBin(String s) {
+    private static Map<String, String> createInverse() {
+        return map.entrySet().stream()
+                .collect(Collectors.toMap(entry -> entry.getValue(), entry -> entry.getKey()));
+    }
+
+    public static String hexToBinary(String s) {
         char[] hex = s.toUpperCase(Locale.ENGLISH).toCharArray();
         StringBuilder b = new StringBuilder();
         for (char h : hex) {
@@ -41,4 +50,14 @@ public final class Hex {
         }
         return b.toString();
     }
+
+    public static String bitStringToHex(String bitString) {
+        Preconditions.checkArgument(bitString.length() % 4 == 0);
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i < bitString.length(); i += 4) {
+            b.append(inverse.get(bitString.substring(i, i + 4)));
+        }
+        return b.toString();
+    }
+
 }
