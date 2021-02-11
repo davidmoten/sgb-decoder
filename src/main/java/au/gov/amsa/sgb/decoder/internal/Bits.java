@@ -18,7 +18,7 @@ public final class Bits {
     public static Bits from(boolean[] bits) {
         return new Bits(bits);
     }
-    
+
     public static Bits zeros(int length) {
         return Bits.from(new boolean[length]);
     }
@@ -142,11 +142,15 @@ public final class Bits {
     }
 
     public boolean[] readBooleanArray(int numBits) {
-        Preconditions.checkArgument(numBits > 0);
-        Preconditions.checkArgument(pos + numBits <= bits.length);
-        boolean[] b = Arrays.copyOfRange(bits, pos, pos + numBits);
+        boolean[] b = readBooleanArray(pos, numBits);
         pos += numBits;
         return b;
+    }
+
+    private boolean[] readBooleanArray(int pos, int numBits) {
+        Preconditions.checkArgument(numBits > 0);
+        Preconditions.checkArgument(pos + numBits <= bits.length);
+        return Arrays.copyOfRange(bits, pos, pos + numBits);
     }
 
     public Bits readBits(int numBits) {
@@ -201,14 +205,12 @@ public final class Bits {
         return Bits.from(b);
     }
 
+    public Bits last(int numBits) {
+        return Bits.from(readBooleanArray(length() - numBits, numBits));
+    }
+
     @Override
     public String toString() {
         return toBitString();
     }
-
-    public Bits last(int numBits) {
-        position(length() - numBits);
-        return readBits(numBits);
-    }
-
 }
