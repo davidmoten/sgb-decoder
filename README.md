@@ -68,7 +68,7 @@ Quick and dirty performance testing (without JMH) indicates that the the library
 This project follows [Semantic Versioning 2.0](https://semver.org/).
 
 ## Compliance Kit
-With the arrival of second generation Beacons on the market sometime from July 2021, many of the National Rescue Coordination Centres (RCCs) throughout the world will want to be able to decode the hex detection messages into a human readable form. This might be simply a web page that performs the decode but could equally be a programming library that developers might use to customize their use of the hex detection message.
+With the arrival of second generation Beacons on the market sometime from July 2021, many of the National Rescue Coordination Centres (RCCs) throughout the world will want to be able to decode SGB hex detection messages into a human readable form. This might be simply a web page that performs the decode but could equally be a programming library that developers might use to customize their use of the hex detection message.
 
 Producing a programming library that decodes an SGB detection message is a non-trivial task that has one important risk: **correctness**. As a developer how do I confirm that my code correctly decodes all variations of SGB detection messages? Writing unit tests still has the risk that my *interpretation* of the specification might not match the intent of the specification.
 
@@ -79,7 +79,7 @@ A suggestion for the creators of the SGB encoding specification is that they hel
 0039823D32618658622811F0000000000003FFF004030680258
 ```
 
-* [detection.json](src/docs/detection.json)
+* [detection-without-vessel-id.json](src/docs/detection.json)
 
 A consumer of the Compliance Kit would consume decode the given hex and generate the JSON canonical form string and compare it to the given JSON file (using JSON equivalence rathen exact string equality).
 
