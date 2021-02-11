@@ -26,6 +26,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
         <scm.url>scm:git:https://github.com/amsa-code/sgb-decoder.git</scm.url>
+        
+        <jackson.version>2.12.1</jackson.version>
 
         <checkstyle.version>3.1.1</checkstyle.version>
         <javadoc.version>3.2.0</javadoc.version>
@@ -36,10 +38,8 @@
         <spotbugs.version>4.2.0</spotbugs.version>
         <m3.site.version>3.9.1</m3.site.version>
         <changelog.version>2.2</changelog.version>
-        <coverage.reports.dir>${project.build.directory}/target/coverage-reports</coverage.reports.dir>
         <changelog.version>2.2</changelog.version>
         <bundle.plugin.version>5.1.1</bundle.plugin.version>
-        <coverage.reports.dir>${project.build.directory}/target/coverage-reports</coverage.reports.dir>
         <jacoco.version>0.8.6</jacoco.version>
 
         <line.coverage>1.00</line.coverage>
@@ -84,7 +84,7 @@
         <connection>${scm.url}</connection>
         <developerConnection>${scm.url}</developerConnection>
         <url>${scm.url}</url>
-        <tag>0.6.5</tag>
+        <tag>0.1</tag>
     </scm>
 
     <dependencies>
@@ -92,13 +92,13 @@
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-parameter-names</artifactId>
-            <version>2.12.1</version>
+            <version>${jackson.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jdk8</artifactId>
-            <version>2.12.1</version>
+            <version>${jackson.version}</version>
         </dependency>
 
         <dependency>
