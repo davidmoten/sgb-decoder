@@ -182,19 +182,12 @@
       "type" : "object",
       "properties" : {
         "min" : {
-          "type" : "integer"
-        },
-        "minType" : {
-          "type" : "string"
+          "$ref" : "#/definitions/RangeEnd"
         },
         "max" : {
-          "type" : "integer"
-        },
-        "maxType" : {
-          "type" : "string"
+          "$ref" : "#/definitions/RangeEnd"
         }
-      },
-      "required" : [ "min", "minType", "max", "maxType" ]
+      }
     },
     "EltDtInFlightEmergency" : {
       "type" : "object",
@@ -256,6 +249,18 @@
         }
       },
       "required" : [ "vesselIdType" ]
+    },
+    "RangeEnd" : {
+      "type" : "object",
+      "properties" : {
+        "value" : {
+          "type" : "integer"
+        },
+        "exclusive" : {
+          "type" : "boolean"
+        }
+      },
+      "required" : [ "value", "exclusive" ]
     },
     "Aviation24BitAddress" : {
       "type" : "object",

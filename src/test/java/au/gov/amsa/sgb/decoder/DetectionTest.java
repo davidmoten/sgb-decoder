@@ -90,12 +90,12 @@ public class DetectionTest {
         assertEquals(1, r.elapsedTimeSinceActivationHours());
         assertEquals(6, r.timeSinceLastEncodedLocationMinutes());
         assertEquals(432, r.altitudeEncodedLocationMetres());
-        assertEquals(Range.create(0, RangeEndType.INCLUSIVE, 1, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(0).max(1).build(),
                 r.dilutionPrecisionHdop().get());
-        assertEquals(Range.create(1, RangeEndType.EXCLUSIVE, 2, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(1).exclusive().max(2).build(),
                 r.dilutionPrecisionDop().get());
         assertEquals(ActivationMethod.MANUAL_ACTIVATION_BY_USER, r.activationMethod());
-        assertEquals(Range.create(75, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(75).exclusive().max(100).build(),
                 r.remainingBatteryCapacityPercent().get());
         assertEquals(GnssStatus.LOCATION_3D, r.gnssStatus());
         assertEquals("9934039823D000000000000", d.beacon23HexId());
@@ -222,17 +222,17 @@ public class DetectionTest {
 
     @Test
     public void testRemainingBattery() {
-        assertEquals(Range.create(0, RangeEndType.INCLUSIVE, 5, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(0).max(5).build(),
                 Detection.readBatteryPercent(Bits.from("000")).get());
-        assertEquals(Range.create(5, RangeEndType.EXCLUSIVE, 10, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(5).exclusive().max(10).build(),
                 Detection.readBatteryPercent(Bits.from("001")).get());
-        assertEquals(Range.create(10, RangeEndType.EXCLUSIVE, 25, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(10).exclusive().max(25).build(),
                 Detection.readBatteryPercent(Bits.from("010")).get());
-        assertEquals(Range.create(25, RangeEndType.EXCLUSIVE, 50, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(25).exclusive().max(50).build(),
                 Detection.readBatteryPercent(Bits.from("011")).get());
-        assertEquals(Range.create(50, RangeEndType.EXCLUSIVE, 75, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(50).exclusive().max(75).build(),
                 Detection.readBatteryPercent(Bits.from("100")).get());
-        assertEquals(Range.create(75, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(75).exclusive().max(100).build(),
                 Detection.readBatteryPercent(Bits.from("101")).get());
         assertFalse(Detection.readBatteryPercent(Bits.from("110")).isPresent());
         assertFalse(Detection.readBatteryPercent(Bits.from("111")).isPresent());
@@ -240,35 +240,35 @@ public class DetectionTest {
 
     @Test
     public void testDop() {
-        assertEquals(Range.create(0, RangeEndType.INCLUSIVE, 1, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(0).max(1).build(),
                 Detection.readDop(Bits.from("0000")).get());
-        assertEquals(Range.create(1, RangeEndType.EXCLUSIVE, 2, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(1).exclusive().max(2).build(),
                 Detection.readDop(Bits.from("0001")).get());
-        assertEquals(Range.create(2, RangeEndType.EXCLUSIVE, 3, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(2).exclusive().max(3).build(),
                 Detection.readDop(Bits.from("0010")).get());
-        assertEquals(Range.create(3, RangeEndType.EXCLUSIVE, 4, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(3).exclusive().max(4).build(),
                 Detection.readDop(Bits.from("0011")).get());
-        assertEquals(Range.create(4, RangeEndType.EXCLUSIVE, 5, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(4).exclusive().max(5).build(),
                 Detection.readDop(Bits.from("0100")).get());
-        assertEquals(Range.create(5, RangeEndType.EXCLUSIVE, 6, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(5).exclusive().max(6).build(),
                 Detection.readDop(Bits.from("0101")).get());
-        assertEquals(Range.create(6, RangeEndType.EXCLUSIVE, 7, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(6).exclusive().max(7).build(),
                 Detection.readDop(Bits.from("0110")).get());
-        assertEquals(Range.create(7, RangeEndType.EXCLUSIVE, 8, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(7).exclusive().max(8).build(),
                 Detection.readDop(Bits.from("0111")).get());
-        assertEquals(Range.create(8, RangeEndType.EXCLUSIVE, 10, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(8).exclusive().max(10).build(),
                 Detection.readDop(Bits.from("1000")).get());
-        assertEquals(Range.create(10, RangeEndType.EXCLUSIVE, 12, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(10).exclusive().max(12).build(),
                 Detection.readDop(Bits.from("1001")).get());
-        assertEquals(Range.create(12, RangeEndType.EXCLUSIVE, 15, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(12).exclusive().max(15).build(),
                 Detection.readDop(Bits.from("1010")).get());
-        assertEquals(Range.create(15, RangeEndType.EXCLUSIVE, 20, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(15).exclusive().max(20).build(),
                 Detection.readDop(Bits.from("1011")).get());
-        assertEquals(Range.create(20, RangeEndType.EXCLUSIVE, 30, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(20).exclusive().max(30).build(),
                 Detection.readDop(Bits.from("1100")).get());
-        assertEquals(Range.create(30, RangeEndType.EXCLUSIVE, 50, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(30).exclusive().max(50).build(),
                 Detection.readDop(Bits.from("1101")).get());
-        assertEquals(Range.create(50, RangeEndType.EXCLUSIVE, 0, RangeEndType.MISSING),
+        assertEquals(Range.min(50).exclusive().build(),
                 Detection.readDop(Bits.from("1110")).get());
         assertFalse(Detection.readDop(Bits.from("1111")).isPresent());
     }
@@ -383,11 +383,11 @@ public class DetectionTest {
 
     @Test
     public void testBatteryPercentInFlightEmergency() {
-        assertEquals(Range.create(0, RangeEndType.INCLUSIVE, 33, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(0).max(33).build(),
                 Detection.readBatteryPercentInFlightEmergency(Bits.from("00")).get());
-        assertEquals(Range.create(33, RangeEndType.EXCLUSIVE, 66, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(33).exclusive().max(66).build(),
                 Detection.readBatteryPercentInFlightEmergency(Bits.from("01")).get());
-        assertEquals(Range.create(66, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(66).exclusive().max(100).build(),
                 Detection.readBatteryPercentInFlightEmergency(Bits.from("10")).get());
         assertFalse(Detection.readBatteryPercentInFlightEmergency(Bits.from("11")).isPresent());
     }
@@ -481,7 +481,7 @@ public class DetectionTest {
         assertEquals(1952 - 400, a.altitudeEncodedLocationMetres());
         assertEquals(TriggeringEvent.G_SWITCH_OR_DEFORMATION_ACTIVATION, a.triggeringEvent());
         assertEquals(GnssStatus.LOCATION_2D, a.gnssStatus());
-        assertEquals(Range.create(66, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE),
+        assertEquals(Range.min(66).exclusive().max(100).build(),
                 a.remainingBatteryCapacityPercent().get());
     }
 

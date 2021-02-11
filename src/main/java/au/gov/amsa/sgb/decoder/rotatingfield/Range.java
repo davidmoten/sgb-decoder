@@ -1,113 +1,137 @@
 package au.gov.amsa.sgb.decoder.rotatingfield;
 
+import java.util.Optional;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.davidmoten.guavamini.Preconditions;
 
+@JsonInclude(Include.NON_NULL)
 public final class Range {
 
-    private final Integer min;
-    private RangeEndType minType;
-    private final int max;
-    private RangeEndType maxType;
+    private final Optional<RangeEnd> min;
+    private final Optional<RangeEnd> max;
 
-    private Range(int min, RangeEndType minType, int max, RangeEndType maxType) {
-        Preconditions.checkNotNull(minType);
-        Preconditions.checkNotNull(maxType);
+    private Range(Optional<RangeEnd> min, Optional<RangeEnd> max) {
+        Preconditions.checkNotNull(min);
+        Preconditions.checkNotNull(max);
         this.min = min;
-        this.minType = minType;
         this.max = max;
-        this.maxType = maxType;
     }
 
-    public static Range create(int min, RangeEndType minType, int max, RangeEndType maxType) {
-        return new Range(minType == RangeEndType.MISSING ? 0 : min, minType, maxType == RangeEndType.MISSING ? 0 : max,
-                maxType);
+    public static BuilderMin min(int value) {
+        return new BuilderMin(new RangeEnd(value, false), Optional.empty());
     }
 
-    public static Range createWithMin(int min, RangeEndType minType) {
-        return create(min, minType, 0, RangeEndType.MISSING);
+    public static BuilderMax max(int value) {
+        return new BuilderMax(Optional.empty(), new RangeEnd(value, false));
     }
 
-    public int min() {
+    public static Range unlimited() {
+        return new Range(Optional.empty(), Optional.empty());
+    }
+
+    public static final class BuilderMin {
+        private RangeEnd min;
+        private Optional<RangeEnd> max;
+
+        BuilderMin(RangeEnd min, Optional<RangeEnd> max) {
+            this.min = min;
+            this.max = max;
+        }
+
+        public BuilderMin exclusive() {
+            this.min = new RangeEnd(min.value(), true);
+            return this;
+        }
+
+        public BuilderMax max(int value) {
+            return new BuilderMax(Optional.of(min), new RangeEnd(value, false));
+        }
+
+        public Range build() {
+            return new Range(Optional.of(min), max);
+        }
+    }
+
+    public static final class BuilderMax {
+        private Optional<RangeEnd> min;
+        private RangeEnd max;
+
+        BuilderMax(Optional<RangeEnd> min, RangeEnd max) {
+            this.min = min;
+            this.max = max;
+        }
+
+        public Range exclusive() {
+            this.max = new RangeEnd(max.value(), true);
+            return this.build();
+        }
+
+        public Range build() {
+            return new Range(min, Optional.of(max));
+        }
+
+    }
+
+    public Optional<RangeEnd> min() {
         return min;
     }
 
-    public RangeEndType minType() {
-        return minType;
-    }
-
-    public int max() {
+    public Optional<RangeEnd> max() {
         return max;
-    }
-
-    public RangeEndType maxType() {
-        return maxType;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + max;
-        result = prime * result + maxType.hashCode();
-        result = prime * result + min;
-        result = prime * result + minType.hashCode();
+        result = prime * result + ((max == null) ? 0 : max.hashCode());
+        result = prime * result + ((min == null) ? 0 : min.hashCode());
         return result;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o)
+    public boolean equals(Object obj) {
+        if (this == obj)
             return true;
-        if (o == null)
+        if (obj == null)
             return false;
-        if (getClass() != o.getClass())
+        if (getClass() != obj.getClass())
             return false;
-        Range other = (Range) o;
-        if (max != other.max)
+        Range other = (Range) obj;
+        if (max == null) {
+            if (other.max != null)
+                return false;
+        } else if (!max.equals(other.max))
             return false;
-        if (maxType != other.maxType)
-            return false;
-        if (min != other.min)
-            return false;
-        if (minType != other.minType)
+        if (min == null) {
+            if (other.min != null)
+                return false;
+        } else if (!min.equals(other.min))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Range [min=" + min + ", minType=" + minType + ", max=" + max + ", maxType=" + maxType + "]";
+        StringBuilder b = new StringBuilder();
+        b.append("Range [");
+        if (min.isPresent()) {
+            b.append("min=");
+            b.append(min.get().value());
+            b.append(", minExclusive=" + min.get().isExclusive());
+        }
+        if (max.isPresent()) {
+            if (min.isPresent()) {
+                b.append(", ");
+            }
+            b.append("max=");
+            b.append(max.get().value());
+            b.append(", maxExclusive=" + max.get().isExclusive());
+        }
+        b.append("]");
+        return b.toString();
     }
-
-//	@Override
-//	public String toString(Indent indent) {
-//		String a = minStr();
-//		String b = maxStr();
-//		if (!a.isEmpty() && !b.isEmpty()) {
-//			return a + " and " + b;
-//		} else {
-//			return a + b;
-//		}
-//	}
-//
-//	private String minStr() {
-//		if (minType == RangeEndType.MISSING) {
-//			return "";
-//		} else if (minType == RangeEndType.INCLUSIVE) {
-//			return ">=" + min;
-//		} else {
-//			return ">" + min;
-//		}
-//	}
-//
-//	private String maxStr() {
-//		if (maxType == RangeEndType.MISSING) {
-//			return "";
-//		} else if (maxType == RangeEndType.INCLUSIVE) {
-//			return "<=" + max;
-//		} else {
-//			return "<" + max;
-//		}
-//	}
 
 }

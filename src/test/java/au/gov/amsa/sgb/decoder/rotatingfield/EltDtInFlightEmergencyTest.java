@@ -12,9 +12,10 @@ public class EltDtInFlightEmergencyTest {
 
     @Test
     public void testToString() {
-        EltDtInFlightEmergency a = new EltDtInFlightEmergency(OffsetTime.of(15, 44, 32, 0, ZoneOffset.UTC), 57,
+        EltDtInFlightEmergency a = new EltDtInFlightEmergency(
+                OffsetTime.of(15, 44, 32, 0, ZoneOffset.UTC), 57,
                 TriggeringEvent.MANUAL_ACTIVATION_BY_CREW, GnssStatus.LOCATION_3D,
-                Optional.of(Range.create(50, RangeEndType.EXCLUSIVE, 75, RangeEndType.INCLUSIVE)));
+                Optional.of(Range.min(50).exclusive().build()));
         assertEquals(RotatingFieldType.ELT_DT_IN_FLIGHT_EMERGENCY, a.rotatingFieldType());
     }
 

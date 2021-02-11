@@ -37,10 +37,6 @@ public final class Json {
         m.registerModule(new ParameterNamesModule(PROPERTIES));
         m.registerModule(new Jdk8Module());
 
-        SimpleModule custom = new SimpleModule();
-        custom.addSerializer(Range.class, new RangeSerializer());
-        m.registerModule(custom);
-
         // make private fields of Person visible to Jackson
         m.setVisibility(FIELD, ANY);
         m.setSerializationInclusion(Include.NON_NULL);

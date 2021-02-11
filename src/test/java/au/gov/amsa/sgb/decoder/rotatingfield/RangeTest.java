@@ -13,64 +13,80 @@ public final class RangeTest {
 
     @Test
     public void testRange() {
-        Range r = Range.create(1, RangeEndType.EXCLUSIVE, 6, RangeEndType.INCLUSIVE);
-        assertEquals(1, r.min());
-        assertEquals(RangeEndType.EXCLUSIVE, r.minType());
-        assertEquals(6, r.max());
-        assertEquals(RangeEndType.INCLUSIVE, r.maxType());
-        assertEquals("Range [min=1, minType=EXCLUSIVE, max=6, maxType=INCLUSIVE]", r.toString());
+        Range r = Range.min(1).exclusive().max(6).build();
+        assertEquals(1, r.min().get().value());
+        assertTrue(r.min().get().isExclusive());
+        assertEquals(6, r.max().get().value());
+        assertFalse(r.max().get().isExclusive());
         // get coverage
         r.hashCode();
     }
 
     @Test
+    public void testRangeToString() {
+        Range r = Range.min(1).exclusive().max(6).build();
+        assertEquals("Range [min=1, minExclusive=true, max=6, maxExclusive=false]", r.toString());
+    }
+
+    @Test
+    public void testRangeToStringMinNotPresent() {
+        Range r = Range.max(6).build();
+        assertEquals("Range [max=6, maxExclusive=false]", r.toString());
+    }
+
+    @Test
     public void testRangeMissing() {
-        Range r = Range.create(5, RangeEndType.MISSING, 7, RangeEndType.MISSING);
-        assertEquals(0, r.min());
-        assertEquals(0, r.max());
+        Range r = Range.unlimited();
+        assertFalse(r.min().isPresent());
+        assertFalse(r.max().isPresent());
     }
 
     @Test
     public void testEquals() {
-        Range r = Range.create(1, RangeEndType.EXCLUSIVE, 6, RangeEndType.INCLUSIVE);
+        Range r = Range.min(1).exclusive().max(6).build();
         assertFalse(r.equals(null));
         assertTrue(r.equals(r));
         assertFalse(r.equals(new Object()));
-        assertFalse(r.equals(Range.create(2, RangeEndType.EXCLUSIVE, 6, RangeEndType.INCLUSIVE)));
-        assertFalse(r.equals(Range.create(1, RangeEndType.INCLUSIVE, 6, RangeEndType.INCLUSIVE)));
-        assertFalse(r.equals(Range.create(1, RangeEndType.EXCLUSIVE, 7, RangeEndType.INCLUSIVE)));
-        assertFalse(r.equals(Range.create(1, RangeEndType.EXCLUSIVE, 6, RangeEndType.EXCLUSIVE)));
-        assertTrue(r.equals(Range.create(1, RangeEndType.EXCLUSIVE, 6, RangeEndType.INCLUSIVE)));
+        assertFalse(r.equals(Range.min(2).exclusive().max(6).build()));
+        assertFalse(r.equals(Range.min(1).max(6).build()));
+        assertFalse(r.equals(Range.min(2).exclusive().max(7).build()));
+        assertFalse(r.equals(Range.min(1).exclusive().max(6).exclusive()));
+        assertTrue(r.equals(Range.min(1).exclusive().max(6).build()));
     }
 
     @Test
     public void testRangeToJson() {
         {
-            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.INCLUSIVE);
-            assertJsonEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : true}",
+            Range r = Range.min(1).max(2).build();
+            assertJsonEquals(
+                    "{\"min\":{\"value\":1,\"exclusive\":false},\"max\":{\"value\":2,\"exclusive\":false}}",
                     Json.toJson(r));
         }
         {
-            Range r = Range.create(1, RangeEndType.EXCLUSIVE, 2, RangeEndType.INCLUSIVE);
-            assertJsonEquals("{\"min\" : 1, \"minInclusive\" : false, \"max\" : 2, \"maxInclusive\" : true}",
+            Range r = Range.min(1).exclusive().max(2).build();
+            assertTrue(r.min().get().isExclusive());
+            assertJsonEquals(
+                    "{\"min\":{\"value\":1,\"exclusive\":true},\"max\":{\"value\":2,\"exclusive\":false}}",
                     Json.toJson(r));
         }
         {
-            Range r = Range.create(1, RangeEndType.MISSING, 2, RangeEndType.INCLUSIVE);
+            Range r = Range.max(2).build();
             assertJsonEquals("{\"max\" : 2, \"maxInclusive\" : true}", Json.toJson(r));
         }
         {
-            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.EXCLUSIVE);
-            assertJsonEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : false}",
+            Range r = Range.min(1).max(2).exclusive();
+            assertJsonEquals(
+                    "{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : false}",
                     Json.toJson(r));
         }
         {
-            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.MISSING);
+            Range r = Range.min(1).build();
             assertJsonEquals("{\"min\" : 1, \"minInclusive\" : true}", Json.toJson(r));
         }
         {
-            Range r = Range.create(1, RangeEndType.INCLUSIVE, 2, RangeEndType.INCLUSIVE);
-            assertJsonEquals("{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : true}",
+            Range r = Range.min(1).max(2).build();
+            assertJsonEquals(
+                    "{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : true}",
                     Json.toJson(r));
         }
     }

@@ -24,7 +24,6 @@ import au.gov.amsa.sgb.decoder.rotatingfield.GnssStatus;
 import au.gov.amsa.sgb.decoder.rotatingfield.NationalUse;
 import au.gov.amsa.sgb.decoder.rotatingfield.ObjectiveRequirements;
 import au.gov.amsa.sgb.decoder.rotatingfield.Range;
-import au.gov.amsa.sgb.decoder.rotatingfield.RangeEndType;
 import au.gov.amsa.sgb.decoder.rotatingfield.Rls;
 import au.gov.amsa.sgb.decoder.rotatingfield.RlsProvider;
 import au.gov.amsa.sgb.decoder.rotatingfield.RlsType;
@@ -39,7 +38,8 @@ import au.gov.amsa.sgb.decoder.vesselid.RadioCallSign;
 import au.gov.amsa.sgb.decoder.vesselid.VesselId;
 
 /**
- * Decodes a 202 bit binary beacon detection message. Based on C/T.018 Rev 6 (May 2020).
+ * Decodes a 202 bit binary beacon detection message. Based on C/T.018 Rev 6
+ * (May 2020).
  */
 @JsonInclude(Include.NON_NULL)
 public final class Detection {
@@ -52,7 +52,7 @@ public final class Detection {
 
     @JsonIgnore
     private final Bits bits;
-    
+
     private final int tac;
     private final int serialNo;
     private final int countryCode;
@@ -177,21 +177,17 @@ public final class Detection {
 
     private static Optional<Range> toBatteryPercent(int code) {
         if (code == 0) {
-            return Optional.of(Range.create(0, RangeEndType.INCLUSIVE, 5, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(0).max(5).build());
         } else if (code == 1) {
-            return Optional.of(Range.create(5, RangeEndType.EXCLUSIVE, 10, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(5).exclusive().max(10).build());
         } else if (code == 2) {
-            return Optional
-                    .of(Range.create(10, RangeEndType.EXCLUSIVE, 25, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(10).exclusive().max(25).build());
         } else if (code == 3) {
-            return Optional
-                    .of(Range.create(25, RangeEndType.EXCLUSIVE, 50, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(25).exclusive().max(50).build());
         } else if (code == 4) {
-            return Optional
-                    .of(Range.create(50, RangeEndType.EXCLUSIVE, 75, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(50).exclusive().max(75).build());
         } else if (code == 5) {
-            return Optional
-                    .of(Range.create(75, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(75).exclusive().max(100).build());
         } else {
             return Optional.empty();
         }
@@ -204,40 +200,23 @@ public final class Detection {
 
     private static Optional<Range> toDop(int code) {
         if (code == 0) {
-            return Optional.of(Range.create(0, RangeEndType.INCLUSIVE, 1, RangeEndType.INCLUSIVE));
-        } else if (code == 1) {
-            return Optional.of(Range.create(1, RangeEndType.EXCLUSIVE, 2, RangeEndType.INCLUSIVE));
-        } else if (code == 2) {
-            return Optional.of(Range.create(2, RangeEndType.EXCLUSIVE, 3, RangeEndType.INCLUSIVE));
-        } else if (code == 3) {
-            return Optional.of(Range.create(3, RangeEndType.EXCLUSIVE, 4, RangeEndType.INCLUSIVE));
-        } else if (code == 4) {
-            return Optional.of(Range.create(4, RangeEndType.EXCLUSIVE, 5, RangeEndType.INCLUSIVE));
-        } else if (code == 5) {
-            return Optional.of(Range.create(5, RangeEndType.EXCLUSIVE, 6, RangeEndType.INCLUSIVE));
-        } else if (code == 6) {
-            return Optional.of(Range.create(6, RangeEndType.EXCLUSIVE, 7, RangeEndType.INCLUSIVE));
-        } else if (code == 7) {
-            return Optional.of(Range.create(7, RangeEndType.EXCLUSIVE, 8, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(0).max(1).build());
+        } else if (code >= 1 && code <= 7) {
+            return Optional.of(Range.min(code).exclusive().max(code + 1).build());
         } else if (code == 8) {
-            return Optional.of(Range.create(8, RangeEndType.EXCLUSIVE, 10, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(8).exclusive().max(10).build());
         } else if (code == 9) {
-            return Optional
-                    .of(Range.create(10, RangeEndType.EXCLUSIVE, 12, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(10).exclusive().max(12).build());
         } else if (code == 10) {
-            return Optional
-                    .of(Range.create(12, RangeEndType.EXCLUSIVE, 15, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(12).exclusive().max(15).build());
         } else if (code == 11) {
-            return Optional
-                    .of(Range.create(15, RangeEndType.EXCLUSIVE, 20, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(15).exclusive().max(20).build());
         } else if (code == 12) {
-            return Optional
-                    .of(Range.create(20, RangeEndType.EXCLUSIVE, 30, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(20).exclusive().max(30).build());
         } else if (code == 13) {
-            return Optional
-                    .of(Range.create(30, RangeEndType.EXCLUSIVE, 50, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(30).exclusive().max(50).build());
         } else if (code == 14) {
-            return Optional.of(Range.createWithMin(50, RangeEndType.EXCLUSIVE));
+            return Optional.of(Range.min(50).exclusive().build());
         } else {
             return Optional.empty();
         }
@@ -289,13 +268,11 @@ public final class Detection {
 
     private static Optional<Range> toBatteryPercentInFlightEmergency(int code) {
         if (code == 0) {
-            return Optional.of(Range.create(0, RangeEndType.INCLUSIVE, 33, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(0).max(33).build());
         } else if (code == 1) {
-            return Optional
-                    .of(Range.create(33, RangeEndType.EXCLUSIVE, 66, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(33).exclusive().max(66).build());
         } else if (code == 2) {
-            return Optional
-                    .of(Range.create(66, RangeEndType.EXCLUSIVE, 100, RangeEndType.INCLUSIVE));
+            return Optional.of(Range.min(66).exclusive().max(100).build());
         } else {
             return Optional.empty();
         }

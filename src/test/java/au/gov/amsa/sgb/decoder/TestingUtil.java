@@ -31,10 +31,11 @@ public final class TestingUtil {
 
     public static void assertJsonEquals(String json, String expected) throws ComparisonFailure {
         if (!Json.equals(expected, json)) {
-            throw new ComparisonFailure("unequal json", expected, Json.prettyPrint(json));
+            System.out.println("not expected: " + json);
+            throw new ComparisonFailure("unequal json", Json.prettyPrint(expected), Json.prettyPrint(json));
         }
     }
-    
+
     public static String ones(int n) {
         return Util.repeat('1', n);
     }
