@@ -2,6 +2,7 @@ package au.gov.amsa.sgb.decoder.internal.json;
 
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.davidmoten.junit.Asserts;
@@ -55,10 +57,23 @@ public class JsonSchemaTest {
         ObjectMapper m = new ObjectMapper();
         com.github.fge.jsonschema.main.JsonSchema jsonSchema = factory
                 .getJsonSchema(m.readTree(file));
-        JsonNode json = m.readTree(TestingUtil.readResource("/compliance-kit/detection-specification-example.json"));
+        String example = TestingUtil.readResource("/compliance-kit/detection-specification-example.json");
+        JsonNode json = m.readTree(example);
         ProcessingReport report = jsonSchema.validate(json);
         System.out.println(report);
         assertTrue(report.isSuccess());
+    }
+
+    @Test
+    public void test() throws JsonProcessingException, ProcessingException, IOException {
+        File file = new File("src/main/resources/detection-schema.json");
+        JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
+        ObjectMapper m = new ObjectMapper();
+        com.github.fge.jsonschema.main.JsonSchema jsonSchema = factory
+                .getJsonSchema(m.readTree(file));
+        JsonNode json = m.readTree("{\"thing\" : 123}");
+        ProcessingReport report = jsonSchema.validate(json);
+        assertFalse(report.isSuccess());
     }
 
     private static String generateSchemaFromDetectionClass() {

@@ -139,9 +139,6 @@
     "Detection" : {
       "type" : "object",
       "properties" : {
-        "bits" : {
-          "$ref" : "#/definitions/Bits"
-        },
         "tac" : {
           "type" : "integer"
         },
@@ -179,7 +176,7 @@
           "type" : "string"
         }
       },
-      "required" : [ "bits", "tac", "serialNo", "countryCode", "hasAtLeastOneEnabledHomingSignal", "hasEnabledRls", "testProtocolMessage", "beaconType", "rotatingField", "beacon23HexId", "beacon15HexId" ]
+      "required" : [ "tac", "serialNo", "countryCode", "hasAtLeastOneEnabledHomingSignal", "hasEnabledRls", "testProtocolMessage", "beaconType", "rotatingField", "beacon23HexId", "beacon15HexId" ]
     },
     "Range" : {
       "type" : "object",
@@ -311,5 +308,6 @@
       },
       "required" : [ "rotatingFieldType", "canProcessAutomaticallyGeneratedAckRlmType1", "canProcessManuallyGeneratedRlm", "rlsProvider" ]
     }
-  }
+  },
+  "$ref" : "#/definitions/Detection"
 }

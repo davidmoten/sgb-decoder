@@ -4,7 +4,7 @@ import com.github.davidmoten.guavamini.Preconditions;
 
 public final class Range {
 
-    private final int min;
+    private final Integer min;
     private RangeEndType minType;
     private final int max;
     private RangeEndType maxType;

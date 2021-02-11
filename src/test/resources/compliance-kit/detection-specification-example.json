@@ -9,7 +9,6 @@
     "lat" : 48.79315185546875,
     "lon" : 69.00875854492188
   },
-  "vesselId" : null,
   "beaconType" : "ELT_NOT_DT",
   "rotatingField" : {
     "rotatingFieldType" : "OBJECTIVE_REQUIREMENTS",

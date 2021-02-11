@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
@@ -35,13 +36,13 @@ public final class JsonSchema {
 
     /**
      * Returns the JSON Schema for the heirarchy of classes pointed to by
-     * {@code classes}. Targets {@link Detection} class only (but might be extended in
-     * the future for more). Any subclasses within the heirarchy should be mentioned
-     * in {@code subclasses} so that the appropriate JSON Schema structures are
-     * produced. Subclasses should include a discriminator field that allows users
-     * to differentiate the JSON representations.
+     * {@code classes}. Targets {@link Detection} class only (but might be extended
+     * in the future for more). Any subclasses within the heirarchy should be
+     * mentioned in {@code subclasses} so that the appropriate JSON Schema
+     * structures are produced. Subclasses should include a discriminator field that
+     * allows users to differentiate the JSON representations.
      * 
-     * @param classes        root class to be converted into a JSON Schema
+     * @param classes    root class to be converted into a JSON Schema
      * @param subclasses
      * @param schemaId   value to be used in the {@code $id} field.
      * @return JSON Schema
@@ -56,10 +57,13 @@ public final class JsonSchema {
         StringBuilder s = new StringBuilder();
         addPreamble(schemaId, s);
         addDefinitions(clsNameDefinitions, s);
+        // TODO support multiple classes not just the first
+        s.append(COMMA + quoted("$ref") + COLON + quoted(toRef(classes.get(0))));
         return "{" + s.toString() + "}";
     }
 
-    private static void addDefinitions(Map<String, Definition> clsNameDefinitions, StringBuilder s) {
+    private static void addDefinitions(Map<String, Definition> clsNameDefinitions,
+            StringBuilder s) {
         s.append(quoted("definitions") + COLON + "{");
         s.append(clsNameDefinitions.values() //
                 .stream() //
@@ -94,27 +98,23 @@ public final class JsonSchema {
         if (t.typeName.equals("object") && !classesAlreadyProcessed.contains(cls.getName())) {
             classesAlreadyProcessed.add(cls.getName());
             // will be an implementation of HasFormatter
-            Arrays.stream(cls.getDeclaredFields()) //
-                    .filter(f -> !isStatic(f)) //
-                    .filter(f -> !ignore(f)) //
-                    .map(JsonSchema::toMyField) //
-                    .forEach(f -> {
-                        JsonType type = toJsonType(f.javaType);
-                        if (type.typeName.equals("object")) {
-                            collectDefinitions(toClass(f.javaType), clsNameDefinitions,
-                                    classesAlreadyProcessed, subclasses);
-                        } else if (type.typeName.equals("string") && !type.enumeration.isEmpty()) {
-                            StringBuilder json = new StringBuilder();
-                            json.append(quoted(definitionName(f.javaType)) + COLON + "{");
-                            add(json, "type", "string");
-                            json.append(", ");
-                            json.append(quoted("enum") + COLON);
-                            json.append("[" + type.enumeration.stream().map(JsonSchema::quoted)
-                                    .collect(Collectors.joining(COMMA)) + "]");
-                            json.append("}");
-                            clsNameDefinitions.put(type.typeName, new Definition(json.toString()));
-                        }
-                    });
+            fields(cls).forEach(f -> {
+                JsonType type = toJsonType(f.javaType);
+                if (type.typeName.equals("object")) {
+                    collectDefinitions(toClass(f.javaType), clsNameDefinitions,
+                            classesAlreadyProcessed, subclasses);
+                } else if (type.typeName.equals("string") && !type.enumeration.isEmpty()) {
+                    StringBuilder json = new StringBuilder();
+                    json.append(quoted(definitionName(f.javaType)) + COLON + "{");
+                    add(json, "type", "string");
+                    json.append(", ");
+                    json.append(quoted("enum") + COLON);
+                    json.append("[" + type.enumeration.stream().map(JsonSchema::quoted)
+                            .collect(Collectors.joining(COMMA)) + "]");
+                    json.append("}");
+                    clsNameDefinitions.put(type.typeName, new Definition(json.toString()));
+                }
+            });
             StringBuilder json = new StringBuilder();
             json.append(quoted(definitionName(cls)) + COLON + "{");
             List<Class<?>> list = subclasses.get(cls);
@@ -141,9 +141,7 @@ public final class JsonSchema {
                 json.append(properties);
             }
 
-            String required = Arrays.stream(cls.getDeclaredFields()) //
-                    .filter(f -> !isStatic(f)) //
-                    .map(JsonSchema::toMyField) //
+            String required = fields(cls) //
                     .filter(f -> f.required) //
                     .map(f -> quoted(f.name)) //
                     .collect(Collectors.joining(", "));
@@ -157,9 +155,15 @@ public final class JsonSchema {
         }
     }
 
+    private static Stream<MyField> fields(Class<?> cls) {
+        return Arrays.stream(cls.getDeclaredFields()) //
+                .filter(f -> !isStatic(f)) //
+                .filter(f -> !ignore(f)) //
+                .map(JsonSchema::toMyField);
+    }
+
     private static boolean ignore(Field f) {
-        JsonIgnore a = f.getAnnotation(JsonIgnore.class);
-        return a != null;
+        return f.getAnnotation(JsonIgnore.class) != null;
     }
 
     @VisibleForTesting
@@ -220,9 +224,7 @@ public final class JsonSchema {
     }
 
     private static String properties(Class<?> cls) {
-        String content = Arrays.stream(cls.getDeclaredFields()) //
-                .filter(f -> !isStatic(f)) //
-                .map(JsonSchema::toMyField) //
+        String content = fields(cls) //
                 .map(JsonSchema::generateDefinition) //
                 .collect(Collectors.joining(","));
         if (content.trim().isEmpty()) {
