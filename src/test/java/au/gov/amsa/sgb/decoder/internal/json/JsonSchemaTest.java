@@ -1,5 +1,6 @@
 package au.gov.amsa.sgb.decoder.internal.json;
 
+import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -39,6 +40,8 @@ import au.gov.amsa.sgb.decoder.vesselid.VesselId;
 
 public class JsonSchemaTest {
 
+    private static final String SCHEMA_ID = "https://amsa.gov.au/sgb";
+
     @Test
     public void updateSchemaInSourceAndEnsureExampleJsonCompliesWithSchema()
             throws IOException, ProcessingException {
@@ -67,7 +70,8 @@ public class JsonSchemaTest {
         map.put(RotatingField.class,
                 Arrays.asList(Cancellation.class, EltDtInFlightEmergency.class, NationalUse.class,
                         ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
-        return Json.prettyPrint(JsonSchema.generateSchema(Detection.class, map));
+        return Json.prettyPrint(
+                JsonSchema.generateSchema(singletonList(Detection.class), map, SCHEMA_ID));
     }
 
     @Test
@@ -92,13 +96,14 @@ public class JsonSchemaTest {
 
     @Test
     public void testRecursiveSchemaDoesNotOverflowStack() {
-        JsonSchema.generateSchema(Recursive.class, new HashMap<>());
+        JsonSchema.generateSchema(singletonList(Recursive.class), new HashMap<>(), SCHEMA_ID);
     }
 
     @Test
     public void testSchemaFromPrimitive() {
-        assertTrue(JsonSchema.generateSchema(Integer.class, new HashMap<>())
-                .contains("\"definitions\" : {}"));
+        assertTrue(
+                JsonSchema.generateSchema(singletonList(Integer.class), new HashMap<>(), SCHEMA_ID)
+                        .contains("\"definitions\" : {}"));
     }
 
     private static final class Recursive {

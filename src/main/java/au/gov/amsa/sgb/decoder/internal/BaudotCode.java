@@ -5,6 +5,9 @@ import java.util.Map;
 
 import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
 
+/**
+ * A Baudot-like code. Same principle, different mappings.
+ */
 public final class BaudotCode {
 
     private static final Map<Integer, Character> map = createMap();

@@ -20,8 +20,8 @@ import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
 import au.gov.amsa.sgb.decoder.Detection;
 
 /**
- * Simplified JSON schema generator targeting {@link Detection} class and is
- * dependents.
+ * Simplified JSON schema generator only targeting {@link Detection} class and
+ * its dependents. Honours Jackson {@link JsonIgnore} annotations on fields.
  */
 public final class JsonSchema {
 
@@ -33,22 +33,46 @@ public final class JsonSchema {
         // prevent instantiation
     }
 
-    public static String generateSchema(Class<?> cls, Map<Class<?>, List<Class<?>>> subclasses) {
+    /**
+     * Returns the JSON Schema for the heirarchy of classes pointed to by
+     * {@code classes}. Targets {@link Detection} class only (but might be extended in
+     * the future for more). Any subclasses within the heirarchy should be mentioned
+     * in {@code subclasses} so that the appropriate JSON Schema structures are
+     * produced. Subclasses should include a discriminator field that allows users
+     * to differentiate the JSON representations.
+     * 
+     * @param classes        root class to be converted into a JSON Schema
+     * @param subclasses
+     * @param schemaId   value to be used in the {@code $id} field.
+     * @return JSON Schema
+     */
+    public static String generateSchema(List<Class<?>> classes,
+            Map<Class<?>, List<Class<?>>> subclasses, String schemaId) {
         // use all private fields to generate schema
         Map<String, Definition> clsNameDefinitions = new HashMap<>();
-        collectDefinitions(cls, clsNameDefinitions, subclasses);
+        for (Class<?> cls : classes) {
+            collectDefinitions(cls, clsNameDefinitions, subclasses);
+        }
         StringBuilder s = new StringBuilder();
-        add(s, "$id", "https://amsa.gov.au/sgb");
-        s.append(COMMA);
-        add(s, "$schema", "http://json-schema.org/draft/2019-09/schema");
-        s.append(COMMA);
+        addPreamble(schemaId, s);
+        addDefinitions(clsNameDefinitions, s);
+        return "{" + s.toString() + "}";
+    }
+
+    private static void addDefinitions(Map<String, Definition> clsNameDefinitions, StringBuilder s) {
         s.append(quoted("definitions") + COLON + "{");
         s.append(clsNameDefinitions.values() //
                 .stream() //
                 .map(x -> x.json) //
                 .collect(Collectors.joining(",")));
         s.append("}");
-        return "{" + s.toString() + "}";
+    }
+
+    private static void addPreamble(String schemaId, StringBuilder s) {
+        add(s, "$id", schemaId);
+        s.append(COMMA);
+        add(s, "$schema", "http://json-schema.org/draft/2019-09/schema");
+        s.append(COMMA);
     }
 
     private static final class Definition {
