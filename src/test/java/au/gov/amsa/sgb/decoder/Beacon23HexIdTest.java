@@ -5,8 +5,6 @@ import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
-import au.gov.amsa.sgb.decoder.Beacon23HexId;
-
 public class Beacon23HexIdTest {
 
     @Test

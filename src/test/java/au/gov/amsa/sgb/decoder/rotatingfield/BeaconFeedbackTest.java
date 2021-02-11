@@ -4,9 +4,6 @@ import java.util.Optional;
 
 import org.junit.Test;
 
-import au.gov.amsa.sgb.decoder.rotatingfield.BeaconFeedback;
-import au.gov.amsa.sgb.decoder.rotatingfield.RlsType;
-
 public class BeaconFeedbackTest {
 
     @Test

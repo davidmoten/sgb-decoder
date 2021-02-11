@@ -6,13 +6,6 @@ import java.util.Optional;
 
 import org.junit.Test;
 
-import au.gov.amsa.sgb.decoder.rotatingfield.ActivationMethod;
-import au.gov.amsa.sgb.decoder.rotatingfield.GnssStatus;
-import au.gov.amsa.sgb.decoder.rotatingfield.ObjectiveRequirements;
-import au.gov.amsa.sgb.decoder.rotatingfield.Range;
-import au.gov.amsa.sgb.decoder.rotatingfield.RangeEndType;
-import au.gov.amsa.sgb.decoder.rotatingfield.RotatingFieldType;
-
 public class ObjectiveRequirementsTest {
 
     @Test

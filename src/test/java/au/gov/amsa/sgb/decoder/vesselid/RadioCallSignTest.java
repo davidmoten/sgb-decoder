@@ -4,9 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import au.gov.amsa.sgb.decoder.vesselid.RadioCallSign;
-import au.gov.amsa.sgb.decoder.vesselid.VesselIdType;
-
 public class RadioCallSignTest {
 
     @Test

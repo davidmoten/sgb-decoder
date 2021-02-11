@@ -2,7 +2,6 @@ package au.gov.amsa.sgb.decoder;
 
 import org.junit.Test;
 
-import au.gov.amsa.sgb.decoder.EncodedGnssPosition;
 import au.gov.amsa.sgb.decoder.internal.json.Json;
 
 public class EncodedGnssPositionTest {

@@ -6,9 +6,6 @@ import java.util.Optional;
 
 import org.junit.Test;
 
-import au.gov.amsa.sgb.decoder.vesselid.Mmsi;
-import au.gov.amsa.sgb.decoder.vesselid.VesselIdType;
-
 public class MmsiTest {
 
     @Test

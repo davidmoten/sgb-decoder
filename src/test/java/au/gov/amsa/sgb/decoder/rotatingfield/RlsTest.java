@@ -6,10 +6,6 @@ import java.util.Optional;
 
 import org.junit.Test;
 
-import au.gov.amsa.sgb.decoder.rotatingfield.Rls;
-import au.gov.amsa.sgb.decoder.rotatingfield.RlsProvider;
-import au.gov.amsa.sgb.decoder.rotatingfield.RotatingFieldType;
-
 public class RlsTest {
 
     @Test

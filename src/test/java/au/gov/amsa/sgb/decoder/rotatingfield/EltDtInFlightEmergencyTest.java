@@ -8,13 +8,6 @@ import java.util.Optional;
 
 import org.junit.Test;
 
-import au.gov.amsa.sgb.decoder.rotatingfield.EltDtInFlightEmergency;
-import au.gov.amsa.sgb.decoder.rotatingfield.GnssStatus;
-import au.gov.amsa.sgb.decoder.rotatingfield.Range;
-import au.gov.amsa.sgb.decoder.rotatingfield.RangeEndType;
-import au.gov.amsa.sgb.decoder.rotatingfield.RotatingFieldType;
-import au.gov.amsa.sgb.decoder.rotatingfield.TriggeringEvent;
-
 public class EltDtInFlightEmergencyTest {
 
     @Test

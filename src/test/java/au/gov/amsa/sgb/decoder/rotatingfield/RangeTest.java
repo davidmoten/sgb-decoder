@@ -8,8 +8,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import au.gov.amsa.sgb.decoder.internal.json.Json;
-import au.gov.amsa.sgb.decoder.rotatingfield.Range;
-import au.gov.amsa.sgb.decoder.rotatingfield.RangeEndType;
 
 public final class RangeTest {
 

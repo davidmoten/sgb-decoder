@@ -8,7 +8,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import au.gov.amsa.sgb.decoder.DetectionTest;
-import au.gov.amsa.sgb.decoder.internal.Bits;
 
 public final class BitsTest {
 

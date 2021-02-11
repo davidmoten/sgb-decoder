@@ -6,9 +6,6 @@ import java.util.Optional;
 
 import org.junit.Test;
 
-import au.gov.amsa.sgb.decoder.vesselid.Aviation24BitAddress;
-import au.gov.amsa.sgb.decoder.vesselid.VesselIdType;
-
 public class Aviation24BitAddressTest {
 
     @Test

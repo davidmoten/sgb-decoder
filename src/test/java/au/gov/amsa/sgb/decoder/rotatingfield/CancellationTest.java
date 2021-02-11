@@ -4,10 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import au.gov.amsa.sgb.decoder.rotatingfield.Cancellation;
-import au.gov.amsa.sgb.decoder.rotatingfield.DeactivationMethod;
-import au.gov.amsa.sgb.decoder.rotatingfield.RotatingFieldType;
-
 public class CancellationTest {
 
     @Test
