@@ -1,37 +1,42 @@
 {
-    "tac" : 230,
-    "serialNo" : 573,
-    "countryCode" : 201,
-    "hasAtLeastOneEnabledHomingSignal" : true,
-    "hasEnabledRls" : false,
-    "testProtocolMessage" : false,
-    "encodedGnssPosition" : {
-        "lat" : 48.79315185546875,
-        "lon" : 69.00875854492188
+  "tac" : 230,
+  "serialNo" : 573,
+  "countryCode" : 201,
+  "hasAtLeastOneEnabledHomingSignal" : true,
+  "hasEnabledRls" : false,
+  "testProtocolMessage" : false,
+  "encodedGnssPosition" : {
+    "lat" : 48.79315185546875,
+    "lon" : 69.00875854492188
+  },
+  "vesselId" : null,
+  "beaconType" : "ELT_NOT_DT",
+  "rotatingField" : {
+    "rotatingFieldType" : "OBJECTIVE_REQUIREMENTS",
+    "elapsedTimeSinceActivationHours" : 1,
+    "timeSinceLastEncodedLocationMinutes" : 6,
+    "altitudeEncodedLocationMetres" : 432,
+    "dilutionPrecisionHdop" : {
+      "min" : 0,
+      "minInclusive" : true,
+      "max" : 1,
+      "maxInclusive" : true
     },
-    "vesselId" : null,
-    "beaconType" : "ELT_NOT_DT",
-    "rotatingField" : {
-        "rotatingFieldType" : "OBJECTIVE_REQUIREMENTS",
-        "elapsedTimeSinceActivationHours" : 1,
-        "timeSinceLastEncodedLocationMinutes" : 6,
-        "altitudeEncodedLocationMetres" : 432,
-        "dilutionPrecisionHdop" : 0,
-        "dilutionPrecisionDop" : {
-            "min" : 1,
-            "minInclusive" : false,
-            "max" : 2,
-            "maxInclusive" : true
-        },
-        "activationMethod" : "MANUAL_ACTIVATION_BY_USER",
-        "remainingBatteryCapacityPercent" : {
-            "min" : 75,
-            "minInclusive" : false,
-            "max" : 100,
-            "maxInclusive" : true
-        },
-        "gnssStatus" : "LOCATION_3D"
+    "dilutionPrecisionVdop" : {
+      "min" : 1,
+      "minInclusive" : false,
+      "max" : 2,
+      "maxInclusive" : true
     },
-    "beacon23HexId" : "9934039823d000000000000",
-    "beacon15HexId" : "9934039823d0000"
+    "activationMethod" : "MANUAL_ACTIVATION_BY_USER",
+    "remainingBatteryCapacityPercent" : {
+      "min" : 75,
+      "minInclusive" : false,
+      "max" : 100,
+      "maxInclusive" : true
+    },
+    "gnssStatus" : "LOCATION_3D"
+  },
+  "beacon23HexId" : "9934039823d000000000000",
+  "beacon15HexId" : "9934039823d0000"
 }

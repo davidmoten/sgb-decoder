@@ -37,7 +37,7 @@ import sgb.decoder.vesselid.RadioCallSign;
 import sgb.decoder.vesselid.VesselId;
 
 /**
- * Decodes a binary beacon detection message. Based on C/T.018 Rev 6 (May 2020).
+ * Decodes a 202 bit binary beacon detection message. Based on C/T.018 Rev 6 (May 2020).
  */
 public final class Detection {
 
@@ -137,8 +137,7 @@ public final class Detection {
         int elapsedTimeSinceActivationHours = bits.readUnsignedInt(6);
         int timeSinceLastEncodedLocationMinutes = bits.readUnsignedInt(11);
         int altitudeEncodedLocationMetres = readAltitudeEncodedLocationMetres(bits);
-        int dilutionPrecisionHdop = bits.readUnsignedInt(4);
-        // return Range object
+        Optional<Range> dilutionPrecisionHdop = readDop(bits);
         Optional<Range> dilutionPrecisionDop = readDop(bits);
         ActivationMethod activationMethod = readActivationMethod(bits);
         Optional<Range> remainingBatteryCapacityPercent = readBatteryPercent(bits);

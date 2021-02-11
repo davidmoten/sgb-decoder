@@ -232,9 +232,9 @@
           "type" : "integer"
         },
         "dilutionPrecisionHdop" : {
-          "type" : "integer"
+          "type" : "#/definitions/Range"
         },
-        "dilutionPrecisionDop" : {
+        "dilutionPrecisionVdop" : {
           "type" : "#/definitions/Range"
         },
         "activationMethod" : {
@@ -247,7 +247,7 @@
           "type" : "string"
         }
       },
-      "required" : [ "rotatingFieldType", "elapsedTimeSinceActivationHours", "timeSinceLastEncodedLocationMinutes", "altitudeEncodedLocationMetres", "dilutionPrecisionHdop", "activationMethod", "gnssStatus" ]
+      "required" : [ "rotatingFieldType", "elapsedTimeSinceActivationHours", "timeSinceLastEncodedLocationMinutes", "altitudeEncodedLocationMetres", "activationMethod", "gnssStatus" ]
     },
     "AircraftOperatorAndSerialNumber" : {
       "type" : "object",

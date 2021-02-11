@@ -16,8 +16,13 @@
     "elapsedTimeSinceActivationHours" : 1,
     "timeSinceLastEncodedLocationMinutes" : 6,
     "altitudeEncodedLocationMetres" : 432,
-    "dilutionPrecisionHdop" : 0,
-    "dilutionPrecisionDop" : {
+    "dilutionPrecisionHdop" : {
+      "min" : 0,
+      "minInclusive" : true,
+      "max" : 1,
+      "maxInclusive" : true
+    },
+    "dilutionPrecisionVdop" : {
       "min" : 1,
       "minInclusive" : false,
       "max" : 2,

@@ -88,7 +88,8 @@ public class DetectionTest {
         assertEquals(1, r.elapsedTimeSinceActivationHours());
         assertEquals(6, r.timeSinceLastEncodedLocationMinutes());
         assertEquals(432, r.altitudeEncodedLocationMetres());
-        assertEquals(0, r.dilutionPrecisionHdop());
+        assertEquals(Range.create(0, RangeEndType.INCLUSIVE, 1, RangeEndType.INCLUSIVE),
+                r.dilutionPrecisionHdop().get());
         assertEquals(Range.create(1, RangeEndType.EXCLUSIVE, 2, RangeEndType.INCLUSIVE),
                 r.dilutionPrecisionDop().get());
         assertEquals(ActivationMethod.MANUAL_ACTIVATION_BY_USER, r.activationMethod());
