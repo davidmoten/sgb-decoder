@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
 
 import sgb.decoder.Detection;
@@ -71,12 +72,13 @@ public final class JsonSchema {
             // will be an implementation of HasFormatter
             Arrays.stream(cls.getDeclaredFields()) //
                     .filter(f -> !isStatic(f)) //
+                    .filter(f -> !ignore(f)) //
                     .map(JsonSchema::toMyField) //
                     .forEach(f -> {
                         JsonType type = toJsonType(f.javaType);
                         if (type.typeName.equals("object")) {
-                            collectDefinitions(toClass(f.javaType), clsNameDefinitions, classesAlreadyProcessed,
-                                    subclasses);
+                            collectDefinitions(toClass(f.javaType), clsNameDefinitions,
+                                    classesAlreadyProcessed, subclasses);
                         } else if (type.typeName.equals("string") && !type.enumeration.isEmpty()) {
                             StringBuilder json = new StringBuilder();
                             json.append(quoted(definitionName(f.javaType)) + COLON + "{");
@@ -128,6 +130,11 @@ public final class JsonSchema {
             json.append("}");
             clsNameDefinitions.put(cls.getName(), new Definition(json.toString()));
         }
+    }
+
+    private static boolean ignore(Field f) {
+        JsonIgnore a = f.getAnnotation(JsonIgnore.class);
+        return a != null;
     }
 
     @VisibleForTesting

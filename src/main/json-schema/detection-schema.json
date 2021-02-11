@@ -51,18 +51,6 @@
       },
       "required" : [ "vesselIdType" ]
     },
-    "Bits" : {
-      "type" : "object",
-      "properties" : {
-        "bits" : {
-          "type" : "#/definitions/[Z"
-        },
-        "pos" : {
-          "type" : "integer"
-        }
-      },
-      "required" : [ "bits", "pos" ]
-    },
     "Mmsi" : {
       "type" : "object",
       "properties" : {
@@ -299,9 +287,6 @@
         }
       },
       "required" : [ "rotatingFieldType", "bitString" ]
-    },
-    "[Z" : {
-      "type" : "object"
     }
   }
 }
