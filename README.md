@@ -11,7 +11,7 @@ Java library that decodes [Cospas-Sarsat](https://en.wikipedia.org/wiki/Internat
 * *spotbugs* maximum effort static analysis enforced 
 * *pmd* static analysis enforced 
 
-Status: *pre-alpha* (in development, **NOT production ready yet**)
+Status: *pre-alpha* (in development, **NOT** production ready yet)
 
 ## How to build
 ```bash
@@ -32,7 +32,7 @@ Add this dependency to your pom.xml:
 ```
 
 ## Usage
-The most likely form that you will encounter a beacon detection message is in the hex encoded Cospas-Sarsat Ground Segment Representation (202 bits hex-encoded to 51 chars using left padded zero bits) Here's an example:
+The most likely form that consumers will encounter a beacon detection message is in the hex encoded Cospas-Sarsat Ground Segment Representation (202 bits hex-encoded to 51 chars using left padded zero bits) Here's an example:
 
 ```java
 import sgb.decoder.Detection;
