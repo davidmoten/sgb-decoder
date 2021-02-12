@@ -7,8 +7,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.davidmoten.guavamini.Preconditions;
 import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
 
@@ -41,7 +39,6 @@ import au.gov.amsa.sgb.decoder.vesselid.VesselId;
  * Decodes a 202 bit binary beacon detection message. Based on C/T.018 Rev 6
  * (May 2020).
  */
-@JsonInclude(Include.NON_NULL)
 public final class Detection {
 
     private static final Bits NO_ENCODED_LOCATION_CAPABILITY = Bits
