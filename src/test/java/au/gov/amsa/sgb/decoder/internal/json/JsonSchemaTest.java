@@ -57,7 +57,8 @@ public class JsonSchemaTest {
         ObjectMapper m = new ObjectMapper();
         com.github.fge.jsonschema.main.JsonSchema jsonSchema = factory
                 .getJsonSchema(m.readTree(file));
-        String example = TestingUtil.readResource("/compliance-kit/detection-specification-example.json");
+        String example = TestingUtil
+                .readResource("/compliance-kit/detection-specification-example.json");
         JsonNode json = m.readTree(example);
         ProcessingReport report = jsonSchema.validate(json);
         System.out.println(report);
@@ -85,8 +86,7 @@ public class JsonSchemaTest {
         map.put(RotatingField.class,
                 Arrays.asList(Cancellation.class, EltDtInFlightEmergency.class, NationalUse.class,
                         ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
-        return Json.prettyPrint(
-                JsonSchema.generateSchema(singletonList(Detection.class), map, SCHEMA_ID));
+        return Json.prettyPrint(JsonSchema.generateSchema(Detection.class, map, SCHEMA_ID));
     }
 
     @Test
@@ -111,14 +111,13 @@ public class JsonSchemaTest {
 
     @Test
     public void testRecursiveSchemaDoesNotOverflowStack() {
-        JsonSchema.generateSchema(singletonList(Recursive.class), new HashMap<>(), SCHEMA_ID);
+        JsonSchema.generateSchema(Recursive.class, new HashMap<>(), SCHEMA_ID);
     }
 
     @Test
     public void testSchemaFromPrimitive() {
-        assertTrue(
-                JsonSchema.generateSchema(singletonList(Integer.class), new HashMap<>(), SCHEMA_ID)
-                        .contains("\"definitions\" : {}"));
+        assertTrue(JsonSchema.generateSchema(Integer.class, new HashMap<>(), SCHEMA_ID)
+                .contains("\"definitions\" : {}"));
     }
 
     private static final class Recursive {

@@ -23,6 +23,13 @@ import au.gov.amsa.sgb.decoder.Detection;
 /**
  * Simplified JSON schema generator only targeting {@link Detection} class and
  * its dependents. Honours Jackson {@link JsonIgnore} annotations on fields.
+ * 
+ * <p>
+ * Limitations include:
+ * <p>
+ * <ul>
+ * <li>arrays not supported (not required for Detection class)</li>
+ * </ul>
  */
 public final class JsonSchema {
 
@@ -42,23 +49,20 @@ public final class JsonSchema {
      * structures are produced. Subclasses should include a discriminator field that
      * allows users to differentiate the JSON representations.
      * 
-     * @param classes    root class to be converted into a JSON Schema
+     * @param cls        root class to be converted into a JSON Schema
      * @param subclasses
      * @param schemaId   value to be used in the {@code $id} field.
      * @return JSON Schema
      */
-    public static String generateSchema(List<Class<?>> classes,
-            Map<Class<?>, List<Class<?>>> subclasses, String schemaId) {
+    public static String generateSchema(Class<?> cls, Map<Class<?>, List<Class<?>>> subclasses,
+            String schemaId) {
         // use all private fields to generate schema
         Map<String, Definition> clsNameDefinitions = new HashMap<>();
-        for (Class<?> cls : classes) {
-            collectDefinitions(cls, clsNameDefinitions, subclasses);
-        }
+        collectDefinitions(cls, clsNameDefinitions, subclasses);
         StringBuilder s = new StringBuilder();
         addPreamble(schemaId, s);
         addDefinitions(clsNameDefinitions, s);
-        // TODO support multiple classes not just the first
-        s.append(COMMA + quoted("$ref") + COLON + quoted(toRef(classes.get(0))));
+        s.append(COMMA + quoted("$ref") + COLON + quoted(toRef(cls)));
         return "{" + s.toString() + "}";
     }
 
