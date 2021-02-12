@@ -57,14 +57,13 @@ public class JsonSchemaTest {
         ObjectMapper m = new ObjectMapper();
         com.github.fge.jsonschema.main.JsonSchema jsonSchema = factory
                 .getJsonSchema(m.readTree(file));
-        String example = TestingUtil
-                .readResource("/compliance-kit/beacon-23-hex-id-sample.json");
+        String example = TestingUtil.readResource("/compliance-kit/beacon-23-hex-id-sample.json");
         JsonNode json = m.readTree(example);
         ProcessingReport report = jsonSchema.validate(json);
-        System.out.println(report);
+        // System.out.println(report);
         assertTrue(report.isSuccess());
     }
-    
+
     @Test
     public void updateDetectionSchemaInSourceAndEnsureExampleJsonCompliesWithSchema()
             throws IOException, ProcessingException {
@@ -82,7 +81,7 @@ public class JsonSchemaTest {
                 .readResource("/compliance-kit/detection-specification-example.json");
         JsonNode json = m.readTree(example);
         ProcessingReport report = jsonSchema.validate(json);
-        System.out.println(report);
+        // System.out.println(report);
         assertTrue(report.isSuccess());
     }
 
@@ -109,7 +108,7 @@ public class JsonSchemaTest {
                         ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
         return Json.prettyPrint(JsonSchema.generateSchema(Detection.class, map, SCHEMA_ID));
     }
-    
+
     private static String generateSchemaFromBeacon23HexIdClass() {
         Map<Class<?>, List<Class<?>>> map = new HashMap<>();
         map.put(VesselId.class,

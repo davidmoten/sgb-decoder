@@ -61,7 +61,12 @@ public class DetectionTest {
     public void testToBits() {
         Detection d = Detection.fromBitString(BITS);
         checkDetection(d);
-        System.out.println(d);
+    }
+    
+    @Test
+    public void testDetectionToString() {
+        Detection d = Detection.fromBitString(BITS);
+        assertEquals(d.toJson(), d.toString());
     }
 
     @Test
@@ -348,8 +353,6 @@ public class DetectionTest {
         assertTrue(Json.prettyPrint(d.toJson()).contains("epirbMmsi"));
         Bits b2 = Bits.from("00").concatWith(b);
         String hex = b2.toHex().toUpperCase();
-        System.out.println(hex);
-        System.out.println(Json.prettyPrint(d.toJson()));
         assertEquals(51, hex.length());
     }
 
