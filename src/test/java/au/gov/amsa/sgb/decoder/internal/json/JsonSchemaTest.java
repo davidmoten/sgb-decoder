@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
 
+import au.gov.amsa.sgb.decoder.Beacon23HexId;
 import au.gov.amsa.sgb.decoder.Detection;
 import au.gov.amsa.sgb.decoder.TestingUtil;
 import au.gov.amsa.sgb.decoder.rotatingfield.Cancellation;
@@ -44,7 +46,28 @@ public class JsonSchemaTest {
     private static final String SCHEMA_ID = "https://amsa.gov.au/sgb";
 
     @Test
-    public void updateSchemaInSourceAndEnsureExampleJsonCompliesWithSchema()
+    public void updateBeacon23HexIdSchemaInSourceAndEnsureExampleJsonCompliesWithSchema()
+            throws IOException, ProcessingException {
+        String schema = generateSchemaFromBeacon23HexIdClass();
+        File file = new File("src/main/resources/beacon-23-hex-id-schema.json");
+        file.delete();
+        Files.write(file.toPath(), schema.getBytes(StandardCharsets.UTF_8));
+
+        // check detection.json is valid with schema
+        JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
+        ObjectMapper m = new ObjectMapper();
+        com.github.fge.jsonschema.main.JsonSchema jsonSchema = factory
+                .getJsonSchema(m.readTree(file));
+        String example = TestingUtil
+                .readResource("/compliance-kit/beacon-23-hex-id-sample.json");
+        JsonNode json = m.readTree(example);
+        ProcessingReport report = jsonSchema.validate(json);
+        System.out.println(report);
+        assertTrue(report.isSuccess());
+    }
+    
+    @Test
+    public void updateDetectionSchemaInSourceAndEnsureExampleJsonCompliesWithSchema()
             throws IOException, ProcessingException {
         String schema = generateSchemaFromDetectionClass();
         File file = new File("src/main/resources/detection-schema.json");
@@ -86,6 +109,10 @@ public class JsonSchemaTest {
                 Arrays.asList(Cancellation.class, EltDtInFlightEmergency.class, NationalUse.class,
                         ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
         return Json.prettyPrint(JsonSchema.generateSchema(Detection.class, map, SCHEMA_ID));
+    }
+    
+    private static String generateSchemaFromBeacon23HexIdClass() {
+        return Json.prettyPrint(JsonSchema.generateSchema(Beacon23HexId.class, Collections.emptyMap(), SCHEMA_ID));
     }
 
     @Test
