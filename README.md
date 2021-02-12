@@ -64,6 +64,8 @@ System.out.println(d.toJson());
 ```
 Output is [here](src/test/resources/compliance-kit/beacon-23-hex-id-sample.json).
 
+The JSON Schema for the above is [here](src/main/resources/beacon-23-hex-id-schema.json).
+
 ## BCH Error Correction
 A beacon transmits the 202 bit SGB detection message followed by a 48 bit BCH error correction code. You can calculate the code expected from the 202 bit SGB detection message like this:
 
