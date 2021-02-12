@@ -7,22 +7,20 @@ import static com.fasterxml.jackson.annotation.PropertyAccessor.FIELD;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
-import au.gov.amsa.sgb.decoder.rotatingfield.Range;
-
 public final class Json {
+    
+    private static ObjectMapper MAPPER = createMapper();
 
     private Json() {
         // prevent instantiation
     }
 
     public static String toJson(Object o) {
-        ObjectMapper m = createMapper();
         try {
-            return m.writeValueAsString(o);
+            return MAPPER.writeValueAsString(o);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

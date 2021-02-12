@@ -2,11 +2,8 @@ package au.gov.amsa.sgb.decoder.rotatingfield;
 
 import java.util.Optional;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.github.davidmoten.guavamini.Preconditions;
 
-@JsonInclude(Include.NON_NULL)
 public final class Range {
 
     private final Optional<RangeEnd> min;
