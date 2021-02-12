@@ -29,6 +29,8 @@ import au.gov.amsa.sgb.decoder.Detection;
  * <p>
  * <ul>
  * <li>arrays not supported (not required for Detection class)</li>
+ * <li>fields are considered {@code required} if not typed using
+ * {@link Optional}</li>
  * </ul>
  */
 public final class JsonSchema {
