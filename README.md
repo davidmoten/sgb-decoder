@@ -33,6 +33,9 @@ Add this dependency to your pom.xml:
 Note that this library is not stand-alone and has a number of runtime dependencies. Use Maven (or Gradle etc)! 
 
 ## Usage
+
+### Decoding an SGB detection
+
 The most likely form that consumers will encounter a beacon detection message is in the hex encoded Cospas-Sarsat Ground Segment Representation (202 bits hex-encoded to 51 chars using left padded zero bits) Here's an example:
 
 ```java
@@ -53,6 +56,13 @@ The JSON Schema for the above is [here](src/main/resources/detection-schema.json
 You can also decode the raw bits (as a bit string) using `Detection.fromBitString("1010000..")`.
 
 Note that a unit [test](src/test/java/au/gov/amsa/sgb/decoder/internal/json/JsonSchemaTest.java) ensures that the abovementioned sample json complies with the JSON Schema.
+
+### Decoding a Beacon 23 Hex Id
+```java
+Beacon23HexId b = Beacon23HexId.fromHex("9934039823d000000000000");
+System.out.println(d.toJson());
+```
+Output is [here](src/test/resources/compliance-kit/beacon-23-hex-id-sample.json).
 
 ## BCH Error Correction
 A beacon transmits the 202 bit SGB detection message followed by a 48 bit BCH error correction code. You can calculate the code expected from the 202 bit SGB detection message like this:
