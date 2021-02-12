@@ -52,12 +52,19 @@ public final class RangeTest {
         assertFalse(r.equals(Range.min(2).exclusive().max(7).build()));
         assertFalse(r.equals(Range.min(1).exclusive().max(6).exclusive()));
         assertTrue(r.equals(Range.min(1).exclusive().max(6).build()));
+        assertFalse(r.equals(Range.min(1).build()));
+        assertFalse(Range.min(1).build().equals(r));
     }
 
     @Test
     public void testRangeUnlimitedToJson() {
         Range r = Range.unlimited();
         assertJsonEquals("{}", Json.toJson(r));
+    }
+    
+    @Test
+    public void testRangeHashCode() {
+        Range.min(1).build().hashCode();
     }
 
     @Test
@@ -96,5 +103,5 @@ public final class RangeTest {
                     Json.toJson(r));
         }
     }
-
+    
 }
