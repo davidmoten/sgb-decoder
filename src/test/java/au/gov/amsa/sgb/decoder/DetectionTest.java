@@ -28,7 +28,6 @@ import au.gov.amsa.sgb.decoder.rotatingfield.GnssStatus;
 import au.gov.amsa.sgb.decoder.rotatingfield.NationalUse;
 import au.gov.amsa.sgb.decoder.rotatingfield.ObjectiveRequirements;
 import au.gov.amsa.sgb.decoder.rotatingfield.Range;
-import au.gov.amsa.sgb.decoder.rotatingfield.RangeEndType;
 import au.gov.amsa.sgb.decoder.rotatingfield.Rls;
 import au.gov.amsa.sgb.decoder.rotatingfield.RlsProvider;
 import au.gov.amsa.sgb.decoder.rotatingfield.RlsType;

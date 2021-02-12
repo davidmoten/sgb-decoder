@@ -55,6 +55,12 @@ public final class RangeTest {
     }
 
     @Test
+    public void testRangeUnlimitedToJson() {
+        Range r = Range.unlimited();
+        assertJsonEquals("{}", Json.toJson(r));
+    }
+
+    @Test
     public void testRangeToJson() {
         {
             Range r = Range.min(1).max(2).build();
@@ -71,22 +77,22 @@ public final class RangeTest {
         }
         {
             Range r = Range.max(2).build();
-            assertJsonEquals("{\"max\" : 2, \"maxInclusive\" : true}", Json.toJson(r));
+            assertJsonEquals("{\"max\" : {\"value\" : 2, \"exclusive\" : false }}", Json.toJson(r));
         }
         {
             Range r = Range.min(1).max(2).exclusive();
             assertJsonEquals(
-                    "{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : false}",
+                    "{\"min\":{\"value\":1,\"exclusive\":false},\"max\":{\"value\":2,\"exclusive\":true}}",
                     Json.toJson(r));
         }
         {
             Range r = Range.min(1).build();
-            assertJsonEquals("{\"min\" : 1, \"minInclusive\" : true}", Json.toJson(r));
+            assertJsonEquals("{\"min\":{\"value\":1,\"exclusive\":false}}", Json.toJson(r));
         }
         {
             Range r = Range.min(1).max(2).build();
             assertJsonEquals(
-                    "{\"min\" : 1, \"minInclusive\" : true, \"max\" : 2, \"maxInclusive\" : true}",
+                    "{\"min\":{\"value\":1,\"exclusive\":false},\"max\":{\"value\":2,\"exclusive\":false}}",
                     Json.toJson(r));
         }
     }

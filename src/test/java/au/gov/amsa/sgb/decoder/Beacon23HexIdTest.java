@@ -15,8 +15,8 @@ public class Beacon23HexIdTest {
         assertEquals(573, b.serialNumber());
         assertFalse(b.testProtocolFlag());
         assertFalse(b.vesselId().isPresent());
-        assertEquals(
-                "{\"countryCode\":201,\"tac\":230,\"serialNumber\":573,\"testProtocolFlag\":false,\"vesselId\":null}",
+        TestingUtil.assertJsonEquals(
+                "{\"countryCode\":201,\"tac\":230,\"serialNumber\":573,\"testProtocolFlag\":false}",
                 b.toJson());
     }
 

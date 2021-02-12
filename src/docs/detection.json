@@ -9,7 +9,6 @@
     "lat" : 48.79315185546875,
     "lon" : 69.00875854492188
   },
-  "vesselId" : null,
   "beaconType" : "ELT_NOT_DT",
   "rotatingField" : {
     "rotatingFieldType" : "OBJECTIVE_REQUIREMENTS",
@@ -17,23 +16,35 @@
     "timeSinceLastEncodedLocationMinutes" : 6,
     "altitudeEncodedLocationMetres" : 432,
     "dilutionPrecisionHdop" : {
-      "min" : 0,
-      "minInclusive" : true,
-      "max" : 1,
-      "maxInclusive" : true
+      "min" : {
+        "value" : 0,
+        "exclusive" : false
+      },
+      "max" : {
+        "value" : 1,
+        "exclusive" : false
+      }
     },
     "dilutionPrecisionVdop" : {
-      "min" : 1,
-      "minInclusive" : false,
-      "max" : 2,
-      "maxInclusive" : true
+      "min" : {
+        "value" : 1,
+        "exclusive" : true
+      },
+      "max" : {
+        "value" : 2,
+        "exclusive" : false
+      }
     },
     "activationMethod" : "MANUAL_ACTIVATION_BY_USER",
     "remainingBatteryCapacityPercent" : {
-      "min" : 75,
-      "minInclusive" : false,
-      "max" : 100,
-      "maxInclusive" : true
+      "min" : {
+        "value" : 75,
+        "exclusive" : true
+      },
+      "max" : {
+        "value" : 100,
+        "exclusive" : false
+      }
     },
     "gnssStatus" : "LOCATION_3D"
   },

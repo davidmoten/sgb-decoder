@@ -26,10 +26,10 @@ public final class TestingUtil {
 
     public static void assertResourceEqualsJson(String resourceName, String json) {
         String expected = readResource(resourceName);
-        assertJsonEquals(json, expected);
+        assertJsonEquals(expected, json);
     }
 
-    public static void assertJsonEquals(String json, String expected) throws ComparisonFailure {
+    public static void assertJsonEquals(String expected, String json) throws ComparisonFailure {
         if (!Json.equals(expected, json)) {
             System.out.println("not expected: " + json);
             throw new ComparisonFailure("unequal json", Json.prettyPrint(expected), Json.prettyPrint(json));

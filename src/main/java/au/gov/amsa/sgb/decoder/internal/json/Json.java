@@ -8,10 +8,11 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 public final class Json {
-    
+
     private static ObjectMapper MAPPER = createMapper();
 
     private Json() {
@@ -32,13 +33,13 @@ public final class Json {
         // Avoid having to annotate the Person class
         // Requires Java 8, pass -parameters to javac
         // and jackson-module-parameter-names as a dependency
-        m.registerModule(new ParameterNamesModule(PROPERTIES));
-        m.registerModule(new Jdk8Module());
-
-        // make private fields of Person visible to Jackson
-        m.setVisibility(FIELD, ANY);
-        m.setSerializationInclusion(Include.NON_NULL);
-        return m;
+        return m//
+                .registerModule(new ParameterNamesModule(PROPERTIES)) //
+                .registerModule(new Jdk8Module().configureAbsentsAsNulls(true)) //
+                .registerModule(new JavaTimeModule())
+                // make private fields of visible to Jackson
+                .setVisibility(FIELD, ANY) //
+                .setSerializationInclusion(Include.NON_NULL);
     }
 
     public static boolean equals(String json1, String json2) {
