@@ -112,7 +112,12 @@ public class JsonSchemaTest {
     }
     
     private static String generateSchemaFromBeacon23HexIdClass() {
-        return Json.prettyPrint(JsonSchema.generateSchema(Beacon23HexId.class, Collections.emptyMap(), SCHEMA_ID));
+        Map<Class<?>, List<Class<?>>> map = new HashMap<>();
+        map.put(VesselId.class,
+                Arrays.asList(AircraftOperatorAndSerialNumber.class,
+                        AircraftRegistrationMarking.class, Aviation24BitAddress.class, Mmsi.class,
+                        RadioCallSign.class));
+        return Json.prettyPrint(JsonSchema.generateSchema(Beacon23HexId.class, map, SCHEMA_ID));
     }
 
     @Test
