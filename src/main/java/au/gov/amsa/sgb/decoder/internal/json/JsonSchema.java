@@ -184,7 +184,7 @@ public final class JsonSchema {
         b.append(" : ");
         b.append("{");
         JsonType t = toJsonType(f.javaType);
-        if (t.typeName.equals("object") || (!t.enumeration.isEmpty())) {
+        if (t.typeName.equals("object") || !t.enumeration.isEmpty()) {
             add(b, "$ref", toRef(f.javaType));
         } else if (t.typeName.equals("time")) {
             add(b, "type", "string");
