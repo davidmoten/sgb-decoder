@@ -331,28 +331,46 @@ public class DetectionTest {
 
     @Test
     public void testReadMmsi() {
-        Bits bits = createMmsiWithEpirbMmsiBits();
+        Bits bits = createVesselIdMmsiWithEpirbMmsiBits();
         Mmsi a = Detection.readVesselIdMmsi(bits);
         assertEquals(123456789, (int) a.mmsi().get());
         assertEquals(974454287, (int) a.epirbMmsi().get());
     }
 
-    private static Bits createMmsiWithEpirbMmsiBits() {
+    private static Bits createVesselIdMmsiWithEpirbMmsiBits() {
         String mmsi = leftPadWithZeros(new BigInteger("123456789").toString(2), 30);
         String last4 = leftPadWithZeros(new BigInteger("4287").toString(2), 14);
         Bits bits = Bits.from(mmsi + last4);
         return bits;
     }
+    
+    //////////////////////////
+    // Hex creation
+    //////////////////////////
 
     @Test
     public void testCreateHexWithMmsiVesselId() {
-        Bits vid = Bits.from("001").concatWith(createMmsiWithEpirbMmsiBits());
+        Bits vid = Bits.from("001").concatWith(createVesselIdMmsiWithEpirbMmsiBits());
         Bits b = Bits.from(BITS).replace(90, vid);
         Detection d = Detection.from(b);
         assertEquals(VesselIdType.MMSI, d.vesselId().get().vesselIdType());
         assertTrue(Json.prettyPrint(d.toJson()).contains("epirbMmsi"));
         Bits b2 = Bits.from("00").concatWith(b);
         String hex = b2.toHex().toUpperCase();
+        assertEquals(51, hex.length());
+    }
+    
+    @Test
+    public void testCreateHexWithAircraftOperatorAndSerialNumber() {
+        Bits vid = Bits.from("101").concatWith(createVesselIdAircraftOperatorAndSerialNumber());
+        Bits b = Bits.from(BITS).replace(90, vid);
+        Detection d = Detection.from(b);
+        assertEquals(VesselIdType.AIRCRAFT_OPERATOR_AND_SERIAL_NUMBER, d.vesselId().get().vesselIdType());
+        assertTrue(Json.prettyPrint(d.toJson()).contains("serialNumber"));
+        Bits b2 = Bits.from("00").concatWith(b);
+        String hex = b2.toHex().toUpperCase();
+        System.out.println(hex);
+        System.out.println(Json.prettyPrint(d.toJson()));
         assertEquals(51, hex.length());
     }
 
@@ -378,7 +396,7 @@ public class DetectionTest {
 
     @Test
     public void testReadVesselIdMmsi() {
-        Bits b = Bits.from("001").concatWith(createMmsiWithEpirbMmsiBits());
+        Bits b = Bits.from("001").concatWith(createVesselIdMmsiWithEpirbMmsiBits());
         Mmsi a = (Mmsi) Detection.readVesselId(b).get();
         assertEquals(123456789, (int) a.mmsi().get());
     }
