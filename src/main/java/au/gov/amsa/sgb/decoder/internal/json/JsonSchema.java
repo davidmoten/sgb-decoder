@@ -104,6 +104,7 @@ public final class JsonSchema {
                     collectDefinitions(toClass(f.javaType), clsNameDefinitions,
                             classesAlreadyProcessed, subclasses);
                 } else if (type.typeName.equals("string") && !type.enumeration.isEmpty()) {
+                    // TODO use classesAlreadyProcessed
                     StringBuilder json = new StringBuilder();
                     json.append(quoted(definitionName(f.javaType)) + COLON + "{");
                     add(json, "type", "string");
@@ -112,7 +113,7 @@ public final class JsonSchema {
                     json.append("[" + type.enumeration.stream().map(JsonSchema::quoted)
                             .collect(Collectors.joining(COMMA)) + "]");
                     json.append("}");
-                    clsNameDefinitions.put(type.typeName, new Definition(json.toString()));
+                    clsNameDefinitions.put(f.javaType, new Definition(json.toString()));
                 }
             });
             StringBuilder json = new StringBuilder();
@@ -183,7 +184,7 @@ public final class JsonSchema {
         b.append(" : ");
         b.append("{");
         JsonType t = toJsonType(f.javaType);
-        if (t.typeName.equals("object")) {
+        if (t.typeName.equals("object") || (!t.enumeration.isEmpty())) {
             add(b, "$ref", toRef(f.javaType));
         } else if (t.typeName.equals("time")) {
             add(b, "type", "string");
