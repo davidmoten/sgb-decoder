@@ -17,7 +17,7 @@ public class Beacon23HexIdTest {
 
     @Test
     public void testDecode() throws IOException {
-        Beacon23HexId b = Beacon23HexId.fromHex("9934039823d000000000000");
+        Beacon23HexId b = Beacon23HexId.fromHex("9934039823D000000000000");
         assertEquals(201, b.countryCode());
         assertEquals(230, b.tac());
         assertEquals(573, b.serialNumber());
