@@ -42,8 +42,9 @@ Note that this library is not stand-alone and has a number of runtime dependenci
 The most likely form that consumers will encounter a beacon detection message is in the hex encoded Cospas-Sarsat Ground Segment Representation (202 bits hex-encoded to 51 chars using left padded zero bits) Here's an example:
 
 ```java
-import sgb.decoder.Detection;
+import au.gov.amsa.sgb.decoder.Detection;
 
+// Use the hex detection message example from specification B-1
 String hex = "0039823D32618658622811F0000000000003FFF004030680258";
 Detection d = Detection.fromHexGroundSegmentRepresentation(hex);
 ``` 
@@ -62,6 +63,8 @@ Note that a unit [test](src/test/java/au/gov/amsa/sgb/decoder/internal/json/Json
 
 ### Decoding a Beacon 23 Hex Id
 ```java
+import au.gov.amsa.sgb.decoder.Beacon23HexId;
+
 Beacon23HexId b = Beacon23HexId.fromHex("9934039823d000000000000");
 System.out.println(d.toJson());
 ```
