@@ -106,5 +106,5 @@ Note that the canonical form in JSON would not have to be exactly matched as a s
 * will consumers need to apply BCH error code correction (which will correct up to 6 bit errors in the first 202 bits of the 250 bit SGB detection message) or is it normally done upstream?
 * create a set of test messages for the Compliance Kit
 * discuss Compliance Kit with the specification authors
-* report error in example in specification to authors
+* ~report error in example in specification to authors~ (fixed in rev. 7 due post March 2021)
 * how to handle invalid message bit sequences (might only affect one field). How to represent this in canonical form?
