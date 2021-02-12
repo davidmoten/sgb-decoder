@@ -1,6 +1,5 @@
 package au.gov.amsa.sgb.decoder.internal.json;
 
-import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
