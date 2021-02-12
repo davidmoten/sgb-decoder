@@ -24,8 +24,15 @@ public final class RangeTest {
 
     @Test
     public void testRangeToString() {
-        Range r = Range.min(1).exclusive().max(6).build();
-        assertEquals("Range [min=1, minExclusive=true, max=6, maxExclusive=false]", r.toString());
+        {
+            Range r = Range.min(1).exclusive().max(6).build();
+            assertEquals("Range [min=1, minExclusive=true, max=6, maxExclusive=false]",
+                    r.toString());
+        }
+        {
+            Range r = Range.min(1).build();
+            assertEquals("Range [min=1, minExclusive=false]", r.toString());
+        }
     }
 
     @Test
@@ -61,7 +68,7 @@ public final class RangeTest {
         Range r = Range.unlimited();
         assertJsonEquals("{}", Json.toJson(r));
     }
-    
+
     @Test
     public void testRangeHashCode() {
         Range.min(1).build().hashCode();
@@ -103,5 +110,5 @@ public final class RangeTest {
                     Json.toJson(r));
         }
     }
-    
+
 }

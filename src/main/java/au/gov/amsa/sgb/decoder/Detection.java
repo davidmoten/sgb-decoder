@@ -201,7 +201,7 @@ public final class Detection {
     private static Optional<Range> toDop(int code) {
         if (code == 0) {
             return Optional.of(Range.min(0).max(1).build());
-        } else if (code >= 1 && code <= 7) {
+        } else if (code <= 7) {
             return Optional.of(Range.min(code).exclusive().max(code + 1).build());
         } else if (code == 8) {
             return Optional.of(Range.min(8).exclusive().max(10).build());
