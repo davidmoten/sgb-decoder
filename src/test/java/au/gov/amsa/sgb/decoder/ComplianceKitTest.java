@@ -1,5 +1,6 @@
 package au.gov.amsa.sgb.decoder;
 
+import static au.gov.amsa.sgb.decoder.TestingUtil.assertJsonEquals;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
@@ -32,10 +33,14 @@ public class ComplianceKitTest {
                     .collect(Collectors.joining("\n"));
             if (type.trim().equalsIgnoreCase("Detection")) {
                 Detection d = Detection.fromHexGroundSegmentRepresentation(hex);
-                TestingUtil.assertJsonEquals(json, d.toJson());
+                assertJsonEquals(json, d.toJson());
+            } else {
+                Beacon23HexId b = Beacon23HexId.fromHex(hex);
+                assertJsonEquals(json, b.toJson());
             }
         }
     }
+
     private static String removeQuotes(String s) {
         s = s.trim();
         return s.substring(1, s.length() - 1);
