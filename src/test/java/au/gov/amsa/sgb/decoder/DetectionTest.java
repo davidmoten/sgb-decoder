@@ -359,7 +359,7 @@ public class DetectionTest {
         String hex = b2.toHex().toUpperCase();
         assertEquals(51, hex.length());
     }
-    
+
     @Test
     public void testCreateHexWithAircraftOperatorAndSerialNumber() {
         Bits vid = Bits.from("101").concatWith(createVesselIdAircraftOperatorAndSerialNumber());
@@ -367,6 +367,17 @@ public class DetectionTest {
         Detection d = Detection.from(b);
         assertEquals(VesselIdType.AIRCRAFT_OPERATOR_AND_SERIAL_NUMBER, d.vesselId().get().vesselIdType());
         assertTrue(Json.prettyPrint(d.toJson()).contains("serialNumber"));
+        Bits b2 = Bits.from("00").concatWith(b);
+        String hex = b2.toHex().toUpperCase();
+        assertEquals(51, hex.length());
+    }
+
+    @Test
+    public void testCreateHexWithAircraftRegistrationMarking() {
+        Bits vid = Bits.from("011").concatWith(createVesselIdAircraftRegistrationMarkingVhAbc());
+        Bits b = Bits.from(BITS).replace(90, vid);
+        Detection d = Detection.from(b);
+        assertEquals(VesselIdType.AIRCRAFT_REGISTRATION_MARKING, d.vesselId().get().vesselIdType());
         Bits b2 = Bits.from("00").concatWith(b);
         String hex = b2.toHex().toUpperCase();
         System.out.println(hex);
