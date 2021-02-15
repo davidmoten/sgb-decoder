@@ -10,7 +10,11 @@ public final class Util {
     }
 
     public static String repeat(char ch, int n) {
-        return IntStream.range(0, n).mapToObj(x -> String.valueOf(ch)).collect(Collectors.joining());
+        return IntStream.range(0, n).mapToObj(x -> String.valueOf(ch))
+                .collect(Collectors.joining());
     }
 
+    public static String quoted(String s) {
+        return "\"" + s + "\"";
+    }
 }

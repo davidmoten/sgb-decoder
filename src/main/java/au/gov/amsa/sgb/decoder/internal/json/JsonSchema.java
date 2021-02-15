@@ -1,5 +1,7 @@
 package au.gov.amsa.sgb.decoder.internal.json;
 
+import static au.gov.amsa.sgb.decoder.internal.Util.quoted;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
@@ -19,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.davidmoten.guavamini.annotations.VisibleForTesting;
 
 import au.gov.amsa.sgb.decoder.Detection;
+import au.gov.amsa.sgb.decoder.internal.Util;
 
 /**
  * Simplified JSON schema generator only targeting {@link Detection} class and
@@ -116,7 +119,7 @@ public final class JsonSchema {
                     add(json, "type", "string");
                     json.append(", ");
                     json.append(quoted("enum") + COLON);
-                    json.append("[" + type.enumeration.stream().map(JsonSchema::quoted)
+                    json.append("[" + type.enumeration.stream().map(Util::quoted)
                             .collect(Collectors.joining(COMMA)) + "]");
                     json.append("}");
                     clsNameDefinitions.put(f.javaType, new Definition(json.toString()));
@@ -263,10 +266,6 @@ public final class JsonSchema {
 
     private static void add(StringBuilder b, String key, String value) {
         b.append(quoted(key) + COLON + quoted(value));
-    }
-
-    public static String quoted(String s) {
-        return DQ + s + DQ;
     }
 
     private static final Map<String, String> javaTypeToJsonType = createJavaTypeToJsonTypeMap();

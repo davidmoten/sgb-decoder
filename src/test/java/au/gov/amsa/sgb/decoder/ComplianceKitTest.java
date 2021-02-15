@@ -13,67 +13,50 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.ComparisonFailure;
 import org.junit.Test;
 
 import com.google.common.io.Files;
 
+import au.gov.amsa.sgb.decoder.internal.Bits;
+import au.gov.amsa.sgb.decoder.internal.Util;
 import au.gov.amsa.sgb.decoder.internal.json.Json;
 
 public class ComplianceKitTest {
 
     @Test
     public void runAllComplianceTests() throws IOException {
-        String base = "src/test/resources/compliance-kit";
-        Charset charset = StandardCharsets.UTF_8;
-        List<String> lines = Files.readLines(new File(base, "tests.csv"), charset);
-        for (String line : lines.subList(1, lines.size())) {
-            System.out.println(line);
-            String[] items = line.split(",");
-            assertEquals(4, items.length);
-            String type = removeQuotes(items[0]);
-            String hex = removeQuotes(items[2]);
-            String filename = removeQuotes(items[3]);
-            String json = Files.readLines(new File(base, filename), charset) //
-                    .stream() //
-                    .collect(Collectors.joining("\n"));
-            if (type.trim().equalsIgnoreCase("Detection")) {
-                Detection d = Detection.fromHexGroundSegmentRepresentation(hex);
-                assertJsonEquals(json, d.toJson());
-            } else {
-                Beacon23HexId b = Beacon23HexId.fromHex(hex);
-                assertJsonEquals(json, b.toJson());
-            }
-        }
+        runAllComplianceTestsInFolder("src/test/resources/compliance-kit");
     }
 
     @Test
-    public void testCreateComplianceKit() {
+    public void testCreateComplianceKit() throws ComparisonFailure, IOException {
         // saves the compliance kit to target for copying to src/test/resources when
         // happy
 
         File kit = new File("target/compliance-kit");
         kit.mkdirs();
-        Arrays.stream(kit.listFiles()).forEach(f -> f.delete());
+        Arrays.stream(kit.listFiles()).forEach(File::delete);
 
         List<KitTest> tests = new ArrayList<>();
         KitTest.type(TestType.DETECTION) //
                 .title("Specification example B-1 no Vessel Id") //
-                .hex("0039823D32618658622811F0000000000003FFF004030680258") //
+                .hex(DetectionTest.SAMPLE_HEX) //
                 .filename("detection-specification-example.json") //
                 .addTo(kit, tests);
         KitTest.type(TestType.DETECTION) //
                 .title("Example B-2 with Vessel Id of type MMSI") //
-                .hex("0039823D32618658622811F23ADE68AA17E3FFF004030680258") //
+                .hex(DetectionTest.createBitsWithVesselIdFieldMmsi()) //
                 .filename("detection-with-mmsi-vessel-id.json") //
                 .addTo(kit, tests);
         KitTest.type(TestType.DETECTION) //
                 .title("Example B-2 with Vessel Id Aircraft Operator and Serial Number") //
-                .hex("0039823D32618658622811FB7AC403C00003FFF004030680258") //
+                .hex(DetectionTest.createBitsWithVesselIdFieldAircraftOperatorAndSerialNumber()) //
                 .filename("detection-with-aircraft-operator-and-serial-number.json") //
                 .addTo(kit, tests);
         KitTest.type(TestType.DETECTION) //
                 .title("Example B-2 with Vessel Id Aircraft Registration Marking") //
-                .hex("0039823D32618658622811F6497CAC719DC3FFF004030680258") //
+                .hex(DetectionTest.createBitsWithVesselIdFieldAircraftRegistrationMarkingVhAbc()) //
                 .filename("detection-with-aircraft-registration-marking.json") //
                 .addTo(kit, tests);
         KitTest.type(TestType.BEACON_23_HEX_ID) //
@@ -83,11 +66,21 @@ public class ComplianceKitTest {
                 .addTo(kit, tests);
 
         writeCsv(kit, tests);
+        runAllComplianceTestsInFolder("target/compliance-kit");
     }
 
     private static void writeCsv(File kit, List<KitTest> tests) {
-        // TODO Auto-generated method stub
-
+        StringBuilder b = new StringBuilder();
+        b.append("TYPE,TITLE,HEX,FILE");
+        for (KitTest test : tests) {
+            b.append(test.toCsvLine());
+            b.append("\n");
+        }
+        try {
+            Files.write(b.toString().getBytes(StandardCharsets.UTF_8), new File(kit, "tests.csv"));
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 
     private static void write(File kit, KitTest t) {
@@ -106,6 +99,42 @@ public class ComplianceKitTest {
         }
     }
 
+    private static void runAllComplianceTestsInFolder(String base)
+            throws IOException, ComparisonFailure {
+        Charset charset = StandardCharsets.UTF_8;
+        File file = new File(base, "tests.csv");
+        List<String> lines = Files.readLines(file, charset);
+        lines.stream() //
+                .skip(1) //
+                .map(line -> line.trim()) //
+                .filter(line -> !line.isEmpty()) //
+                .forEach(line -> {
+                    System.out.println(line);
+                    String[] items = line.split(",");
+                    assertEquals(4, items.length);
+                    String type = removeQuotes(items[0]);
+                    String hex = removeQuotes(items[2]);
+                    String filename = removeQuotes(items[3]);
+                    String json;
+                    try {
+                        json = Files.readLines(new File(base, filename), charset) //
+                                .stream() //
+                                .collect(Collectors.joining("\n"));
+                    } catch (IOException e) {
+                        throw new UncheckedIOException(e);
+                    }
+                    if (type.trim().equalsIgnoreCase("Detection")) {
+                        Detection d = Detection.fromHexGroundSegmentRepresentation(hex);
+                        assertJsonEquals(json, d.toJson());
+                    } else {
+                        System.out.println("line=" + line);
+                        System.out.println(hex);
+                        Beacon23HexId b = Beacon23HexId.fromHex(hex);
+                        assertJsonEquals(json, b.toJson());
+                    }
+                });
+    }
+
     private enum TestType {
         DETECTION("Detection"), BEACON_23_HEX_ID("Beacon 23 Hex Id");
 
@@ -120,7 +149,8 @@ public class ComplianceKitTest {
         }
     }
 
-    private static final class KitTest {
+    static final class KitTest {
+
         final TestType type;
         final String title;
         final String hex;
@@ -161,15 +191,30 @@ public class ComplianceKitTest {
                 return this;
             }
 
+            public Builder hex(Bits bits) {
+                this.hex = Bits.from("00").concatWith(bits).toHex();
+                return this;
+            }
+
             public KitTest filename(String filename) {
                 return new KitTest(type, title, hex, filename);
             }
         }
+
+        private static String escape(String s) {
+            return s.replaceAll("\"", "\"\"");
+        }
+
+        public String toCsvLine() {
+            return Util.quoted(escape(type.toString())) + "," //
+                    + Util.quoted(escape(title)) + "," //
+                    + Util.quoted(hex) + "," //
+                    + Util.quoted(filename);
+        }
     }
 
     private static String removeQuotes(String s) {
-        s = s.trim();
-        return s.substring(1, s.length() - 1);
+        return s.trim().substring(1, s.length() - 1);
     }
 
 }

@@ -42,7 +42,7 @@ import au.gov.amsa.sgb.decoder.vesselid.VesselIdType;
 
 public class DetectionTest {
 
-    private static final String SAMPLE_HEX = "0039823D32618658622811F0000000000003FFF004030680258";
+    public static final String SAMPLE_HEX = "0039823D32618658622811F0000000000003FFF004030680258";
     public static final String BITS = "00000000111001100000100011110100" //
             + "11001001100001100001100101100001" //
             + "10001000101000000100011111000000" //
@@ -62,7 +62,7 @@ public class DetectionTest {
         Detection d = Detection.fromBitString(BITS);
         checkDetection(d);
     }
-    
+
     @Test
     public void testDetectionToString() {
         Detection d = Detection.fromBitString(BITS);
@@ -94,10 +94,8 @@ public class DetectionTest {
         assertEquals(1, r.elapsedTimeSinceActivationHours());
         assertEquals(6, r.timeSinceLastEncodedLocationMinutes());
         assertEquals(432, r.altitudeEncodedLocationMetres());
-        assertEquals(Range.min(0).max(1).build(),
-                r.dilutionPrecisionHdop().get());
-        assertEquals(Range.min(1).exclusive().max(2).build(),
-                r.dilutionPrecisionDop().get());
+        assertEquals(Range.min(0).max(1).build(), r.dilutionPrecisionHdop().get());
+        assertEquals(Range.min(1).exclusive().max(2).build(), r.dilutionPrecisionDop().get());
         assertEquals(ActivationMethod.MANUAL_ACTIVATION_BY_USER, r.activationMethod());
         assertEquals(Range.min(75).exclusive().max(100).build(),
                 r.remainingBatteryCapacityPercent().get());
@@ -148,7 +146,7 @@ public class DetectionTest {
         assertEquals("AC82EC", a.addressHex());
     }
 
-    private static Bits createVesselIdAviation24BitAddress() {
+    static Bits createVesselIdAviation24BitAddress() {
         String address = "101011001000001011101100";
         String designator = "11000100110111000000";
         return Bits.from(address + designator);
@@ -162,13 +160,13 @@ public class DetectionTest {
         assertEquals("VH-ABC", a.value().get());
     }
 
-    private Bits createVesselIdAircraftRegistrationMarkingVhAbc() {
+    static Bits createVesselIdAircraftRegistrationMarkingVhAbc() {
         return Bits.from("00100100101111100101011000111000110011101110");
     }
 
     @Test
     public void testReadVesselIdAicraftRegistrationMarkingNotPresent() {
-        // two zeros then a space then VH-ABC using Baudot
+        // two zeros then spaces using Baudot
         Bits b = Bits.from("00100100100100100100100100100100100100100100");
         AircraftRegistrationMarking a = Detection.readVesselIdAicraftRegistrationMarking(b);
         assertFalse(a.value().isPresent());
@@ -244,8 +242,7 @@ public class DetectionTest {
 
     @Test
     public void testDop() {
-        assertEquals(Range.min(0).max(1).build(),
-                Detection.readDop(Bits.from("0000")).get());
+        assertEquals(Range.min(0).max(1).build(), Detection.readDop(Bits.from("0000")).get());
         assertEquals(Range.min(1).exclusive().max(2).build(),
                 Detection.readDop(Bits.from("0001")).get());
         assertEquals(Range.min(2).exclusive().max(3).build(),
@@ -272,8 +269,7 @@ public class DetectionTest {
                 Detection.readDop(Bits.from("1100")).get());
         assertEquals(Range.min(30).exclusive().max(50).build(),
                 Detection.readDop(Bits.from("1101")).get());
-        assertEquals(Range.min(50).exclusive().build(),
-                Detection.readDop(Bits.from("1110")).get());
+        assertEquals(Range.min(50).exclusive().build(), Detection.readDop(Bits.from("1110")).get());
         assertFalse(Detection.readDop(Bits.from("1111")).isPresent());
     }
 
@@ -325,7 +321,7 @@ public class DetectionTest {
         assertFalse(Detection.readVesselId(Bits.from("111").concatWith(ones(44))).isPresent());
     }
 
-    private Bits createVesselIdAircraftOperatorAndSerialNumber() {
+    private static Bits createVesselIdAircraftOperatorAndSerialNumber() {
         return Bits.from("101111010110001000000001111" + zeros(17));
     }
 
@@ -343,15 +339,14 @@ public class DetectionTest {
         Bits bits = Bits.from(mmsi + last4);
         return bits;
     }
-    
+
     //////////////////////////
     // Hex creation
     //////////////////////////
 
     @Test
     public void testCreateHexWithMmsiVesselId() {
-        Bits vid = Bits.from("001").concatWith(createVesselIdMmsiWithEpirbMmsiBits());
-        Bits b = Bits.from(BITS).replace(90, vid);
+        Bits b = createBitsWithVesselIdFieldMmsi();
         Detection d = Detection.from(b);
         assertEquals(VesselIdType.MMSI, d.vesselId().get().vesselIdType());
         assertTrue(Json.prettyPrint(d.toJson()).contains("epirbMmsi"));
@@ -360,22 +355,31 @@ public class DetectionTest {
         assertEquals(51, hex.length());
     }
 
+    static Bits createBitsWithVesselIdFieldMmsi() {
+        Bits vid = Bits.from("001").concatWith(createVesselIdMmsiWithEpirbMmsiBits());
+        return  Bits.from(BITS).replace(90, vid);
+    }
+
     @Test
     public void testCreateHexWithAircraftOperatorAndSerialNumber() {
-        Bits vid = Bits.from("101").concatWith(createVesselIdAircraftOperatorAndSerialNumber());
-        Bits b = Bits.from(BITS).replace(90, vid);
+        Bits b = createBitsWithVesselIdFieldAircraftOperatorAndSerialNumber();
         Detection d = Detection.from(b);
-        assertEquals(VesselIdType.AIRCRAFT_OPERATOR_AND_SERIAL_NUMBER, d.vesselId().get().vesselIdType());
+        assertEquals(VesselIdType.AIRCRAFT_OPERATOR_AND_SERIAL_NUMBER,
+                d.vesselId().get().vesselIdType());
         assertTrue(Json.prettyPrint(d.toJson()).contains("serialNumber"));
         Bits b2 = Bits.from("00").concatWith(b);
         String hex = b2.toHex().toUpperCase();
         assertEquals(51, hex.length());
     }
 
+    static Bits createBitsWithVesselIdFieldAircraftOperatorAndSerialNumber() {
+        Bits vid = Bits.from("101").concatWith(createVesselIdAircraftOperatorAndSerialNumber());
+        return Bits.from(BITS).replace(90, vid);
+    }
+
     @Test
     public void testCreateHexWithAircraftRegistrationMarking() {
-        Bits vid = Bits.from("011").concatWith(createVesselIdAircraftRegistrationMarkingVhAbc());
-        Bits b = Bits.from(BITS).replace(90, vid);
+        Bits b = createBitsWithVesselIdFieldAircraftRegistrationMarkingVhAbc();
         Detection d = Detection.from(b);
         assertEquals(VesselIdType.AIRCRAFT_REGISTRATION_MARKING, d.vesselId().get().vesselIdType());
         Bits b2 = Bits.from("00").concatWith(b);
@@ -384,6 +388,13 @@ public class DetectionTest {
         System.out.println(Json.prettyPrint(d.toJson()));
         assertEquals(51, hex.length());
     }
+
+    static Bits createBitsWithVesselIdFieldAircraftRegistrationMarkingVhAbc() {
+        Bits vid = Bits.from("011").concatWith(createVesselIdAircraftRegistrationMarkingVhAbc());
+        return Bits.from(BITS).replace(90, vid);
+    }
+
+    //////////////////////////////////////////////////////////////////////
 
     @Test
     public void testReadMmsiPrimaryNotPresent() {
