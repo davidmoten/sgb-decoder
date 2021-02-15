@@ -87,20 +87,24 @@ Quick and dirty performance testing (without JMH) indicates that the the library
 ## Semantic Versioning
 This project follows [Semantic Versioning 2.0](https://semver.org/).
 
-## Compliance Kit
+## SGB Compliance Kit (SGBCK) 
 With the arrival of second generation Beacons on the market sometime from July 2021, many of the National Rescue Coordination Centres (RCCs) throughout the world will want to be able to decode SGB hex detection messages into a human readable form. This might be simply a web page that performs the decode but could equally be a programming library that developers might use to customize their use of the hex detection message.
 
-Producing a programming library that decodes an SGB detection message is a non-trivial task that has one important risk: **correctness**. As a developer how do I confirm that my code correctly decodes all variations of SGB detection messages? Writing unit tests still has the risk that my *interpretation* of the specification might not match the intent of the specification.
+Producing a programming library that decodes an SGB detection message is a non-trivial task that has one important risk: **correctness**. As a developer how do I automatically confirm that my code correctly decodes all variations of SGB detection messages? Writing unit tests still has the risk that my *interpretation* of the specification might not match the *intent* of the specification. To reduce risk (beacon alerts is a life-and-death matter after all) a developer should seek a high level of code coverage via appropriately granular unit tests of the decoder on its own but to have some certainty about what the software will do come the first real detection it's desirable to have some officially validated decode tests too.
 
-A suggestion for the creators of the SGB encoding specification is that they help to build a Compliance Kit which is a list of beacon detection messages in hex form together with the corresponding decoded human readable version of the detection message in some *canonical form*. If this were the case then no matter what language a decoder was written in full test coverage of that decoder would be guaranteed by consuming the (comprehensive) Compliance Kit test data. 
+A suggestion is that the beacons community (particularly devs) provide and maintain an SGB Compliance Kit (SGBCK) which is a list of beacon detection messages in hex form together with the corresponding decoded human and machine readable version of the detection message in some *canonical form*. If this were the case then no matter what language a decoder was written in a decent level of test coverage of that decoder would provided by consuming the (comprehensive) Compliance Kit test data. 
 
-An example of a test kit is [here](src/test/resources/compliance-kit) and comprises:
-* [`tests.csv`](src/test/resources/compliance-kit/tests.csv) file with columns *TITLE*, *HEX*, *JSON*
+Dave Moten proposes that the SGBCK should look like the contents of this [folder](src/test/resources/compliance-kit). The folder contains:
+* [`tests.csv`](src/test/resources/compliance-kit/tests.csv) file with columns *TYPE*, *TITLE*, *HEX*, *JSON*
 * JSON files referenced by `tests.csv`
 
 A consumer of the Compliance Kit would decode the given hex and generate the JSON canonical form string and compare it to the given JSON file (using JSON equivalence rathen exact string equality).
 
+Note that there is also obvious benefit here for an encoder too with no change to the SGCK as described.
+
 Clearly one test in the kit does not cut it. There are many variations on field values, some are derived from special binary codes, some field values are optional.
+
+### Why use JSON as the *canonical format*
 
 Given that a service implementation of the decoder would probably serialize the decoded structure into JSON or XML, it makes sense to use one of those text formats to hold the canonical decoded form so that the implementer can reuse the canonical form work.
 
@@ -113,4 +117,4 @@ Note that the canonical form in JSON would not have to be exactly matched as a s
 * create a set of test messages for the Compliance Kit
 * discuss Compliance Kit with the specification authors
 * ~report error in example in specification to authors~ (fixed in rev. 7 due post March 2021)
-* how to handle invalid message bit sequences (might only affect one field). How to represent this in canonical form?
+* how to handle invalid message bit sequences (might only affect one field). How to represent this in canonical form (or just ignore)?
