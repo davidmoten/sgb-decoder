@@ -55,8 +55,7 @@ public class JsonSchemaTest {
         // check detection.json is valid with schema
         JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
         ObjectMapper m = new ObjectMapper();
-        com.github.fge.jsonschema.main.JsonSchema jsonSchema = factory
-                .getJsonSchema(m.readTree(file));
+        com.github.fge.jsonschema.main.JsonSchema jsonSchema = factory.getJsonSchema(m.readTree(file));
         String example = TestingUtil.readResource("/compliance-kit/beacon-23-hex-id-sample.json");
         JsonNode json = m.readTree(example);
         ProcessingReport report = jsonSchema.validate(json);
@@ -75,10 +74,8 @@ public class JsonSchemaTest {
         // check detection.json is valid with schema
         JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
         ObjectMapper m = new ObjectMapper();
-        com.github.fge.jsonschema.main.JsonSchema jsonSchema = factory
-                .getJsonSchema(m.readTree(file));
-        String example = TestingUtil
-                .readResource("/compliance-kit/detection-specification-example.json");
+        com.github.fge.jsonschema.main.JsonSchema jsonSchema = factory.getJsonSchema(m.readTree(file));
+        String example = TestingUtil.readResource("/compliance-kit/detection-specification-example.json");
         JsonNode json = m.readTree(example);
         ProcessingReport report = jsonSchema.validate(json);
         // System.out.println(report);
@@ -90,8 +87,7 @@ public class JsonSchemaTest {
         File file = new File("src/main/resources/detection-schema.json");
         JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
         ObjectMapper m = new ObjectMapper();
-        com.github.fge.jsonschema.main.JsonSchema jsonSchema = factory
-                .getJsonSchema(m.readTree(file));
+        com.github.fge.jsonschema.main.JsonSchema jsonSchema = factory.getJsonSchema(m.readTree(file));
         JsonNode json = m.readTree("{\"thing\" : 123}");
         ProcessingReport report = jsonSchema.validate(json);
         assertFalse(report.isSuccess());
@@ -99,22 +95,17 @@ public class JsonSchemaTest {
 
     private static String generateSchemaFromDetectionClass() {
         Map<Class<?>, List<Class<?>>> map = new HashMap<>();
-        map.put(VesselId.class,
-                Arrays.asList(AircraftOperatorAndSerialNumber.class,
-                        AircraftRegistrationMarking.class, Aviation24BitAddress.class, Mmsi.class,
-                        RadioCallSign.class));
-        map.put(RotatingField.class,
-                Arrays.asList(Cancellation.class, EltDtInFlightEmergency.class, NationalUse.class,
-                        ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
+        map.put(VesselId.class, Arrays.asList(AircraftOperatorAndSerialNumber.class, AircraftRegistrationMarking.class,
+                Aviation24BitAddress.class, Mmsi.class, RadioCallSign.class));
+        map.put(RotatingField.class, Arrays.asList(Cancellation.class, EltDtInFlightEmergency.class, NationalUse.class,
+                ObjectiveRequirements.class, Rls.class, UnknownRotatingField.class));
         return Json.prettyPrint(JsonSchema.generateSchema(Detection.class, map, SCHEMA_ID));
     }
 
     private static String generateSchemaFromBeacon23HexIdClass() {
         Map<Class<?>, List<Class<?>>> map = new HashMap<>();
-        map.put(VesselId.class,
-                Arrays.asList(AircraftOperatorAndSerialNumber.class,
-                        AircraftRegistrationMarking.class, Aviation24BitAddress.class, Mmsi.class,
-                        RadioCallSign.class));
+        map.put(VesselId.class, Arrays.asList(AircraftOperatorAndSerialNumber.class, AircraftRegistrationMarking.class,
+                Aviation24BitAddress.class, Mmsi.class, RadioCallSign.class));
         return Json.prettyPrint(JsonSchema.generateSchema(Beacon23HexId.class, map, SCHEMA_ID));
     }
 
@@ -145,8 +136,8 @@ public class JsonSchemaTest {
 
     @Test
     public void testSchemaFromPrimitive() {
-        assertTrue(JsonSchema.generateSchema(Integer.class, new HashMap<>(), SCHEMA_ID)
-                .contains("\"definitions\" : {}"));
+        assertTrue(
+                JsonSchema.generateSchema(Integer.class, new HashMap<>(), SCHEMA_ID).contains("\"definitions\" : {}"));
     }
 
     private static final class Recursive {

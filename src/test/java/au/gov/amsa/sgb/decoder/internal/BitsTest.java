@@ -194,7 +194,7 @@ public final class BitsTest {
     public void testToString() {
         assertEquals("101", Bits.from("101").toString());
     }
-    
+
     @Test
     public void testToHexWithLeadingZeros() {
         assertEquals("00", Bits.from("00000000").toHex());

@@ -38,8 +38,7 @@ public final class Hex {
     }
 
     private static Map<String, String> createInverse() {
-        return map.entrySet().stream()
-                .collect(Collectors.toMap(entry -> entry.getValue(), entry -> entry.getKey()));
+        return map.entrySet().stream().collect(Collectors.toMap(entry -> entry.getValue(), entry -> entry.getKey()));
     }
 
     public static String hexToBinary(String s) {

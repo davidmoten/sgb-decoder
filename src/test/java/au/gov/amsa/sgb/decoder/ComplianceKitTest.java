@@ -31,7 +31,7 @@ public class ComplianceKitTest {
 
     @Test
     public void testCreateComplianceKitInTargetFolder() throws ComparisonFailure, IOException {
-        
+
         // When new hex tests are obtained (confirmed ones from community/spec authors)
         // then they are added below. Once happy with the tests they are copied from
         // target/compliance-kit to src/test/resources/compliance-kit as a permanent
@@ -102,8 +102,7 @@ public class ComplianceKitTest {
         }
     }
 
-    private static void runAllComplianceTestsInFolder(File base)
-            throws IOException, ComparisonFailure {
+    private static void runAllComplianceTestsInFolder(File base) throws IOException, ComparisonFailure {
         Charset charset = StandardCharsets.UTF_8;
         File file = new File(base, "tests.csv");
         List<String> lines = Files.readLines(file, charset);

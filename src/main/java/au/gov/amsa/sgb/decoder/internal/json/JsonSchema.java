@@ -59,8 +59,7 @@ public final class JsonSchema {
      * @param schemaId   value to be used in the {@code $id} field.
      * @return JSON Schema
      */
-    public static String generateSchema(Class<?> cls, Map<Class<?>, List<Class<?>>> subclasses,
-            String schemaId) {
+    public static String generateSchema(Class<?> cls, Map<Class<?>, List<Class<?>>> subclasses, String schemaId) {
         // use all private fields to generate schema
         Map<String, Definition> clsNameDefinitions = new HashMap<>();
         collectDefinitions(cls, clsNameDefinitions, subclasses);
@@ -71,8 +70,7 @@ public final class JsonSchema {
         return "{" + s.toString() + "}";
     }
 
-    private static void addDefinitions(Map<String, Definition> clsNameDefinitions,
-            StringBuilder s) {
+    private static void addDefinitions(Map<String, Definition> clsNameDefinitions, StringBuilder s) {
         s.append(quoted("definitions") + COLON + "{");
         s.append(clsNameDefinitions.values() //
                 .stream() //
@@ -110,8 +108,7 @@ public final class JsonSchema {
             fields(cls).forEach(f -> {
                 JsonType type = toJsonType(f.javaType);
                 if (type.typeName.equals("object")) {
-                    collectDefinitions(toClass(f.javaType), clsNameDefinitions,
-                            classesAlreadyProcessed, subclasses);
+                    collectDefinitions(toClass(f.javaType), clsNameDefinitions, classesAlreadyProcessed, subclasses);
                 } else if (type.typeName.equals("string") && !type.enumeration.isEmpty()) {
                     // TODO use classesAlreadyProcessed
                     StringBuilder json = new StringBuilder();
@@ -119,8 +116,8 @@ public final class JsonSchema {
                     add(json, "type", "string");
                     json.append(", ");
                     json.append(quoted("enum") + COLON);
-                    json.append("[" + type.enumeration.stream().map(Util::quoted)
-                            .collect(Collectors.joining(COMMA)) + "]");
+                    json.append(
+                            "[" + type.enumeration.stream().map(Util::quoted).collect(Collectors.joining(COMMA)) + "]");
                     json.append("}");
                     clsNameDefinitions.put(f.javaType, new Definition(json.toString()));
                 }

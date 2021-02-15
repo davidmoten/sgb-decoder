@@ -9,11 +9,11 @@ public final class RangeEnd {
         this.value = value;
         this.exclusive = exclusive;
     }
-    
+
     public int value() {
         return value;
     }
-    
+
     public boolean isExclusive() {
         return exclusive;
     }
@@ -42,6 +42,5 @@ public final class RangeEnd {
             return false;
         return true;
     }
-    
-    
+
 }

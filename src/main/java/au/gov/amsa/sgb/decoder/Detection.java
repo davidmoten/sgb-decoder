@@ -44,8 +44,7 @@ public final class Detection {
     private static final Bits NO_ENCODED_LOCATION_CAPABILITY = Bits
             .from("11111111000001111100000111111111111110000011111");
 
-    private static final Bits BCH_DIVISOR = Bits
-            .from("1110001111110101110000101110111110011110010010111");
+    private static final Bits BCH_DIVISOR = Bits.from("1110001111110101110000101110111110011110010010111");
 
     @JsonIgnore
     private final Bits bits;
@@ -64,8 +63,7 @@ public final class Detection {
     private final String beacon15HexId;
 
     private Detection(Bits bits) {
-        Preconditions.checkArgument(bits.length() == 202,
-                "length should be 202 but was " + bits.length());
+        Preconditions.checkArgument(bits.length() == 202, "length should be 202 but was " + bits.length());
         this.bits = bits;
         tac = bits.readUnsignedInt(16);
         serialNo = bits.readUnsignedInt(14);
@@ -144,9 +142,8 @@ public final class Detection {
         Optional<Range> remainingBatteryCapacityPercent = readBatteryPercent(bits);
         GnssStatus gnssStatus = readGnssStatus(bits);
         bits.skip(2);
-        return new ObjectiveRequirements(elapsedTimeSinceActivationHours,
-                timeSinceLastEncodedLocationMinutes, altitudeEncodedLocationMetres,
-                dilutionPrecisionHdop, dilutionPrecisionDop, activationMethod,
+        return new ObjectiveRequirements(elapsedTimeSinceActivationHours, timeSinceLastEncodedLocationMinutes,
+                altitudeEncodedLocationMetres, dilutionPrecisionHdop, dilutionPrecisionDop, activationMethod,
                 remainingBatteryCapacityPercent, gnssStatus);
     }
 
@@ -243,9 +240,8 @@ public final class Detection {
         GnssStatus gnssStatus = readGnssStatus(bits);
         Optional<Range> remainingBatteryCapacityPercent = readBatteryPercentInFlightEmergency(bits);
         bits.skip(9);
-        return new EltDtInFlightEmergency(timeOfLastEncodedLocationSeconds,
-                altitudeEncodedLocationMetres, triggeringEvent, gnssStatus,
-                remainingBatteryCapacityPercent);
+        return new EltDtInFlightEmergency(timeOfLastEncodedLocationSeconds, altitudeEncodedLocationMetres,
+                triggeringEvent, gnssStatus, remainingBatteryCapacityPercent);
     }
 
     private static int readAltitudeEncodedLocationMetres(Bits bits) {
@@ -300,8 +296,8 @@ public final class Detection {
         RlsProvider rlsProvider = readRlsProvider(bits);
         Optional<BeaconFeedback> beaconFeedback = readBeaconFeadback(bits, rlsProvider);
         bits.skip(11);
-        return new Rls(canProcessAutomaticallyGeneratedAckRlmType1, canProcessManuallyGeneratedRlm,
-                rlsProvider, beaconFeedback);
+        return new Rls(canProcessAutomaticallyGeneratedAckRlmType1, canProcessManuallyGeneratedRlm, rlsProvider,
+                beaconFeedback);
     }
 
     @VisibleForTesting
@@ -338,8 +334,8 @@ public final class Detection {
             } else {// OTHER
                 shortRlmParametersBitString = Optional.of(bits.readBitString(15));
             }
-            return Optional.of(new BeaconFeedback(rlmType1FeedbackReceived,
-                    rlmType2FeedbackReceived, rlsType, shortRlmParametersBitString));
+            return Optional.of(new BeaconFeedback(rlmType1FeedbackReceived, rlmType2FeedbackReceived, rlsType,
+                    shortRlmParametersBitString));
         } else {
             return Optional.empty();
         }

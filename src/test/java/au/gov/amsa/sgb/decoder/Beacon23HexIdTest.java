@@ -24,8 +24,7 @@ public class Beacon23HexIdTest {
         assertFalse(b.testProtocolFlag());
         assertFalse(b.vesselId().isPresent());
         TestingUtil.assertJsonEquals(
-                "{\"countryCode\":201,\"tac\":230,\"serialNumber\":573,\"testProtocolFlag\":false}",
-                b.toJson());
+                "{\"countryCode\":201,\"tac\":230,\"serialNumber\":573,\"testProtocolFlag\":false}", b.toJson());
         File f = new File("src/test/resources/compliance-kit/beacon-23-hex-id-sample.json");
         f.delete();
         Files.write(Json.prettyPrint(b.toJson()).getBytes(StandardCharsets.UTF_8), f);

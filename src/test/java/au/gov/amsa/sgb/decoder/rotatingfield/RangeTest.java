@@ -26,8 +26,7 @@ public final class RangeTest {
     public void testRangeToString() {
         {
             Range r = Range.min(1).exclusive().max(6).build();
-            assertEquals("Range [min=1, minExclusive=true, max=6, maxExclusive=false]",
-                    r.toString());
+            assertEquals("Range [min=1, minExclusive=true, max=6, maxExclusive=false]", r.toString());
         }
         {
             Range r = Range.min(1).build();
@@ -78,15 +77,13 @@ public final class RangeTest {
     public void testRangeToJson() {
         {
             Range r = Range.min(1).max(2).build();
-            assertJsonEquals(
-                    "{\"min\":{\"value\":1,\"exclusive\":false},\"max\":{\"value\":2,\"exclusive\":false}}",
+            assertJsonEquals("{\"min\":{\"value\":1,\"exclusive\":false},\"max\":{\"value\":2,\"exclusive\":false}}",
                     Json.toJson(r));
         }
         {
             Range r = Range.min(1).exclusive().max(2).build();
             assertTrue(r.min().get().isExclusive());
-            assertJsonEquals(
-                    "{\"min\":{\"value\":1,\"exclusive\":true},\"max\":{\"value\":2,\"exclusive\":false}}",
+            assertJsonEquals("{\"min\":{\"value\":1,\"exclusive\":true},\"max\":{\"value\":2,\"exclusive\":false}}",
                     Json.toJson(r));
         }
         {
@@ -95,8 +92,7 @@ public final class RangeTest {
         }
         {
             Range r = Range.min(1).max(2).exclusive();
-            assertJsonEquals(
-                    "{\"min\":{\"value\":1,\"exclusive\":false},\"max\":{\"value\":2,\"exclusive\":true}}",
+            assertJsonEquals("{\"min\":{\"value\":1,\"exclusive\":false},\"max\":{\"value\":2,\"exclusive\":true}}",
                     Json.toJson(r));
         }
         {
@@ -105,8 +101,7 @@ public final class RangeTest {
         }
         {
             Range r = Range.min(1).max(2).build();
-            assertJsonEquals(
-                    "{\"min\":{\"value\":1,\"exclusive\":false},\"max\":{\"value\":2,\"exclusive\":false}}",
+            assertJsonEquals("{\"min\":{\"value\":1,\"exclusive\":false},\"max\":{\"value\":2,\"exclusive\":false}}",
                     Json.toJson(r));
         }
     }

@@ -44,5 +44,5 @@ public class JsonTest {
     public enum Stuff {
         BOO, DUH;
     }
-    
+
 }
