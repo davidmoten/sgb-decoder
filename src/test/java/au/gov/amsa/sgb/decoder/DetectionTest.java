@@ -7,9 +7,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -20,7 +18,6 @@ import java.time.ZoneOffset;
 import org.junit.Test;
 
 import au.gov.amsa.sgb.decoder.internal.Bits;
-import au.gov.amsa.sgb.decoder.internal.JsonToHtml;
 import au.gov.amsa.sgb.decoder.internal.json.Json;
 import au.gov.amsa.sgb.decoder.rotatingfield.ActivationMethod;
 import au.gov.amsa.sgb.decoder.rotatingfield.BeaconFeedback;
@@ -64,16 +61,6 @@ public class DetectionTest {
     public void testToBits() {
         Detection d = Detection.fromBitString(BITS);
         checkDetection(d);
-    }
-
-    @Test
-    public void testToHtml() throws FileNotFoundException {
-        Detection d = Detection.fromBitString(BITS);
-        checkDetection(d);
-        String html = "<html>" + JsonToHtml.toHtml(d.toJson()) + "</html>";
-        try (PrintStream out = new PrintStream("target/detection.html")) {
-            out.println(html);
-        }
     }
 
     @Test
