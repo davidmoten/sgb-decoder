@@ -26,13 +26,16 @@ public class ComplianceKitTest {
 
     @Test
     public void runAllComplianceTests() throws IOException {
-        runAllComplianceTestsInFolder("src/test/resources/compliance-kit");
+        runAllComplianceTestsInFolder(new File("src/test/resources/compliance-kit"));
     }
 
     @Test
-    public void testCreateComplianceKit() throws ComparisonFailure, IOException {
-        // saves the compliance kit to target for copying to src/test/resources when
-        // happy
+    public void testCreateComplianceKitInTargetFolder() throws ComparisonFailure, IOException {
+        
+        // When new hex tests are obtained (confirmed ones from community/spec authors)
+        // then they are added below. Once happy with the tests they are copied from
+        // target/compliance-kit to src/test/resources/compliance-kit as a permanent
+        // test for the build
 
         File kit = new File("target/compliance-kit");
         kit.mkdirs();
@@ -66,12 +69,12 @@ public class ComplianceKitTest {
                 .addTo(kit, tests);
 
         writeCsv(kit, tests);
-        runAllComplianceTestsInFolder("target/compliance-kit");
+        runAllComplianceTestsInFolder(kit);
     }
 
     private static void writeCsv(File kit, List<KitTest> tests) {
         StringBuilder b = new StringBuilder();
-        b.append("TYPE,TITLE,HEX,FILE");
+        b.append("TYPE,TITLE,HEX,JSON");
         for (KitTest test : tests) {
             b.append(test.toCsvLine());
             b.append("\n");
@@ -99,7 +102,7 @@ public class ComplianceKitTest {
         }
     }
 
-    private static void runAllComplianceTestsInFolder(String base)
+    private static void runAllComplianceTestsInFolder(File base)
             throws IOException, ComparisonFailure {
         Charset charset = StandardCharsets.UTF_8;
         File file = new File(base, "tests.csv");
@@ -109,7 +112,6 @@ public class ComplianceKitTest {
                 .map(line -> line.trim()) //
                 .filter(line -> !line.isEmpty()) //
                 .forEach(line -> {
-                    System.out.println(line);
                     String[] items = line.split(",");
                     assertEquals(4, items.length);
                     String type = removeQuotes(items[0]);
@@ -127,8 +129,6 @@ public class ComplianceKitTest {
                         Detection d = Detection.fromHexGroundSegmentRepresentation(hex);
                         assertJsonEquals(json, d.toJson());
                     } else {
-                        System.out.println("line=" + line);
-                        System.out.println(hex);
                         Beacon23HexId b = Beacon23HexId.fromHex(hex);
                         assertJsonEquals(json, b.toJson());
                     }
