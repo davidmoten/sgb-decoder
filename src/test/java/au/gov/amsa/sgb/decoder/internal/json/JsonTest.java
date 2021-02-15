@@ -35,6 +35,7 @@ public class JsonTest {
         assertTrue(Json.equals("{\"count\":1}\n" + "", Json.toJson(new Thing())));
     }
 
+    @SuppressWarnings("unused")
     public static final class Thing {
         private Optional<Stuff> stuff = null;
         private int count = 1;
@@ -43,4 +44,5 @@ public class JsonTest {
     public enum Stuff {
         BOO, DUH;
     }
+    
 }

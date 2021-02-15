@@ -7,7 +7,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -18,6 +20,7 @@ import java.time.ZoneOffset;
 import org.junit.Test;
 
 import au.gov.amsa.sgb.decoder.internal.Bits;
+import au.gov.amsa.sgb.decoder.internal.JsonToHtml;
 import au.gov.amsa.sgb.decoder.internal.json.Json;
 import au.gov.amsa.sgb.decoder.rotatingfield.ActivationMethod;
 import au.gov.amsa.sgb.decoder.rotatingfield.BeaconFeedback;
@@ -64,6 +67,16 @@ public class DetectionTest {
     }
 
     @Test
+    public void testToHtml() throws FileNotFoundException {
+        Detection d = Detection.fromBitString(BITS);
+        checkDetection(d);
+        String html = "<html>" + JsonToHtml.toHtml(d.toJson()) + "</html>";
+        try (PrintStream out = new PrintStream("target/detection.html")) {
+            out.println(html);
+        }
+    }
+
+    @Test
     public void testDetectionToString() {
         Detection d = Detection.fromBitString(BITS);
         assertEquals(d.toJson(), d.toString());
@@ -72,8 +85,7 @@ public class DetectionTest {
     @Test
     public void testDetectionToJsonUsingJackson() throws IOException {
         Detection d = Detection.fromHexGroundSegmentRepresentation(SAMPLE_HEX);
-        TestingUtil.assertResourceEqualsJson("/compliance-kit/detection-specification-example.json",
-                d.toJson());
+        TestingUtil.assertResourceEqualsJson("/compliance-kit/detection-specification-example.json", d.toJson());
         File file = new File("src/docs/detection.json");
         Files.write(file.toPath(), Json.prettyPrint(d.toJson()).getBytes(StandardCharsets.UTF_8));
     }
@@ -97,8 +109,7 @@ public class DetectionTest {
         assertEquals(Range.min(0).max(1).build(), r.dilutionPrecisionHdop().get());
         assertEquals(Range.min(1).exclusive().max(2).build(), r.dilutionPrecisionDop().get());
         assertEquals(ActivationMethod.MANUAL_ACTIVATION_BY_USER, r.activationMethod());
-        assertEquals(Range.min(75).exclusive().max(100).build(),
-                r.remainingBatteryCapacityPercent().get());
+        assertEquals(Range.min(75).exclusive().max(100).build(), r.remainingBatteryCapacityPercent().get());
         assertEquals(GnssStatus.LOCATION_3D, r.gnssStatus());
         assertEquals("9934039823D000000000000", d.beacon23HexId());
         assertEquals("9934039823D0000", d.beacon15HexId());
@@ -124,16 +135,14 @@ public class DetectionTest {
     @Test
     public void testReadVesselIdAviation24BitAddressNoDesignator() {
         String address = "101011001000001011101100";
-        Aviation24BitAddress a = Detection
-                .readVesselIdAviation24BitAddress(Bits.from(address + zeros(20)));
+        Aviation24BitAddress a = Detection.readVesselIdAviation24BitAddress(Bits.from(address + zeros(20)));
         assertEquals("AC82EC", a.addressHex());
         assertFalse(a.aircraftOperatorDesignator().isPresent());
     }
 
     @Test
     public void testReadVesselIdAviation24BitAddressWithDesignator() {
-        Aviation24BitAddress a = Detection
-                .readVesselIdAviation24BitAddress(createVesselIdAviation24BitAddress());
+        Aviation24BitAddress a = Detection.readVesselIdAviation24BitAddress(createVesselIdAviation24BitAddress());
         assertEquals("AC82EC", a.addressHex());
         assertEquals("ABC", a.aircraftOperatorDesignator().get());
     }
@@ -141,8 +150,7 @@ public class DetectionTest {
     @Test
     public void testReadVesselIdWithAviation24BitAddress() {
         Aviation24BitAddress a = (Aviation24BitAddress) Detection
-                .readVesselId(Bits.from("100").concatWith(createVesselIdAviation24BitAddress()))
-                .get();
+                .readVesselId(Bits.from("100").concatWith(createVesselIdAviation24BitAddress())).get();
         assertEquals("AC82EC", a.addressHex());
     }
 
@@ -174,9 +182,8 @@ public class DetectionTest {
 
     @Test
     public void testReadVesselIdWithAircraftRegistrationMarking() {
-        AircraftRegistrationMarking a = (AircraftRegistrationMarking) Detection.readVesselId(
-                Bits.from("011").concatWith(createVesselIdAircraftRegistrationMarkingVhAbc()))
-                .get();
+        AircraftRegistrationMarking a = (AircraftRegistrationMarking) Detection
+                .readVesselId(Bits.from("011").concatWith(createVesselIdAircraftRegistrationMarkingVhAbc())).get();
         assertEquals("VH-ABC", a.value().get());
     }
 
@@ -201,8 +208,7 @@ public class DetectionTest {
     @Test
     public void testReadVesselIdWithRadioCallSign() {
         RadioCallSign a = (RadioCallSign) Detection
-                .readVesselId(Bits.from("010").concatWith(createVesselIdRadioCallSignForBingo()))
-                .get();
+                .readVesselId(Bits.from("010").concatWith(createVesselIdRadioCallSignForBingo())).get();
         assertEquals("BINGO", a.value().get());
     }
 
@@ -224,18 +230,12 @@ public class DetectionTest {
 
     @Test
     public void testRemainingBattery() {
-        assertEquals(Range.min(0).max(5).build(),
-                Detection.readBatteryPercent(Bits.from("000")).get());
-        assertEquals(Range.min(5).exclusive().max(10).build(),
-                Detection.readBatteryPercent(Bits.from("001")).get());
-        assertEquals(Range.min(10).exclusive().max(25).build(),
-                Detection.readBatteryPercent(Bits.from("010")).get());
-        assertEquals(Range.min(25).exclusive().max(50).build(),
-                Detection.readBatteryPercent(Bits.from("011")).get());
-        assertEquals(Range.min(50).exclusive().max(75).build(),
-                Detection.readBatteryPercent(Bits.from("100")).get());
-        assertEquals(Range.min(75).exclusive().max(100).build(),
-                Detection.readBatteryPercent(Bits.from("101")).get());
+        assertEquals(Range.min(0).max(5).build(), Detection.readBatteryPercent(Bits.from("000")).get());
+        assertEquals(Range.min(5).exclusive().max(10).build(), Detection.readBatteryPercent(Bits.from("001")).get());
+        assertEquals(Range.min(10).exclusive().max(25).build(), Detection.readBatteryPercent(Bits.from("010")).get());
+        assertEquals(Range.min(25).exclusive().max(50).build(), Detection.readBatteryPercent(Bits.from("011")).get());
+        assertEquals(Range.min(50).exclusive().max(75).build(), Detection.readBatteryPercent(Bits.from("100")).get());
+        assertEquals(Range.min(75).exclusive().max(100).build(), Detection.readBatteryPercent(Bits.from("101")).get());
         assertFalse(Detection.readBatteryPercent(Bits.from("110")).isPresent());
         assertFalse(Detection.readBatteryPercent(Bits.from("111")).isPresent());
     }
@@ -243,32 +243,19 @@ public class DetectionTest {
     @Test
     public void testDop() {
         assertEquals(Range.min(0).max(1).build(), Detection.readDop(Bits.from("0000")).get());
-        assertEquals(Range.min(1).exclusive().max(2).build(),
-                Detection.readDop(Bits.from("0001")).get());
-        assertEquals(Range.min(2).exclusive().max(3).build(),
-                Detection.readDop(Bits.from("0010")).get());
-        assertEquals(Range.min(3).exclusive().max(4).build(),
-                Detection.readDop(Bits.from("0011")).get());
-        assertEquals(Range.min(4).exclusive().max(5).build(),
-                Detection.readDop(Bits.from("0100")).get());
-        assertEquals(Range.min(5).exclusive().max(6).build(),
-                Detection.readDop(Bits.from("0101")).get());
-        assertEquals(Range.min(6).exclusive().max(7).build(),
-                Detection.readDop(Bits.from("0110")).get());
-        assertEquals(Range.min(7).exclusive().max(8).build(),
-                Detection.readDop(Bits.from("0111")).get());
-        assertEquals(Range.min(8).exclusive().max(10).build(),
-                Detection.readDop(Bits.from("1000")).get());
-        assertEquals(Range.min(10).exclusive().max(12).build(),
-                Detection.readDop(Bits.from("1001")).get());
-        assertEquals(Range.min(12).exclusive().max(15).build(),
-                Detection.readDop(Bits.from("1010")).get());
-        assertEquals(Range.min(15).exclusive().max(20).build(),
-                Detection.readDop(Bits.from("1011")).get());
-        assertEquals(Range.min(20).exclusive().max(30).build(),
-                Detection.readDop(Bits.from("1100")).get());
-        assertEquals(Range.min(30).exclusive().max(50).build(),
-                Detection.readDop(Bits.from("1101")).get());
+        assertEquals(Range.min(1).exclusive().max(2).build(), Detection.readDop(Bits.from("0001")).get());
+        assertEquals(Range.min(2).exclusive().max(3).build(), Detection.readDop(Bits.from("0010")).get());
+        assertEquals(Range.min(3).exclusive().max(4).build(), Detection.readDop(Bits.from("0011")).get());
+        assertEquals(Range.min(4).exclusive().max(5).build(), Detection.readDop(Bits.from("0100")).get());
+        assertEquals(Range.min(5).exclusive().max(6).build(), Detection.readDop(Bits.from("0101")).get());
+        assertEquals(Range.min(6).exclusive().max(7).build(), Detection.readDop(Bits.from("0110")).get());
+        assertEquals(Range.min(7).exclusive().max(8).build(), Detection.readDop(Bits.from("0111")).get());
+        assertEquals(Range.min(8).exclusive().max(10).build(), Detection.readDop(Bits.from("1000")).get());
+        assertEquals(Range.min(10).exclusive().max(12).build(), Detection.readDop(Bits.from("1001")).get());
+        assertEquals(Range.min(12).exclusive().max(15).build(), Detection.readDop(Bits.from("1010")).get());
+        assertEquals(Range.min(15).exclusive().max(20).build(), Detection.readDop(Bits.from("1011")).get());
+        assertEquals(Range.min(20).exclusive().max(30).build(), Detection.readDop(Bits.from("1100")).get());
+        assertEquals(Range.min(30).exclusive().max(50).build(), Detection.readDop(Bits.from("1101")).get());
         assertEquals(Range.min(50).exclusive().build(), Detection.readDop(Bits.from("1110")).get());
         assertFalse(Detection.readDop(Bits.from("1111")).isPresent());
     }
@@ -289,10 +276,8 @@ public class DetectionTest {
 
     @Test
     public void testReadActivationMethod() {
-        assertEquals(ActivationMethod.MANUAL_ACTIVATION_BY_USER,
-                Detection.readActivationMethod(Bits.from("00")));
-        assertEquals(ActivationMethod.AUTOMATIC_ACTIVATION_BY_BEACON,
-                Detection.readActivationMethod(Bits.from("01")));
+        assertEquals(ActivationMethod.MANUAL_ACTIVATION_BY_USER, Detection.readActivationMethod(Bits.from("00")));
+        assertEquals(ActivationMethod.AUTOMATIC_ACTIVATION_BY_BEACON, Detection.readActivationMethod(Bits.from("01")));
         assertEquals(ActivationMethod.AUTOMATIC_ACTIVATION_BY_EXTERNAL_MEANS,
                 Detection.readActivationMethod(Bits.from("10")));
         assertEquals(ActivationMethod.OTHER, Detection.readActivationMethod(Bits.from("11")));
@@ -310,9 +295,7 @@ public class DetectionTest {
     @Test
     public void testReadVesselIdWithAircraftOperatorAndSerialNumber() {
         AircraftOperatorAndSerialNumber a = (AircraftOperatorAndSerialNumber) Detection
-                .readVesselId(Bits.from("101")
-                        .concatWith(createVesselIdAircraftOperatorAndSerialNumber()))
-                .get();
+                .readVesselId(Bits.from("101").concatWith(createVesselIdAircraftOperatorAndSerialNumber())).get();
         assertEquals("XYZ", a.aircraftOperatorDesignator());
     }
 
@@ -357,15 +340,14 @@ public class DetectionTest {
 
     static Bits createBitsWithVesselIdFieldMmsi() {
         Bits vid = Bits.from("001").concatWith(createVesselIdMmsiWithEpirbMmsiBits());
-        return  Bits.from(BITS).replace(90, vid);
+        return Bits.from(BITS).replace(90, vid);
     }
 
     @Test
     public void testCreateHexWithAircraftOperatorAndSerialNumber() {
         Bits b = createBitsWithVesselIdFieldAircraftOperatorAndSerialNumber();
         Detection d = Detection.from(b);
-        assertEquals(VesselIdType.AIRCRAFT_OPERATOR_AND_SERIAL_NUMBER,
-                d.vesselId().get().vesselIdType());
+        assertEquals(VesselIdType.AIRCRAFT_OPERATOR_AND_SERIAL_NUMBER, d.vesselId().get().vesselIdType());
         assertTrue(Json.prettyPrint(d.toJson()).contains("serialNumber"));
         Bits b2 = Bits.from("00").concatWith(b);
         String hex = b2.toHex().toUpperCase();
@@ -434,8 +416,7 @@ public class DetectionTest {
 
     @Test
     public void testReadTriggeringEvent() {
-        assertEquals(TriggeringEvent.MANUAL_ACTIVATION_BY_CREW,
-                Detection.readTriggeringEvent(Bits.from("0001")));
+        assertEquals(TriggeringEvent.MANUAL_ACTIVATION_BY_CREW, Detection.readTriggeringEvent(Bits.from("0001")));
         assertEquals(TriggeringEvent.G_SWITCH_OR_DEFORMATION_ACTIVATION,
                 Detection.readTriggeringEvent(Bits.from("0100")));
         assertEquals(TriggeringEvent.AUTOMATIC_ACTIVATION_FROM_AVIONICS_OR_TRIGGERING_SYSTEM,
@@ -446,14 +427,11 @@ public class DetectionTest {
     @Test
     public void testReadRotatingFieldCancellationMessage() {
         assertEquals(DeactivationMethod.MANUAL_DEACTIVATION_BY_USER,
-                Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "10"))
-                        .deactivationMethod());
+                Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "10")).deactivationMethod());
         assertEquals(DeactivationMethod.AUTOMATIC_DEACTIVATION_BY_EXTERNAL_MEANS,
-                Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "01"))
-                        .deactivationMethod());
+                Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "01")).deactivationMethod());
         assertEquals(DeactivationMethod.OTHER,
-                Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "11"))
-                        .deactivationMethod());
+                Detection.readRotatingFieldCancellationMessage(Bits.from(ones(42) + "11")).deactivationMethod());
     }
 
     @Test
@@ -479,9 +457,7 @@ public class DetectionTest {
 
     @Test
     public void testReadPositionNotAvailable() {
-        assertFalse(
-                Detection.readPosition(Bits.from("11111111000001111100000111111111111110000011111"))
-                        .isPresent());
+        assertFalse(Detection.readPosition(Bits.from("11111111000001111100000111111111111110000011111")).isPresent());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -502,8 +478,7 @@ public class DetectionTest {
         int hours = n / 3600;
         int mins = (n - hours * 3600) / 60;
         int secs = n - hours * 3600 - mins * 60;
-        OffsetTime time = Detection
-                .readTimeOfLastEncodedLocationSeconds(Bits.from(zeros(17 - c) + ones(c)));
+        OffsetTime time = Detection.readTimeOfLastEncodedLocationSeconds(Bits.from(zeros(17 - c) + ones(c)));
         assertEquals(OffsetTime.of(hours, mins, secs, 0, ZoneOffset.UTC), time);
     }
 
@@ -521,8 +496,7 @@ public class DetectionTest {
         assertEquals(1952 - 400, a.altitudeEncodedLocationMetres());
         assertEquals(TriggeringEvent.G_SWITCH_OR_DEFORMATION_ACTIVATION, a.triggeringEvent());
         assertEquals(GnssStatus.LOCATION_2D, a.gnssStatus());
-        assertEquals(Range.min(66).exclusive().max(100).build(),
-                a.remainingBatteryCapacityPercent().get());
+        assertEquals(Range.min(66).exclusive().max(100).build(), a.remainingBatteryCapacityPercent().get());
     }
 
     @Test
@@ -617,8 +591,8 @@ public class DetectionTest {
             for (long j = 0; j < n; j++) {
                 Detection.fromHexGroundSegmentRepresentation(SAMPLE_HEX);
             }
-            System.out.println("rate=" + new DecimalFormat("0.00")
-                    .format(n * 1000.0 / (System.currentTimeMillis() - t)) + "msg/s");
+            System.out.println("rate=" + new DecimalFormat("0.00").format(n * 1000.0 / (System.currentTimeMillis() - t))
+                    + "msg/s");
         }
 
     }
