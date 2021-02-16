@@ -7,6 +7,7 @@ Java library that decodes [Cospas-Sarsat](https://en.wikipedia.org/wiki/Internat
 **Features**
 
 * Decodes Second Generation Beacon (SGB) detection messages (202 bits) to Java objects
+* Calculates BCH error correction code for an SGB detection message
 * Extracts Beacon 23 Hex Id from an SGB detection message
 * Decodes a Beacon 23 Hex Id to Java objects
 * Provides a JSON form of the SGB detection message and a corresponding JSON Schema
